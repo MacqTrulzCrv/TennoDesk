@@ -2721,5 +2721,11 @@
   "orderModal.posted": "İlan verildi",
   "orderModal.undone": "İlan geri alındı",
   "orderbook.listingsShort": "ilan",
-  "orderbook.confidenceHint": "WTS ilan derinliği ve fiyatın tazeliği"
+  "orderbook.confidenceHint": "WTS ilan derinliği ve fiyatın tazeliği",
+  "nav.group.panel": "Panel",
+  "nav.group.inventory": "Envanter",
+  "nav.group.analysis": "Analiz",
+  "nav.group.market": "Piyasa",
+  "nav.group.world": "Dünya",
+  "nav.group.guide": "Rehber"
 }

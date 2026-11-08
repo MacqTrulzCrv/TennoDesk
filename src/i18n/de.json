@@ -2715,5 +2715,11 @@
   "orderModal.posted": "Order erstellt",
   "orderModal.undone": "Order entfernt",
   "orderbook.listingsShort": "Angebote",
-  "orderbook.confidenceHint": "WTS-Angebotstiefe und Aktualität des Preises"
+  "orderbook.confidenceHint": "WTS-Angebotstiefe und Aktualität des Preises",
+  "nav.group.panel": "Panel",
+  "nav.group.inventory": "Inventar",
+  "nav.group.analysis": "Analyse",
+  "nav.group.market": "Markt",
+  "nav.group.world": "Welt",
+  "nav.group.guide": "Ratgeber"
 }

@@ -22,7 +22,12 @@
   import { themeSettings } from "../stores/theme.js";
   import { resetTourAutoStart } from "../stores/tour.js";
   import type { MessageKey } from "../lib/i18n.js";
-  import { VIEW_LABEL_KEYS, type SidebarViewName } from "../lib/viewRegistry.js";
+  import {
+    SIDEBAR_GROUPS,
+    sidebarGroupOf,
+    VIEW_LABEL_KEYS,
+    type SidebarViewName,
+  } from "../lib/viewRegistry.js";
 
   $: showDevTools = $devMode;
 
@@ -37,6 +42,17 @@
   );
 
   $: visibleNavItems = navItems.filter((item) => !$hiddenTabs.has(item.view));
+
+  // Settings pins to the bottom on its own; every other visible view is bucketed
+  // into its section, keeping the user's relative order inside each section.
+  $: settingsItem = visibleNavItems.find((item) => item.view === "settings") ?? null;
+  $: groupedNav = SIDEBAR_GROUPS.map((group) => ({
+    key: group.key,
+    labelKey: group.labelKey,
+    items: visibleNavItems.filter(
+      (item) => item.view !== "settings" && sidebarGroupOf(item.view) === group.key,
+    ),
+  })).filter((group) => group.items.length > 0);
 
   let dragWidth: number | null = null;
   let resizing = false;
@@ -179,25 +195,48 @@
       </svg>
       <span>{$tr("nav.collapse")}</span>
     </button>
-    {#each visibleNavItems as item (item.view)}
-      <button
-        data-view={item.view}
-        class="nav-btn relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 px-3.5 py-2.5 font-display text-base font-medium tracking-wide transition-colors duration-150 {$currentView ===
-        item.view
-          ? "bg-[var(--view-accent-glow)] text-[var(--view-accent)] before:content-[''] before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-1 before:rounded-r before:bg-[var(--view-accent)] max-[800px]:before:hidden"
-          : 'bg-transparent text-text-secondary hover:bg-bg-hover hover:text-text-primary'}"
-        aria-current={$currentView === item.view ? "page" : undefined}
-        on:click={() => currentView.set(item.view)}
-      >
-        <img src={item.icon} alt="" class="h-6 w-6 shrink-0 object-contain brightness-[0.85]" />
-        <span>{$sidebarLabels[item.view] ?? $tr(item.labelKey)}</span>
-      </button>
+    {#each groupedNav as group (group.key)}
+      {#if !collapsed}
+        <div class="nav-group-label">{$tr(group.labelKey)}</div>
+      {/if}
+      {#each group.items as item (item.view)}
+        <button
+          data-view={item.view}
+          class="nav-btn relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 px-3.5 py-2.5 font-display text-base font-medium tracking-wide transition-colors duration-150 {$currentView ===
+          item.view
+            ? "bg-[var(--view-accent-glow)] text-[var(--view-accent)] before:content-[''] before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-1 before:rounded-r before:bg-[var(--view-accent)] max-[800px]:before:hidden"
+            : 'bg-transparent text-text-secondary hover:bg-bg-hover hover:text-text-primary'}"
+          aria-current={$currentView === item.view ? "page" : undefined}
+          on:click={() => currentView.set(item.view)}
+        >
+          <img src={item.icon} alt="" class="h-6 w-6 shrink-0 object-contain brightness-[0.85]" />
+          <span>{$sidebarLabels[item.view] ?? $tr(item.labelKey)}</span>
+        </button>
+      {/each}
     {/each}
   </div>
 
-  <div class="mt-auto flex shrink-0 flex-col gap-2">
+  <div class="mt-auto flex shrink-0 flex-col gap-0.5 border-t border-border/50 pt-2.5">
+    {#if settingsItem}
+      <button
+        data-view={settingsItem.view}
+        class="nav-btn relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 px-3.5 py-2.5 font-display text-base font-medium tracking-wide transition-colors duration-150 {$currentView ===
+        settingsItem.view
+          ? "bg-[var(--view-accent-glow)] text-[var(--view-accent)] before:content-[''] before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-1 before:rounded-r before:bg-[var(--view-accent)] max-[800px]:before:hidden"
+          : 'bg-transparent text-text-secondary hover:bg-bg-hover hover:text-text-primary'}"
+        aria-current={$currentView === settingsItem.view ? "page" : undefined}
+        on:click={() => currentView.set(settingsItem.view)}
+      >
+        <img
+          src={settingsItem.icon}
+          alt=""
+          class="h-6 w-6 shrink-0 object-contain brightness-[0.85]"
+        />
+        <span>{$sidebarLabels[settingsItem.view] ?? $tr(settingsItem.labelKey)}</span>
+      </button>
+    {/if}
     {#if showDevTools}
-      <div class="mt-2 flex flex-col gap-0.5">
+      <div class="mt-1.5 flex flex-col gap-0.5 border-t border-border/40 pt-1.5">
         <button
           class="nav-btn relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 bg-transparent px-3.5 py-2.5 font-display text-base font-medium tracking-wide text-text-muted transition-colors duration-150 hover:bg-bg-hover hover:text-text-secondary"
           title={$tr("nav.previewSetupWizard")}
@@ -349,7 +388,61 @@
   .sidebar-collapsed :global(.nav-btn img) {
     max-width: none;
   }
+  .nav-group-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem 0.2rem;
+    font-family: var(--font-display);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    user-select: none;
+  }
+  .nav-group-label::before {
+    content: "";
+    flex: none;
+    width: 0.5rem;
+    height: 2px;
+    border-radius: 2px;
+    background: color-mix(in oklab, var(--accent) 55%, transparent);
+  }
+  .nav-group-label:first-of-type {
+    padding-top: 0.2rem;
+  }
+  .sidebar-collapsed .nav-group-label {
+    display: none;
+  }
+
+  /* --- visual polish --- */
+  #sidebar {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--bg-surface) 42%, var(--bg-base)) 0%,
+      var(--bg-base) 55%
+    );
+  }
+  .nav-btn :global(img) {
+    transition: filter 0.15s ease;
+  }
+  .nav-btn:hover :global(img) {
+    filter: brightness(1.08);
+  }
+  .nav-btn[aria-current="page"] {
+    background: linear-gradient(90deg, var(--view-accent-glow), transparent 88%);
+  }
+  .nav-btn[aria-current="page"] :global(img) {
+    filter: brightness(1.18) drop-shadow(0 0 6px var(--view-accent-glow));
+  }
+  .nav-btn[aria-current="page"]::before {
+    box-shadow: 0 0 10px var(--view-accent);
+  }
   @media (max-width: 800px) {
+    .nav-group-label {
+      display: none;
+    }
     .nav-btn :global(span) {
       display: none;
     }

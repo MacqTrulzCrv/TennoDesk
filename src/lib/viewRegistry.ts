@@ -85,6 +85,37 @@ export const SIDEBAR_VIEW_ORDER: readonly SidebarViewName[] = VIEW_NAMES.filter(
   (view): view is SidebarViewName => view !== "setup",
 );
 
+export interface SidebarGroup {
+  key: string;
+  labelKey: MessageKey;
+  views: readonly SidebarViewName[];
+}
+
+/** Sidebar sections, rendered in this order. `settings` is intentionally absent
+    — it pins to the bottom on its own. A view missing here lands in the last
+    group, so a newly registered view is never dropped from the nav. */
+export const SIDEBAR_GROUPS: readonly SidebarGroup[] = [
+  { key: "panel", labelKey: "nav.group.panel", views: ["dashboard"] },
+  { key: "inventory", labelKey: "nav.group.inventory", views: ["inventory", "foundry", "relics"] },
+  {
+    key: "analysis",
+    labelKey: "nav.group.analysis",
+    views: ["mastery", "stats", "arbi", "missions"],
+  },
+  { key: "market", labelKey: "nav.group.market", views: ["market", "analytics", "rivens"] },
+  { key: "world", labelKey: "nav.group.world", views: ["world", "syndicates"] },
+  { key: "guide", labelKey: "nav.group.guide", views: ["wiki", "builds"] },
+];
+
+const VIEW_TO_GROUP: Record<string, string> = Object.fromEntries(
+  SIDEBAR_GROUPS.flatMap((group) => group.views.map((view) => [view, group.key])),
+);
+
+/** Group key a sidebar view belongs to; the last group catches anything unlisted. */
+export function sidebarGroupOf(view: SidebarViewName): string {
+  return VIEW_TO_GROUP[view] ?? SIDEBAR_GROUPS[SIDEBAR_GROUPS.length - 1].key;
+}
+
 export function isToggleableView(view: SidebarViewName): view is ToggleableView {
   return SIDEBAR_VIEW_HIDEABLE[view];
 }

@@ -2735,5 +2735,11 @@
   "orderModal.posted": "Order posted",
   "orderModal.undone": "Order removed",
   "orderbook.listingsShort": "listings",
-  "orderbook.confidenceHint": "WTS listing depth and how fresh the price snapshot is"
+  "orderbook.confidenceHint": "WTS listing depth and how fresh the price snapshot is",
+  "nav.group.panel": "Panel",
+  "nav.group.inventory": "Inventory",
+  "nav.group.analysis": "Analysis",
+  "nav.group.market": "Market",
+  "nav.group.world": "World",
+  "nav.group.guide": "Guide"
 }

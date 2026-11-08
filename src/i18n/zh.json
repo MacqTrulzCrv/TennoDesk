@@ -2715,5 +2715,11 @@
   "orderModal.posted": "订单已发布",
   "orderModal.undone": "订单已撤销",
   "orderbook.listingsShort": "条挂单",
-  "orderbook.confidenceHint": "WTS 挂单深度与价格新鲜度"
+  "orderbook.confidenceHint": "WTS 挂单深度与价格新鲜度",
+  "nav.group.panel": "面板",
+  "nav.group.inventory": "库存",
+  "nav.group.analysis": "分析",
+  "nav.group.market": "市场",
+  "nav.group.world": "世界",
+  "nav.group.guide": "指南"
 }
