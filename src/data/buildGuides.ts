@@ -9,7 +9,7 @@ export type BuildFocus = "general" | "steelpath";
 export type BuildRole = "dps" | "support" | "tank" | "farm" | "utility";
 export type BuildItemType = "warframe" | "primary" | "secondary" | "melee";
 
-export interface BuildGuide {
+interface BuildGuide {
   id: string;
   name: string;
   focus: BuildFocus;
@@ -44,9 +44,9 @@ interface BuildGuideTable {
 
 export const BUILD_GUIDES = data as BuildGuideTable;
 
-export type ModRarity = "Common" | "Uncommon" | "Rare" | "Legendary";
+type ModRarity = "Common" | "Uncommon" | "Rare" | "Legendary";
 
-export interface BuildModMeta {
+interface BuildModMeta {
   rarity: ModRarity;
   polarity: string | null;
   /** Capacity at max rank; negative means the mod adds capacity (aura/stance). */
