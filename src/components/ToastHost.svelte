@@ -39,6 +39,20 @@
         </button>
       </header>
       <p class="text-sm leading-[1.375] text-text-primary">{toast.message}</p>
+      {#if toast.action}
+        <div class="mt-2 flex justify-end">
+          <button
+            class="cursor-pointer rounded border bg-transparent px-2.5 py-1 font-display text-xs font-semibold tracking-wide border-[color-mix(in_oklab,currentColor_55%,transparent)] transition-[background-color] duration-150 hover:bg-[color-mix(in_oklab,currentColor_14%,transparent)]"
+            on:click={() => {
+              const action = toast.action;
+              removeToast(toast.id);
+              void action?.run();
+            }}
+          >
+            {toast.action.label}
+          </button>
+        </div>
+      {/if}
     </article>
   {/each}
 </div>

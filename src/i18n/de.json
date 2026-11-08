@@ -2710,5 +2710,8 @@
   "nav.quickSwitch": "Schnellwechsel",
   "nav.quickSwitchHint": "Zu einer Ansicht springen oder ein Item suchen…",
   "nav.goTo": "Öffnen",
-  "common.noResults": "Keine Ergebnisse"
+  "common.noResults": "Keine Ergebnisse",
+  "common.undo": "Rückgängig",
+  "orderModal.posted": "Order erstellt",
+  "orderModal.undone": "Order entfernt"
 }

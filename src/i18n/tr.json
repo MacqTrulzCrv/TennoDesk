@@ -2716,5 +2716,8 @@
   "nav.quickSwitch": "Hızlı geç",
   "nav.quickSwitchHint": "Bir ekrana geç ya da item ara…",
   "nav.goTo": "Git",
-  "common.noResults": "Sonuç yok"
+  "common.noResults": "Sonuç yok",
+  "common.undo": "Geri al",
+  "orderModal.posted": "İlan verildi",
+  "orderModal.undone": "İlan geri alındı"
 }

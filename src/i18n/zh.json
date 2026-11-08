@@ -2710,5 +2710,8 @@
   "nav.quickSwitch": "快速切换",
   "nav.quickSwitchHint": "跳转到视图或搜索物品…",
   "nav.goTo": "前往",
-  "common.noResults": "无结果"
+  "common.noResults": "无结果",
+  "common.undo": "撤销",
+  "orderModal.posted": "订单已发布",
+  "orderModal.undone": "订单已撤销"
 }

@@ -5,6 +5,7 @@
   import { invoke, tradeInvoke } from "../lib/ipc.js";
   import { isIpcError } from "../lib/ipcGuards.js";
   import { refreshMarketOrders } from "../lib/marketOrdersSync.js";
+  import { addToast } from "../stores/toasts.js";
   import ModalShell from "../components/ModalShell.svelte";
   import ThemedButton from "../components/ThemedButton.svelte";
   import ThemedInput from "../components/ThemedInput.svelte";
@@ -304,12 +305,43 @@
 
       await refreshMarketOrders();
 
+      // A freshly created order can be taken back; an edit cannot be undone.
+      const postedOrderId =
+        !isEdit && result && typeof result === "object" && "id" in result
+          ? (result as { id?: unknown }).id
+          : null;
+
       orderModalState.set(null);
+
+      if (typeof postedOrderId === "string" && postedOrderId) {
+        notifyOrderPosted(postedOrderId);
+      }
     } catch (err) {
       errorMsg = (err as Error).message;
     } finally {
       submitting = false;
     }
+  }
+
+  function notifyOrderPosted(orderId: string): void {
+    const undoneMessage = $tr("orderModal.undone");
+    addToast({
+      level: "success",
+      message: $tr("orderModal.posted"),
+      durationMs: 8000,
+      action: {
+        label: $tr("common.undo"),
+        run: async () => {
+          const deletion = await tradeInvoke("wfmDeleteOrder", orderId);
+          if (isIpcError(deletion)) {
+            addToast({ level: "error", message: deletion.error });
+            return;
+          }
+          await refreshMarketOrders();
+          addToast({ level: "info", message: undoneMessage });
+        },
+      },
+    });
   }
 
   function close(): void {

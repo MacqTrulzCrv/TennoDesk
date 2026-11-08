@@ -2,12 +2,19 @@ import { writable } from "svelte/store";
 
 type ToastLevel = "info" | "success" | "warning" | "error";
 
+/** An optional inline button (e.g. "Undo") rendered inside the toast. */
+export interface ToastAction {
+  label: string;
+  run: () => void | Promise<void>;
+}
+
 interface ToastInput {
   level?: ToastLevel;
   title?: string;
   message: string;
   durationMs?: number;
   sticky?: boolean;
+  action?: ToastAction;
 }
 
 interface Toast {
@@ -18,6 +25,7 @@ interface Toast {
   durationMs: number;
   sticky: boolean;
   createdAt: number;
+  action?: ToastAction;
 }
 
 const DEFAULT_TOAST_DURATION_MS = 6000;
@@ -38,6 +46,7 @@ export function addToast(input: ToastInput): number {
     durationMs: Math.max(500, input.durationMs ?? DEFAULT_TOAST_DURATION_MS),
     sticky: Boolean(input.sticky),
     createdAt: Date.now(),
+    action: input.action,
   };
 
   toasts.update((current) => [toast, ...current].slice(0, MAX_TOASTS));
