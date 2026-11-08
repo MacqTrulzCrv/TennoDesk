@@ -227,10 +227,7 @@ function similarityScore(a: string, b: string): number {
 // fold to ASCII before any comparison. The Turkish dotless i carries no
 // combining mark, so NFD alone cannot reach it.
 function foldDiacritics(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .replace(/ı/g, "i");
+  return value.normalize("NFD").replace(/\p{M}/gu, "").replace(/ı/g, "i");
 }
 
 function normalizeRewardWord(word: string): string {
