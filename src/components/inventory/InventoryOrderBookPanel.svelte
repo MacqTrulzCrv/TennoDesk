@@ -147,6 +147,30 @@
       ? Math.max(...filteredBuyBase.map((entry) => entry.unitPlatinum))
       : null;
   $: spread = bestSell != null && bestBuy != null ? bestSell - bestBuy : null;
+
+  // Price-confidence chip: WTS depth and how stale the snapshot is, so a price
+  // read off two old listings reads differently from one off a busy market.
+  $: activeSellCount = filteredSellBase.length;
+  $: priceAgeMs = orderBook?.timestamp ? nowTimestamp - orderBook.timestamp : null;
+  $: priceStale = priceAgeMs != null && priceAgeMs > 60 * 60 * 1000;
+  $: priceConfidence =
+    activeSellCount >= 5 && !priceStale
+      ? "strong"
+      : activeSellCount < 3 || priceStale
+        ? "weak"
+        : "ok";
+  $: confidenceChipClass =
+    priceConfidence === "strong"
+      ? "bg-success-bg text-success"
+      : priceConfidence === "weak"
+        ? "bg-warning-bg text-warning"
+        : "bg-white/5 text-text-secondary";
+  $: confidenceDotClass =
+    priceConfidence === "strong"
+      ? "bg-success"
+      : priceConfidence === "weak"
+        ? "bg-warning"
+        : "bg-text-muted";
   $: sellRows = sortEntries(filteredSellBase, "sell", sellSort).slice(0, DISPLAY_ROWS_PER_SIDE);
   $: buyRows = sortEntries(filteredBuyBase, "buy", buySort).slice(0, DISPLAY_ROWS_PER_SIDE);
 
@@ -527,6 +551,19 @@
         {$tr("orderbook.noActiveListings")}
       </div>
     {:else}
+      <div
+        class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs {confidenceChipClass}"
+        title={$tr("orderbook.confidenceHint")}
+        data-price-confidence={priceConfidence}
+      >
+        <span class="h-1.5 w-1.5 shrink-0 rounded-full {confidenceDotClass}"></span>
+        <span class="font-display font-semibold"
+          >{activeSellCount} {$tr("orderbook.listingsShort")}</span
+        >
+        <span class="opacity-70"
+          >· {formatUpdatedLabel($tr, orderBook.timestamp ?? null, nowTimestamp)}</span
+        >
+      </div>
       <div class="grid grid-cols-3 gap-1.5 max-[800px]:grid-cols-2">
         <div class="grid gap-0.5 rounded-lg border border-border bg-bg-soft px-2 py-1.5">
           <span class="text-xs uppercase tracking-[0.05em] text-text-muted"

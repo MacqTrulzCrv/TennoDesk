@@ -2713,5 +2713,7 @@
   "common.noResults": "Keine Ergebnisse",
   "common.undo": "Rückgängig",
   "orderModal.posted": "Order erstellt",
-  "orderModal.undone": "Order entfernt"
+  "orderModal.undone": "Order entfernt",
+  "orderbook.listingsShort": "Angebote",
+  "orderbook.confidenceHint": "WTS-Angebotstiefe und Aktualität des Preises"
 }

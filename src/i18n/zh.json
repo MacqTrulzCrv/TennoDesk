@@ -2713,5 +2713,7 @@
   "common.noResults": "无结果",
   "common.undo": "撤销",
   "orderModal.posted": "订单已发布",
-  "orderModal.undone": "订单已撤销"
+  "orderModal.undone": "订单已撤销",
+  "orderbook.listingsShort": "条挂单",
+  "orderbook.confidenceHint": "WTS 挂单深度与价格新鲜度"
 }

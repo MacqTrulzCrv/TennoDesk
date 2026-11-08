@@ -2733,5 +2733,7 @@
   "common.noResults": "No results",
   "common.undo": "Undo",
   "orderModal.posted": "Order posted",
-  "orderModal.undone": "Order removed"
+  "orderModal.undone": "Order removed",
+  "orderbook.listingsShort": "listings",
+  "orderbook.confidenceHint": "WTS listing depth and how fresh the price snapshot is"
 }

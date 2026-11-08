@@ -2719,5 +2719,7 @@
   "common.noResults": "Sonuç yok",
   "common.undo": "Geri al",
   "orderModal.posted": "İlan verildi",
-  "orderModal.undone": "İlan geri alındı"
+  "orderModal.undone": "İlan geri alındı",
+  "orderbook.listingsShort": "ilan",
+  "orderbook.confidenceHint": "WTS ilan derinliği ve fiyatın tazeliği"
 }
