@@ -57,12 +57,12 @@ Kurulum konumu: `%LOCALAPPDATA%\Programs\TennoDesk` · veri: `%APPDATA%\TennoDes
 
 ## Gereksinimler
 
-| Araç | Sürüm |
-|------|-------|
-| Windows | 10 / 11 (x64) |
-| Node.js | **≥ 22.12** |
-| pnpm | **11.x** (`pnpm@11.1.2` ile test edildi) |
-| Electron | 41.x (otomatik indirilir) |
+| Araç     | Sürüm                                    |
+| -------- | ---------------------------------------- |
+| Windows  | 10 / 11 (x64)                            |
+| Node.js  | **≥ 22.12**                              |
+| pnpm     | **11.x** (`pnpm@11.1.2` ile test edildi) |
+| Electron | 41.x (otomatik indirilir)                |
 
 pnpm kurulu değilse: `corepack enable && corepack prepare pnpm@11.1.2 --activate`
 
