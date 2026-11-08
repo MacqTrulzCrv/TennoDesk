@@ -6,11 +6,22 @@
 ; MUI_LANGDLL_SAVELANGUAGE. Defined there, the language dialog reads the value
 ; but nothing ever writes it, so it asks again on every interactive install.
 !define MUI_LANGDLL_REGISTRY_ROOT "HKCU"
-!define MUI_LANGDLL_REGISTRY_KEY "Software\WFHelper"
+!define MUI_LANGDLL_REGISTRY_KEY "Software\TennoDesk"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "InstallerLanguage"
 
 !macro customUnInstall
   ${IfNot} ${isUpdated}
+    ; Current TennoDesk sign-in artifacts.
+    DeleteRegValue HKCU "Software\TennoDesk" "InstallerLanguage"
+    DeleteRegKey /ifempty HKCU "Software\TennoDesk"
+    DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "TennoDeskWarframeWatcher"
+    DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run" "TennoDeskWarframeWatcher"
+    Delete "$APPDATA\TennoDesk\warframe-watcher.json"
+    Delete "$APPDATA\TennoDesk\warframe-watcher.ps1"
+    Delete "$APPDATA\TennoDesk\warframe-watcher-task.xml"
+    nsExec::Exec '"$SYSDIR\schtasks.exe" /Delete /TN "TennoDeskWarframeWatcher" /F'
+    Pop $0
+    ; Legacy WFHelper artifacts from the fork origin, scrubbed if still present.
     DeleteRegValue HKCU "Software\WFHelper" "InstallerLanguage"
     DeleteRegKey /ifempty HKCU "Software\WFHelper"
     DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "WFHelperWarframeWatcher"
@@ -22,6 +33,8 @@
     Pop $0
     ReadEnvStr $0 "USERNAME"
     ${If} $0 != ""
+      nsExec::Exec '"$SYSDIR\schtasks.exe" /Delete /TN "TennoDesk\WarframeWatcher-$0" /F'
+      Pop $0
       nsExec::Exec '"$SYSDIR\schtasks.exe" /Delete /TN "WFHelper\WarframeWatcher-$0" /F'
       Pop $0
     ${EndIf}
@@ -48,7 +61,7 @@ Function HelperOptionsPage
     Abort
   ${EndIf}
 
-  ${NSD_CreateLabel} 0 0 100% 24u "WFHelper can download warframe-api-helper on first launch, or you can manage the helper manually."
+  ${NSD_CreateLabel} 0 0 100% 24u "TennoDesk can download warframe-api-helper on first launch, or you can manage the helper manually."
   Pop $0
 
   ${NSD_CreateCheckbox} 0 34u 100% 12u "Automatically install warframe-api-helper during first-run setup"
@@ -58,7 +71,7 @@ Function HelperOptionsPage
     ${NSD_Check} $HelperAutoInstallCheckbox
   ${EndIf}
 
-  ${NSD_CreateLabel} 0 58u 100% 42u "Manual install path: $APPDATA\WFHelper\api-helper\warframe-api-helper.exe$\r$\nIf you skip automatic install, download the helper yourself and place it at that path."
+  ${NSD_CreateLabel} 0 58u 100% 42u "Manual install path: $APPDATA\TennoDesk\api-helper\warframe-api-helper.exe$\r$\nIf you skip automatic install, download the helper yourself and place it at that path."
   Pop $0
 
   nsDialogs::Show
@@ -76,11 +89,11 @@ FunctionEnd
 !macro customInstall
   ; Silent auto-update skips the options page - keep the user's original choice.
   ${If} ${Silent}
-  ${AndIf} ${FileExists} "$APPDATA\WFHelper\setup-preferences.json"
+  ${AndIf} ${FileExists} "$APPDATA\TennoDesk\setup-preferences.json"
     Goto helperPrefsDone
   ${EndIf}
-  CreateDirectory "$APPDATA\WFHelper"
-  FileOpen $0 "$APPDATA\WFHelper\setup-preferences.json" w
+  CreateDirectory "$APPDATA\TennoDesk"
+  FileOpen $0 "$APPDATA\TennoDesk\setup-preferences.json" w
   ${If} $HelperAutoInstall == "1"
     FileWrite $0 '{"autoInstallHelper":true}'
   ${Else}

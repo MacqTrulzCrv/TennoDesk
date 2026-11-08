@@ -33,6 +33,7 @@ type OverlayCtx = {
   plannerOverlayWindow?: import("electron").BrowserWindow | null;
   overlayInteractionHotkeyRegistered: string | null;
   rivenRescanHotkeyRegistered: string | null;
+  plannerToggleHotkeyRegistered: string | null;
   overlayInteractiveMode: boolean;
 };
 
@@ -53,6 +54,7 @@ type OverlaySettingsControllerOptions = {
   onRelicRewardTrigger: (source?: string) => void;
   onToggleOverlayInteractionMode: (source?: string) => void;
   onRivenRescanTrigger: (source?: string) => void;
+  onPlannerToggleTrigger: (source?: string) => void;
   configureWarframeLifecycle: (enabled: boolean) => Promise<void>;
 };
 
@@ -106,6 +108,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     onRelicRewardTrigger,
     onToggleOverlayInteractionMode,
     onRivenRescanTrigger,
+    onPlannerToggleTrigger,
   } = options;
 
   function normalizeFissureAlerts(
@@ -223,6 +226,11 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
       rivenRescanHotkey: normalizeHotkey(
         candidate.rivenRescanHotkey ?? defaults.rivenRescanHotkey,
         String(defaults.rivenRescanHotkey),
+      ),
+      plannerToggleHotkeyEnabled: booleanSetting("plannerToggleHotkeyEnabled"),
+      plannerToggleHotkey: normalizeHotkey(
+        candidate.plannerToggleHotkey ?? defaults.plannerToggleHotkey,
+        String(defaults.plannerToggleHotkey),
       ),
       worldNotificationsEnabled: booleanSetting("worldNotificationsEnabled"),
       cycleAlerts: normalizeCycleAlerts(candidate.cycleAlerts, defaults.cycleAlerts),
@@ -365,10 +373,21 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     ctx.rivenRescanHotkeyRegistered = null;
   }
 
+  function unregisterPlannerToggleHotkey(): void {
+    if (!ctx.plannerToggleHotkeyRegistered) return;
+    try {
+      globalShortcut.unregister(ctx.plannerToggleHotkeyRegistered);
+    } catch (err) {
+      log.warn("[PlannerToggleHotkey] unregister failed:", normalizeErrorMessage(err));
+    }
+    ctx.plannerToggleHotkeyRegistered = null;
+  }
+
   function unregisterOverlayHotkey(): void {
     unregisterOverlayTriggerHotkey();
     unregisterOverlayInteractionHotkey();
     unregisterRivenRescanHotkey();
+    unregisterPlannerToggleHotkey();
   }
 
   function registerOverlayTriggerHotkey(): boolean {
@@ -455,6 +474,32 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     }
   }
 
+  function registerPlannerToggleHotkey(): boolean {
+    unregisterPlannerToggleHotkey();
+
+    if (!ctx.overlaySettings.plannerToggleHotkeyEnabled) {
+      log.info("[PlannerToggleHotkey] disabled");
+      return false;
+    }
+
+    const accelerator = String(ctx.overlaySettings.plannerToggleHotkey || "");
+    if (!accelerator) return false;
+
+    try {
+      const ok = globalShortcut.register(accelerator, () => onPlannerToggleTrigger("hotkey"));
+      if (!ok) {
+        log.warn("[PlannerToggleHotkey] register failed:", accelerator);
+        return false;
+      }
+      ctx.plannerToggleHotkeyRegistered = accelerator;
+      log.info("[PlannerToggleHotkey] registered:", accelerator);
+      return true;
+    } catch (err) {
+      log.warn("[PlannerToggleHotkey] invalid shortcut:", accelerator, normalizeErrorMessage(err));
+      return false;
+    }
+  }
+
   // Hotkeys are only held while Warframe runs; main drives this via setHotkeysActive.
   let hotkeysActive = false;
 
@@ -466,7 +511,8 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     const triggerOk = registerOverlayTriggerHotkey();
     const interactionOk = registerOverlayInteractionHotkey();
     const rescanOk = registerRivenRescanHotkey();
-    return triggerOk || interactionOk || rescanOk;
+    const plannerOk = registerPlannerToggleHotkey();
+    return triggerOk || interactionOk || rescanOk || plannerOk;
   }
 
   function setHotkeysActive(active: boolean): void {

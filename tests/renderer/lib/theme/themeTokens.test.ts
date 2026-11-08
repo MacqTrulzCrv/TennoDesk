@@ -145,7 +145,7 @@ describe("settings migration", () => {
     );
 
     const loaded = loadThemeSettings();
-    expect(loaded.version).toBe(1);
+    expect(loaded.version).toBe(2);
     expect(loaded.colors.accent).toBe("#123456");
     expect("notAToken" in loaded.colors).toBe(false);
     expect(loaded.viewOverrides.market).toEqual({ colors: { accent: "#00ff00" } });

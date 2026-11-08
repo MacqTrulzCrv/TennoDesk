@@ -4,7 +4,7 @@ import path from "node:path";
 import { APP_PRODUCT_NAME } from "../shared/appMeta";
 
 const APP_USER_DATA_DIR_NAME = APP_PRODUCT_NAME;
-const LEGACY_USER_DATA_DIR_NAMES = ["warframe-companion"];
+const LEGACY_USER_DATA_DIR_NAMES = ["WFHelper", "warframe-companion"];
 
 function directoryHasEntries(dir: string): boolean {
   try {

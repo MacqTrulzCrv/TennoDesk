@@ -11,7 +11,14 @@ import type {
 } from "../types/market.js";
 
 const MARKET_TAB_KEY = "wf_market_tab";
-const MARKET_TABS: readonly MarketTab[] = ["sell", "buy", "rivens", "browse", "alerts"];
+const MARKET_TABS: readonly MarketTab[] = [
+  "sell",
+  "buy",
+  "sellables",
+  "rivens",
+  "browse",
+  "alerts",
+];
 
 function restoreMarketTab(): MarketTab {
   const raw = readStorage(MARKET_TAB_KEY);

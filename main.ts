@@ -105,7 +105,6 @@ import * as worldStateIpc from "./ipc/worldStateIpc";
 import * as messageNotificationIpc from "./ipc/messageNotificationIpc";
 import * as systemIpc from "./ipc/systemIpc";
 import * as notificationSoundIpc from "./ipc/notificationSoundIpc";
-import * as feedbackIpc from "./ipc/feedbackIpc";
 import * as snapshotCacheIpc from "./ipc/snapshotCacheIpc";
 import * as rankedHotsetIpc from "./ipc/rankedHotsetIpc";
 import * as statsIpc from "./ipc/statsIpc";
@@ -482,7 +481,7 @@ function reportSessionHealth(profileStage: ProfileStage): void {
   if (injectors.length > 0) {
     log.warn(
       `[Startup] software known to crash its host is injected here: ${injectors.join(", ")}. ` +
-        "Disabling its overlay, or excluding WFHelper from it, is the fix.",
+        "Disabling its overlay, or excluding TennoDesk from it, is the fix.",
     );
   }
 }
@@ -527,7 +526,6 @@ function registerIpcHandlers(profileStage: ProfileStage): void {
   overlayIpc.register();
   worldStateIpc.register();
   systemIpc.register();
-  feedbackIpc.register();
   notificationSoundIpc.register();
   snapshotCacheIpc.register();
   rankedHotsetIpc.register();

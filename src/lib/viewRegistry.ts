@@ -28,6 +28,7 @@ export const LAZY_VIEW_LOADERS: Record<
   analytics: () => import("../views/MarketAnalysisView.svelte"),
   relics: () => import("../views/RelicsView.svelte"),
   wiki: () => import("../views/WikiView.svelte"),
+  builds: () => import("../views/BuildGuidesView.svelte"),
   arbi: () => import("../views/ArbiAnalyzeView.svelte"),
   missions: () => import("../views/MissionsView.svelte"),
 };
@@ -51,6 +52,7 @@ export const VIEW_LABEL_KEYS: Record<ViewName, MessageKey> = {
   analytics: "common.analytics",
   relics: "common.relics",
   wiki: "common.wiki",
+  builds: "nav.builds",
   rivens: "common.rivens",
   arbi: "nav.runAnalysis",
   missions: "enemy.missions",
@@ -71,6 +73,7 @@ const SIDEBAR_VIEW_HIDEABLE: Record<SidebarViewName, boolean> = {
   analytics: true,
   relics: true,
   wiki: true,
+  builds: true,
   rivens: true,
   arbi: true,
   missions: true,

@@ -110,7 +110,7 @@ export interface CustomThemePreset {
 }
 
 export interface ThemeSettings {
-  version: 1;
+  version: 1 | 2;
   activePreset: string;
   colors: ThemeColors;
   fontSizes: ThemeFontSizes;

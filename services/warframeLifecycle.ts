@@ -11,11 +11,17 @@ import { withScope } from "./logger";
 import { userDataPath } from "./userDataPath";
 import { getWarframeProcessState } from "./warframeStatus";
 import { normalizeErrorMessage } from "../config/shared/errors";
+import { APP_PRODUCT_NAME } from "../config/shared/appMeta";
 
 const log = withScope("WarframeLifecycle");
-const LOGIN_ITEM_NAME = "WFHelperWarframeWatcher";
-const LEGACY_TASK_NAME = "WFHelperWarframeWatcher";
-const TASK_FOLDER = "WFHelper";
+const LOGIN_ITEM_NAME = `${APP_PRODUCT_NAME}WarframeWatcher`;
+const TASK_FOLDER = APP_PRODUCT_NAME;
+// This app was forked from WFHelper. Clear anything the original branding may
+// have registered in Windows (startup item, flat task, per-user folder task) so
+// nothing foreign is left behind in Task Scheduler or the Startup list.
+const LEGACY_LOGIN_ITEM_NAME = "WFHelperWarframeWatcher";
+const LEGACY_FLAT_TASK_NAME = "WFHelperWarframeWatcher";
+const LEGACY_TASK_FOLDER = "WFHelper";
 const EXIT_GRACE_MS = 10_000;
 
 function systemRoot(): string {
@@ -78,6 +84,11 @@ function watcherTaskName(): string {
   return `${TASK_FOLDER}\\WarframeWatcher-${accountName()}`;
 }
 
+/** The per-user task the WFHelper fork origin registered; removed on migration. */
+function legacyWatcherTaskName(): string {
+  return `${LEGACY_TASK_FOLDER}\\WarframeWatcher-${accountName()}`;
+}
+
 /** conhost --headless allocates no console; powershell.exe alone paints one until
  *  -WindowStyle Hidden applies, and Windows Terminal ignores that switch entirely. */
 function watcherTaskXml(powershell: string, watcherArgs: string[]): string {
@@ -88,8 +99,8 @@ function watcherTaskXml(powershell: string, watcherArgs: string[]): string {
   return `<?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
-    <Author>WFHelper</Author>
-    <Description>Starts WFHelper when Warframe launches and closes it after Warframe exits. Remove this task to turn the feature off.</Description>
+    <Author>${escapeXml(APP_PRODUCT_NAME)}</Author>
+    <Description>Starts ${escapeXml(APP_PRODUCT_NAME)} when Warframe launches and closes it after Warframe exits. Remove this task to turn the feature off.</Description>
   </RegistrationInfo>
   <Triggers>
     <LogonTrigger><Enabled>true</Enabled><UserId>${user}</UserId></LogonTrigger>
@@ -143,7 +154,7 @@ function tick(): void {
     absentSince ??= Date.now();
     if (Date.now() - absentSince >= EXIT_GRACE_MS) {
       seenGame = false;
-      log.info("Warframe exited; closing WFHelper");
+      log.info(`Warframe exited; closing ${APP_PRODUCT_NAME}`);
       quitApp();
     }
   }
@@ -193,7 +204,10 @@ async function apply(nextEnabled: boolean): Promise<void> {
   const register = async (value: boolean): Promise<void> => {
     if (process.env.WFHELPER_USER_DATA) return;
     app.setLoginItemSettings({ name: LOGIN_ITEM_NAME, openAtLogin: false });
-    await removeTask(LEGACY_TASK_NAME);
+    // Migration: drop the WFHelper-branded startup item and both of its tasks.
+    app.setLoginItemSettings({ name: LEGACY_LOGIN_ITEM_NAME, openAtLogin: false });
+    await removeTask(LEGACY_FLAT_TASK_NAME);
+    await removeTask(legacyWatcherTaskName());
     const name = watcherTaskName();
     if (!value) {
       await removeTask(name);

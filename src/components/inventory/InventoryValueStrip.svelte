@@ -13,14 +13,24 @@
     /** Totals for the whole inventory in the same valuation scope. */
     inventory: InventoryValueTotals;
     allTradables: boolean;
+    /** False on tabs with no prime rows, where the prime lens has nothing to
+     *  narrow to; the button is disabled so it never empties the list. */
+    primeApplicable?: boolean;
     onSelectScope: (allTradables: boolean) => void;
     /** Per-unit platinum floor applied to both figures; 0 is off. */
     minPlatinum: number;
     onSelectMinPlatinum: (minPlatinum: number) => void;
   }
 
-  let { inView, inventory, allTradables, onSelectScope, minPlatinum, onSelectMinPlatinum }: Props =
-    $props();
+  let {
+    inView,
+    inventory,
+    allTradables,
+    primeApplicable = true,
+    onSelectScope,
+    minPlatinum,
+    onSelectMinPlatinum,
+  }: Props = $props();
 
   const PLAT_ICON = PLATINUM_ICON_URL;
   const DUCAT_ICON = STAT_ICON_URLS.ducatsDelta;
@@ -91,23 +101,38 @@
       </div>
     {/each}
 
-    <div class="filter-tabs" data-value-scope-toggle>
+    <!-- Deliberately smaller and dimmer than the filter tabs below: this lens
+         narrows the open tab to prime rows (and steers the counter with it), so
+         it is kept visually distinct from the list's own filter tabs. On a tab
+         with no prime rows the prime option is disabled - there is nothing to
+         narrow to. -->
+    <div
+      class="inline-flex overflow-hidden rounded border border-border/60"
+      data-value-scope-toggle
+    >
       <button
         type="button"
-        class="filter-tab min-h-7 py-0 text-xs"
-        class:active={!allTradables}
-        aria-pressed={!allTradables}
+        class="px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.04em] {!allTradables &&
+        primeApplicable
+          ? 'bg-accent-glow text-accent'
+          : 'bg-transparent text-text-muted hover:text-text-secondary'} disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-text-muted"
+        aria-pressed={!allTradables && primeApplicable}
+        disabled={!primeApplicable}
         data-value-scope-option="prime"
-        title={$tr("inventory.value.scopePrimeHint")}
+        title={primeApplicable
+          ? $tr("inventory.value.scopePrimeHint")
+          : $tr("inventory.value.scopePrimeUnavailable")}
         onclick={() => onSelectScope(false)}
       >
         {$tr("inventory.value.scopePrime")}
       </button>
       <button
         type="button"
-        class="filter-tab min-h-7 py-0 text-xs"
-        class:active={allTradables}
-        aria-pressed={allTradables}
+        class="border-l border-border/60 px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.04em] {allTradables ||
+        !primeApplicable
+          ? 'bg-accent-glow text-accent'
+          : 'bg-transparent text-text-muted hover:text-text-secondary'}"
+        aria-pressed={allTradables || !primeApplicable}
         data-value-scope-option="tradable"
         title={$tr("inventory.value.allTradablesHint")}
         onclick={() => onSelectScope(true)}
@@ -118,17 +143,18 @@
 
     <!-- The title sits on the group so all four buttons show it; browsers walk
          up to the nearest titled ancestor. -->
-    <div class="filter-tabs" data-value-min-plat-toggle title={$tr("inventory.value.minPlatHint")}>
-      <img
-        src={PLAT_ICON}
-        alt=""
-        class="h-3.5 w-3.5 shrink-0 self-center object-contain opacity-70"
-      />
+    <div
+      class="inline-flex items-center gap-0.5 overflow-hidden rounded border border-border/60 px-1"
+      data-value-min-plat-toggle
+      title={$tr("inventory.value.minPlatHint")}
+    >
+      <img src={PLAT_ICON} alt="" class="h-3 w-3 shrink-0 self-center object-contain opacity-60" />
       {#each VALUE_MIN_PLATINUM_PRESETS as preset (preset)}
         <button
           type="button"
-          class="filter-tab min-h-7 py-0 text-xs"
-          class:active={minPlatinum === preset}
+          class="rounded px-1.5 py-0.5 font-display text-[11px] {minPlatinum === preset
+            ? 'bg-accent-glow text-accent'
+            : 'bg-transparent text-text-muted hover:text-text-secondary'}"
           aria-pressed={minPlatinum === preset}
           aria-label={preset === 0
             ? $tr("inventory.value.minPlatOff")

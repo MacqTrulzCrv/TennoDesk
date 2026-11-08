@@ -12,12 +12,17 @@ function generateWfmWsId(): string {
   return Array.from(crypto.randomBytes(11), (b) => chars[b % chars.length]).join("");
 }
 
-export function createWfmWebSocket(options: { handshakeTimeout?: number } = {}): WebSocket {
+export function createWfmWebSocket(
+  options: { handshakeTimeout?: number; headers?: Record<string, string> } = {},
+): WebSocket {
   return new WebSocket(WFM_WS_URL, WFM_WS_PROTOCOL, {
     origin: WFM_WS_ORIGIN,
     handshakeTimeout: options.handshakeTimeout,
     maxPayload: WFM_WS_MAX_PAYLOAD_BYTES,
     perMessageDeflate: false,
+    // Ride the REST path's browser UA + earned Cloudflare clearance so the
+    // upgrade is not 403'd as a bot at the edge, before signIn can be sent.
+    headers: options.headers,
   });
 }
 

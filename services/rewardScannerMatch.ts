@@ -222,8 +222,19 @@ function similarityScore(a: string, b: string): number {
   return Math.max(0, 1 - distance / Math.max(a.length, b.length, 1));
 }
 
+// Localized names and the Windows OCR read keep their diacritics while the onnx
+// reader prints plain ASCII (Turkish "Kalip" loses its dotless i), so both sides
+// fold to ASCII before any comparison. The Turkish dotless i carries no
+// combining mark, so NFD alone cannot reach it.
+function foldDiacritics(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/ı/g, "i");
+}
+
 function normalizeRewardWord(word: string): string {
-  const normalized = normalizeForSearch(word).replace(/[^a-z0-9]/g, "");
+  const normalized = foldDiacritics(normalizeForSearch(word)).replace(/[^a-z0-9]/g, "");
   if (!normalized) return "";
   return REWARD_TOKEN_ALIASES[normalized] || normalized;
 }
@@ -254,7 +265,7 @@ const OCR_CONFUSIONS: ReadonlyArray<readonly [RegExp, string]> = Object.freeze([
 ]);
 
 function foldOcrConfusions(value: string): string {
-  let folded = String(value || "").toLowerCase();
+  let folded = foldDiacritics(String(value || "").toLowerCase());
   for (const [pattern, replacement] of OCR_CONFUSIONS) {
     folded = folded.replace(pattern, replacement);
   }

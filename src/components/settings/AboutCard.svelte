@@ -1,11 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { DISCORD_URL, PATREON_URL } from "../../config/links.js";
   import { locale, tr } from "../../lib/i18n.js";
-  import { invoke, on, send } from "../../lib/ipc.js";
+  import { invoke, on } from "../../lib/ipc.js";
   import type { RelicDataInfo } from "../../../config/shared/relicDataInfo.js";
   import SettingsSection from "./SettingsSection.svelte";
-  import DocsLink from "../DocsLink.svelte";
 
   const appVersion = import.meta.env.VITE_APP_VERSION || "?";
 
@@ -42,59 +40,14 @@
         : relicData.version,
   );
 
-  function openLink(url: string): void {
-    send("open-external", url);
-  }
+  type InfoRow = { label: string; value: string; id?: string };
 
-  type CreditRow = (
-    | { label: string; url: string; text: string }
-    | { label: string; value: string }
-  ) & { id?: string };
-
-  // Rebuilt on a language switch, so both the row labels and the translated
-  // link texts follow the active locale.
-  const credits: CreditRow[] = $derived([
-    {
-      label: $tr("settings.creditPrices"),
-      url: "https://warframe.market",
-      text: "warframe.market",
-    },
+  // Rebuilt on a language switch so the row labels follow the active locale.
+  const infoRows: InfoRow[] = $derived([
     { label: $tr("settings.creditGameData"), value: $tr("settings.creditGameDataValue") },
-    {
-      label: $tr("settings.creditItemDropData"),
-      url: "https://github.com/WFCD",
-      text: $tr("settings.creditWfcd"),
-    },
     ...(relicDataValue
       ? [{ id: "relic-data", label: $tr("settings.creditRelicData"), value: relicDataValue }]
       : []),
-    { label: $tr("settings.creditIcons"), url: "https://browse.wf", text: "browse.wf" },
-    {
-      label: $tr("settings.creditArbiStats"),
-      url: "https://svesk.github.io/arbi/",
-      text: $tr("settings.creditArbiStatsValue"),
-    },
-    {
-      label: $tr("settings.creditArbiMaps"),
-      url: "https://arbi.guide",
-      text: "arbi.guide (remesis)",
-    },
-    {
-      label: $tr("settings.creditInventorySnapshots"),
-      url: "https://github.com/Sainan/warframe-api-helper",
-      text: "warframe-api-helper",
-    },
-    {
-      label: $tr("settings.creditSource"),
-      url: "https://github.com/WFHelper/WFHelper",
-      text: "GitHub",
-    },
-    { label: $tr("settings.creditWebsite"), url: "https://wfhelper.com", text: "wfhelper.com" },
-    {
-      label: $tr("settings.creditCommunity"),
-      url: DISCORD_URL,
-      text: $tr("settings.creditCommunityValue"),
-    },
   ]);
 </script>
 
@@ -107,26 +60,12 @@
   {/snippet}
 
   <div class="mt-2.5 grid gap-1">
-    {#each credits as credit}
-      <div class="settings-credit-row" data-credit={credit.id}>
-        <span>{credit.label}</span>
-        {#if "url" in credit}
-          <button class="settings-link" onclick={() => openLink(credit.url)}>{credit.text}</button>
-        {:else}
-          <span class="settings-credit-value">{credit.value}</span>
-        {/if}
+    {#each infoRows as row}
+      <div class="settings-credit-row" data-credit={row.id}>
+        <span>{row.label}</span>
+        <span class="settings-credit-value">{row.value}</span>
       </div>
     {/each}
-    <div class="settings-credit-row">
-      <span>{$tr("settings.creditHelp")}</span>
-      <DocsLink />
-    </div>
-    <div class="settings-credit-row">
-      <span>{$tr("settings.creditSupport")}</span>
-      <span class="flex flex-wrap items-center justify-end gap-x-2.5 gap-y-1">
-        <button class="settings-link" onclick={() => openLink(PATREON_URL)}>Patreon</button>
-      </span>
-    </div>
   </div>
 
   <p class="m-0 mt-2.5 text-xs leading-snug text-text-muted">
@@ -135,22 +74,8 @@
 </SettingsSection>
 
 <style>
-  .settings-link {
-    background: none;
-    border: 0;
-    padding: 0;
-    color: var(--accent);
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-family: inherit;
-    /* Breaking a link mid-phrase reads as two links; let the row wrap instead. */
-    white-space: nowrap;
-  }
-  .settings-link:hover {
-    text-decoration: underline;
-  }
   /* Wrapping makes a flex line break on the children's max-content widths, so a
-     narrow card drops the link under the label instead of squeezing both into
+     narrow card drops the value under the label instead of squeezing both into
      ragged two-line columns. */
   .settings-credit-row {
     display: flex;

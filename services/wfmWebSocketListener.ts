@@ -1,6 +1,7 @@
 import WebSocket from "ws";
 
 import { normalizeErrorMessage } from "../config/shared/errors";
+import { wfmHandshakeHeaders } from "./wfmClient";
 import { withScope } from "./logger";
 import { createWfmWebSocket, parseWfmWsMessage, sendWfmWsMessage } from "./wfmWebSocketCommon";
 
@@ -79,7 +80,7 @@ function _connect(token: string): void {
 
   _destroySocket();
   let reconnecting = false;
-  const socket = createWfmWebSocket();
+  const socket = createWfmWebSocket({ headers: wfmHandshakeHeaders(token) });
 
   _socket = socket;
 

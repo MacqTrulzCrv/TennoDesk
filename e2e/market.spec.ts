@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import {
@@ -84,7 +84,7 @@ test.describe("Market tab (fixture mode)", () => {
       const flag = await page
         .evaluate(() => localStorage.getItem("setup-completed-v2"))
         .catch(() => "<evaluate failed>");
-      const welcome = await page.getByRole("heading", { name: "Welcome to WFHelper" }).count();
+      const welcome = await page.getByRole("heading", { name: "Welcome to TennoDesk" }).count();
       const body = await page
         .evaluate(() => document.body.innerHTML.slice(0, 1500))
         .catch(() => "<evaluate failed>");

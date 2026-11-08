@@ -34,7 +34,7 @@ vi.mock("node:https", () => {
   return { default: { request }, request };
 });
 
-import { request, __test__ } from "../../services/wfmClient";
+import { request, wfmHandshakeHeaders, __test__ } from "../../services/wfmClient";
 
 function freshSolver() {
   return vi.fn(async () => {
@@ -114,5 +114,31 @@ describe("stale Cloudflare clearance recovery", () => {
 
     await expect(request("GET", "/items")).resolves.toEqual({ ok: true });
     expect(solver).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("wfmHandshakeHeaders (ws upgrade must look like the REST browser)", () => {
+  beforeEach(() => {
+    __test__.setClearanceForTest(null, null);
+  });
+
+  it("rides the earned clearance cookie under the exact UA it was earned with", () => {
+    __test__.setClearanceForTest("cf_clearance=earned", "UA-earned");
+    const headers = wfmHandshakeHeaders("tok123");
+    expect(headers["User-Agent"]).toBe("UA-earned");
+    expect(headers["Cookie"]).toContain("JWT=tok123");
+    expect(headers["Cookie"]).toContain("cf_clearance=earned");
+  });
+
+  it("falls back to a browser UA and JWT-only cookie before any clearance exists", () => {
+    const headers = wfmHandshakeHeaders("tokABC");
+    expect(headers["User-Agent"]).toMatch(/Mozilla\/5\.0.*Chrome\//);
+    expect(headers["Cookie"]).toBe("JWT=tokABC");
+  });
+
+  it("omits the cookie entirely when there is neither a token nor clearance", () => {
+    const headers = wfmHandshakeHeaders(null);
+    expect(headers["User-Agent"]).toMatch(/Mozilla\/5\.0/);
+    expect(headers["Cookie"]).toBeUndefined();
   });
 });

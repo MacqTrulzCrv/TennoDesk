@@ -282,6 +282,14 @@ function onRelicRewardTrigger(source = "manual", stalenessMs = 0): void {
 
 const OVERLAY_SETTINGS_FILE = userDataPath(OVERLAY_SETTINGS_FILE_NAME);
 
+function onPlannerToggleTrigger(source = "manual"): void {
+  rewardOverlayIpc.onPlannerToggleTrigger(
+    source,
+    pushOverlayThemeVars,
+    bringOverlayToWarframeDisplayIfAvailable,
+  );
+}
+
 const settingsController = createOverlaySettingsController({
   log,
   fs,
@@ -293,6 +301,7 @@ const settingsController = createOverlaySettingsController({
   onRelicRewardTrigger,
   onToggleOverlayInteractionMode: toggleOverlayInteractionMode,
   onRivenRescanTrigger: rivenOverlayIpc.onRivenManualRescan,
+  onPlannerToggleTrigger,
   configureWarframeLifecycle,
 });
 

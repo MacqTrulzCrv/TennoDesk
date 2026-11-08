@@ -1,0 +1,722 @@
+{
+  "Abundant Mutation": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Accumulating Whipclaw": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Adaptation": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 12
+  },
+  "Amalgam Organ Shatter": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 11
+  },
+  "Amar's Hatred": {
+    "rarity": "Uncommon",
+    "polarity": "vazarin",
+    "drain": 9
+  },
+  "Archon Continuity": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Archon Intensify": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Archon Stretch": {
+    "rarity": "Legendary",
+    "polarity": "naramon",
+    "drain": 16
+  },
+  "Archon Vitality": {
+    "rarity": "Legendary",
+    "polarity": "vazarin",
+    "drain": 16
+  },
+  "Armored Agility": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 11
+  },
+  "Assimilate": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Astral Twilight": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": -5
+  },
+  "Augur Accord": {
+    "rarity": "Uncommon",
+    "polarity": "vazarin",
+    "drain": 7
+  },
+  "Augur Pact": {
+    "rarity": "Common",
+    "polarity": "naramon",
+    "drain": 7
+  },
+  "Augur Reach": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 7
+  },
+  "Augur Secrets": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 7
+  },
+  "Aviator": {
+    "rarity": "Common",
+    "polarity": "vazarin",
+    "drain": 9
+  },
+  "Berserker Fury": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Biting Frost": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Blaze": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Blind Justice": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": -5
+  },
+  "Blind Rage": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Blood Forge": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Blood Rush": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Brief Respite": {
+    "rarity": "Uncommon",
+    "polarity": "zenurik",
+    "drain": -7
+  },
+  "Capacitance": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Carving Mantis": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": -5
+  },
+  "Cataclysmic Continuum": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Catalyzing Shields": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 13
+  },
+  "Cathode Current": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Champion's Blessing": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Chaos Sphere": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Chilling Reload": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 5
+  },
+  "Chromatic Blade": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Condition Overload": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 15
+  },
+  "Constitution": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 13
+  },
+  "Convulsion": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 11
+  },
+  "Corrosive Projection": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": -7
+  },
+  "Corrupt Charge": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Critical Deceleration": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Critical Delay": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 9
+  },
+  "Crushing Ruin": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": -5
+  },
+  "Cunning Drift": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Deep Freeze": {
+    "rarity": "Uncommon",
+    "polarity": "vazarin",
+    "drain": 11
+  },
+  "Despoil": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Energy Siphon": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": -7
+  },
+  "Equilibrium": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 7
+  },
+  "Eternal War": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Exothermic": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Fleeting Expertise": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 11
+  },
+  "Flow": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 5
+  },
+  "Focus Energy": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Fracturing Crush": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Frigid Blast": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Fused Reservoir": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Galvanized Aptitude": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 12
+  },
+  "Galvanized Chamber": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Galvanized Diffusion": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Galvanized Hell": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Galvanized Savvy": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 12
+  },
+  "Galvanized Scope": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 12
+  },
+  "Galvanized Shot": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 12
+  },
+  "Growing Power": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": -7
+  },
+  "Health Conversion": {
+    "rarity": "Rare",
+    "polarity": "unairu",
+    "drain": 15
+  },
+  "Hornet Strike": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Hunter Munitions": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Hushed Invisibility": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Icy Avalanche": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Infiltrate": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Intensify": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Intrepid Stand": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Ironclad Charge": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Jade's Judgment": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Jet Stream": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Jolt": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Killing Blow": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": 11
+  },
+  "Lethal Torrent": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 11
+  },
+  "Loyal Merulina": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Malignant Force": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Mesa's Waltz": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Mesmer Shield": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Molecular Fission": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Narrow Minded": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 16
+  },
+  "Negation Armor": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Neutron Star": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "North Wind": {
+    "rarity": "Uncommon",
+    "polarity": "vazarin",
+    "drain": 11
+  },
+  "Ore Gaze": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Organ Shatter": {
+    "rarity": "Common",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Overextended": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 11
+  },
+  "Peaceful Provocation": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Phoenix Renewal": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Photon Repeater": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Pilfering Strangledome": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Pilfering Swarm": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Pistol Amp": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": -7
+  },
+  "Pistol Pestilence": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Point Strike": {
+    "rarity": "Common",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Pointed Wind": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": -5
+  },
+  "Power Drift": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Primed Continuity": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Primed Cryo Rounds": {
+    "rarity": "Legendary",
+    "polarity": "vazarin",
+    "drain": 16
+  },
+  "Primed Fever Strike": {
+    "rarity": "Legendary",
+    "polarity": "naramon",
+    "drain": 16
+  },
+  "Primed Firestorm": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Primed Flow": {
+    "rarity": "Legendary",
+    "polarity": "naramon",
+    "drain": 14
+  },
+  "Primed Fulmination": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Primed Pistol Gambit": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 12
+  },
+  "Primed Point Blank": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Primed Pressure Point": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Primed Reach": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Primed Sure Footed": {
+    "rarity": "Legendary",
+    "polarity": "vazarin",
+    "drain": 16
+  },
+  "Primed Target Cracker": {
+    "rarity": "Legendary",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Reaping Spiral": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": -5
+  },
+  "Redirection": {
+    "rarity": "Common",
+    "polarity": "vazarin",
+    "drain": 7
+  },
+  "Resonance": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Rime Rounds": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Rolling Guard": {
+    "rarity": "Rare",
+    "polarity": "vazarin",
+    "drain": 12
+  },
+  "Rush": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 16
+  },
+  "Sacrificial Steel": {
+    "rarity": "Legendary",
+    "polarity": "umbra",
+    "drain": 16
+  },
+  "Safeguard": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Savage Silence": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Scorch": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Seeking Shuriken": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Serration": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": 14
+  },
+  "Shocking Touch": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 11
+  },
+  "Sovereign Outcast": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": -5
+  },
+  "Steel Charge": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": -9
+  },
+  "Steel Fiber": {
+    "rarity": "Common",
+    "polarity": "vazarin",
+    "drain": 9
+  },
+  "Stormbringer": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 11
+  },
+  "Streamline": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 5
+  },
+  "Stretch": {
+    "rarity": "Uncommon",
+    "polarity": "naramon",
+    "drain": 14
+  },
+  "Thermal Transfer": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Toxic Barrage": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 7
+  },
+  "Transient Fortitude": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 16
+  },
+  "Ulfrun's Endurance": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Umbral Fiber": {
+    "rarity": "Legendary",
+    "polarity": "umbra",
+    "drain": 16
+  },
+  "Umbral Intensify": {
+    "rarity": "Legendary",
+    "polarity": "umbra",
+    "drain": 16
+  },
+  "Umbral Vitality": {
+    "rarity": "Legendary",
+    "polarity": "umbra",
+    "drain": 16
+  },
+  "Venom Dose": {
+    "rarity": "Rare",
+    "polarity": "zenurik",
+    "drain": 9
+  },
+  "Vigilante Armaments": {
+    "rarity": "Common",
+    "polarity": "naramon",
+    "drain": 9
+  },
+  "Vile Acceleration": {
+    "rarity": "Rare",
+    "polarity": "naramon",
+    "drain": 9
+  },
+  "Vital Sense": {
+    "rarity": "Rare",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Vitality": {
+    "rarity": "Common",
+    "polarity": "vazarin",
+    "drain": 7
+  },
+  "Weeping Wounds": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": 9
+  },
+  "Worthy Comradery": {
+    "rarity": "Uncommon",
+    "polarity": "madurai",
+    "drain": -7
+  }
+}

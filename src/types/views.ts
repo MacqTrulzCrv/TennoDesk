@@ -14,6 +14,7 @@ export const VIEW_NAMES = [
   "analytics",
   "relics",
   "wiki",
+  "builds",
   "rivens",
   "arbi",
   "missions",

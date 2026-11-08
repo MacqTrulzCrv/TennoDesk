@@ -1,5 +1,4 @@
 <script lang="ts">
-  import DocsLink from "../DocsLink.svelte";
   import {
     isScalableOverlayWindow,
     OVERLAY_WINDOW_KEYS,
@@ -350,7 +349,6 @@
           <span class="text-xs text-text-muted"
             >{overlayStepIndex + 1} / {overlayPlacementSteps.length}</span
           >
-          <DocsLink page="setup" />
         </div>
       </div>
       <p class="m-0 text-sm leading-snug text-text-secondary">{placementText}</p>

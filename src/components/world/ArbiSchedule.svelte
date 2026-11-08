@@ -28,6 +28,7 @@
     selectedScheduleEntries,
     type ArbiSelectionPreset,
   } from "../../lib/world/arbiScheduleData.js";
+  import { APP_PRODUCT_NAME } from "../../../config/shared/appMeta.js";
 
   const DAY_OPTIONS = [7, 14, 30, 60];
   const MAX_COPY_ROWS = 80;
@@ -292,7 +293,7 @@
     }
 
     const footer = cardEl("wfh-arbicard-footer");
-    footer.appendChild(cardEl("wfh-arbicard-url", "wfhelper.com"));
+    footer.appendChild(cardEl("wfh-arbicard-url", APP_PRODUCT_NAME));
     footer.appendChild(cardEl("wfh-arbicard-brand", $tr("arbisched.brand")));
     card.appendChild(footer);
 

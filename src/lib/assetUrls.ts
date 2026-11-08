@@ -7,7 +7,7 @@ export const FORMA_ICON_URL = new URL("../../assets/Forma.webp", import.meta.url
 export const APP_LOGO_URL = new URL("../../assets/logo.png", import.meta.url).href;
 export const CREDITS_ICON_URL = new URL("../../assets/Bounties/Credits.png", import.meta.url).href;
 
-/** Played by the renderer, not the toast, so Windows bills it to WFHelper and
+/** Played by the renderer, not the toast, so Windows bills it to TennoDesk and
  *  the app's own volume-mixer slider applies. */
 export const NOTIFICATION_SOUND_URL = new URL("../../assets/notification.wav", import.meta.url)
   .href;
@@ -26,6 +26,7 @@ export const NAV_ICON_URLS = {
   settings: new URL("../../assets/icons/Settings.png", import.meta.url).href,
   stats: new URL("../../assets/icons/Stats.png", import.meta.url).href,
   wiki: new URL("../../assets/icons/Wiki.svg", import.meta.url).href,
+  builds: new URL("../../assets/icons/Builds.svg", import.meta.url).href,
   arbi: new URL("../../assets/icons/ArbiAnalyze.png", import.meta.url).href,
   missions: new URL("../../assets/icons/Missions.svg", import.meta.url).href,
 } as const;

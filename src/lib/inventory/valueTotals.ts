@@ -38,7 +38,8 @@ export const VALUE_MIN_PLATINUM_PRESETS: readonly number[] = [0, 5, 10, 15];
 // them would double the same stock.
 const AGGREGATE_GROUPS: ReadonlySet<string> = new Set(["full_sets", "incomplete_sets"]);
 
-function isPrimeRow(entry: InventoryValueEntry): boolean {
+/** Exported for the inventory's prime lens, which must match the counter. */
+export function isPrimeRow(entry: InventoryValueEntry): boolean {
   return entry.partType === "prime" || entry.isPrime === true;
 }
 

@@ -2,6 +2,7 @@ import WebSocket from "ws";
 
 import { normalizeErrorMessage } from "../config/shared/errors";
 import type { WfmStatus } from "../config/shared/wfm";
+import { wfmHandshakeHeaders } from "./wfmClient";
 import { withScope } from "./logger";
 import {
   WFM_WS_TIMEOUT_MS,
@@ -23,7 +24,10 @@ export function setStatusViaWebSocket(
     let settled = false;
     let statusOk = false;
     let statusUntil: string | null = null;
-    const socket = createWfmWebSocket({ handshakeTimeout: WFM_WS_TIMEOUT_MS });
+    const socket = createWfmWebSocket({
+      handshakeTimeout: WFM_WS_TIMEOUT_MS,
+      headers: wfmHandshakeHeaders(token),
+    });
 
     const timer = setTimeout(() => {
       done(new Error("WFM WebSocket timeout"));

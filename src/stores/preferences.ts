@@ -23,9 +23,12 @@ if (readStorage("wf_show_foundry_ready_badges") == null) {
 }
 export const showFoundryReadyBadges = persistedBoolean("wf_show_foundry_ready_badges", true);
 export const showVaultedBadges = persistedBoolean("wf_show_vaulted_badges", true);
+// Default to the full tab so every category (mods, arcanes, resources, pets)
+// shows its own stock on open; the prime-only lens is an opt-in the user flips
+// on the tabs where selling prime parts is the point.
 export const inventoryValueAllTradables = persistedBoolean(
   "wf_inventory_value_all_tradables",
-  false,
+  true,
 );
 export const inventoryValueMinPlatinum = persistedPresetNumber(
   "wf_inventory_value_min_plat",

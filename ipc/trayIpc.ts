@@ -28,7 +28,7 @@ function trayIcon(): string | Electron.NativeImage {
 function buildTrayMenu(): Menu {
   return Menu.buildFromTemplate([
     {
-      label: mainMessage("tray.show", "Show WFHelper"),
+      label: mainMessage("tray.show", "Show TennoDesk"),
       click: () => showMainWindow?.(),
     },
     { type: "separator" },
@@ -66,7 +66,7 @@ export function createTray(): boolean {
       }
       return false;
     }
-    tray.setToolTip("WFHelper");
+    tray.setToolTip("TennoDesk");
     // Linux tray backends deliver no click event, so there the menu is the only way in.
     if (process.platform === "win32") tray.on("click", () => showMainWindow?.());
     log.info("[Tray] created");

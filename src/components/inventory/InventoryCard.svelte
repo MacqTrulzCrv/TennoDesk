@@ -20,6 +20,7 @@
   } from "../../stores/inventorySafety.js";
   import { itemMarksFor } from "../../lib/parentMastery.js";
   import { tr } from "../../lib/i18n.js";
+  import { openQuickSell } from "../../lib/inventory/quickSell.js";
   import type { InventoryViewItem } from "../../lib/inventoryMarket.js";
   import { isRankedGroup } from "../../../config/shared/numeric.js";
 
@@ -142,16 +143,32 @@
         if (selectable) dispatch("toggle", { item, shiftKey: event.shiftKey });
       }}
     />
-  {:else if canExpand}
-    <button
-      type="button"
-      class="expand-link absolute top-1.5 right-1.5 z-10 inline-flex items-center rounded border border-border bg-bg-deep/45 px-1.5 py-0.5 font-display text-xs font-semibold text-text-secondary opacity-0 transition-[opacity,color,border-color] duration-100 group-hover:opacity-100 hover:text-accent hover:border-accent-dim"
-      title={$tr("inventory.openItemDetails")}
-      aria-label={$tr("common.openDetailsFor", { name: itemLabel(item) })}
-      on:click|stopPropagation={() => dispatch("expand", item)}
-    >
-      {$tr("common.details")}
-    </button>
+  {:else}
+    <div class="absolute top-1.5 right-1.5 z-10 flex gap-1">
+      {#if item.marketSlug}
+        <button
+          type="button"
+          class="inline-flex items-center rounded border border-border bg-bg-deep/45 px-1.5 py-0.5 font-display text-xs font-semibold text-text-secondary opacity-0 transition-[opacity,color,border-color] duration-100 group-hover:opacity-100 hover:border-success/60 hover:text-success"
+          data-inventory-quick-sell={item.internalName}
+          title={$tr("inventory.quickSellHint")}
+          aria-label={$tr("inventory.quickSell")}
+          on:click|stopPropagation={() => void openQuickSell(item)}
+        >
+          {$tr("inventory.quickSell")}
+        </button>
+      {/if}
+      {#if canExpand}
+        <button
+          type="button"
+          class="expand-link inline-flex items-center rounded border border-border bg-bg-deep/45 px-1.5 py-0.5 font-display text-xs font-semibold text-text-secondary opacity-0 transition-[opacity,color,border-color] duration-100 group-hover:opacity-100 hover:text-accent hover:border-accent-dim"
+          title={$tr("inventory.openItemDetails")}
+          aria-label={$tr("common.openDetailsFor", { name: itemLabel(item) })}
+          on:click|stopPropagation={() => dispatch("expand", item)}
+        >
+          {$tr("common.details")}
+        </button>
+      {/if}
+    </div>
   {/if}
   <div class="item-img-wrap">
     <ItemImage

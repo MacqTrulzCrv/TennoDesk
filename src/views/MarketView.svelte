@@ -79,6 +79,7 @@
   import LayoutGrid from "../components/layout/LayoutGrid.svelte";
   import SharedFilterBar from "../components/SharedFilterBar.svelte";
   import MarketBrowseView from "../components/market/MarketBrowseView.svelte";
+  import MarketSellablesView from "../components/market/MarketSellablesView.svelte";
   import MarketAlertsView from "../components/market/alerts/MarketAlertsView.svelte";
   import MarketContractRow from "../components/market/MarketContractRow.svelte";
   import MarketOrderRow from "../components/market/MarketOrderRow.svelte";
@@ -153,6 +154,7 @@
   $: orderTypeTabs = [
     { key: "sell", label: $tr("market.tab.sell") },
     { key: "buy", label: $tr("market.tab.buy") },
+    { key: "sellables", label: $tr("market.tab.sellables") },
     { key: "rivens", label: $tr("common.rivens") },
     { key: "browse", label: $tr("market.tab.browse") },
     { key: "alerts", label: $tr("common.alerts") },
@@ -1009,6 +1011,27 @@
         <MarketBrowseView />
       {/if}
     </LayoutGrid>
+  {:else if $marketViewState.typeTab === "sellables"}
+    <!-- Browsing the sellable stock works logged out; posting asks on click. -->
+    <div class="view-header">
+      <h2>{$tr("market.sellables.title")}</h2>
+      <div class="view-controls gap-2">
+        {#if $marketSession.loggedIn && $marketSession.userName}
+          <span
+            class="rounded-full border border-border bg-surface-hover px-2 py-1 font-display text-xs font-bold text-text-primary"
+            >@{$marketSession.userName}</span
+          >
+        {/if}
+      </div>
+    </div>
+    <div class="mb-2.5 flex items-end border-b border-border-subtle">
+      <HeaderTabs
+        options={orderTypeTabs}
+        activeKey={$marketViewState.typeTab}
+        onSelect={handleTypeTabSelect}
+      />
+    </div>
+    <MarketSellablesView />
   {:else if $marketViewState.typeTab === "alerts"}
     <!-- Alerts work logged out too - auction and order searches are public. -->
     <div class="view-header">

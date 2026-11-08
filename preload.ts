@@ -3,8 +3,6 @@ import type { IpcEventMap, IpcInvokeMap } from "./src/types/ipc";
 import type { PreloadAPI, TradePreloadAPI } from "./src/types/preload";
 import { ipcDataBridge } from "./ipc/preloadListeners";
 import {
-  FEEDBACK_CONTEXT,
-  FEEDBACK_SUBMIT,
   INVENTORY_GET,
   INVENTORY_OPEN_FILE,
   INVENTORY_OPEN_ALECA_FRAME_FILE,
@@ -198,8 +196,6 @@ type Ret<K extends keyof IpcInvokeMap> = Promise<IpcInvokeMap[K]["return"]>;
 try {
   contextBridge.exposeInMainWorld("api", {
     platform: process.platform,
-    getFeedbackContext: inv<"getFeedbackContext">(FEEDBACK_CONTEXT),
-    submitFeedback: inv<"submitFeedback">(FEEDBACK_SUBMIT),
 
     getInventory: inv<"getInventory">(INVENTORY_GET),
     openInventoryFile: inv<"openInventoryFile">(INVENTORY_OPEN_FILE),

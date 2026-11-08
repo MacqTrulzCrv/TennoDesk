@@ -251,6 +251,22 @@ export function onRelicSelectionTrigger(
   void relicSelectionController.onRelicSelectionTrigger(source);
 }
 
+/** Hotkey toggle: a visible planner hides, a hidden one re-runs the selection
+ *  trigger so its rows match the current era and inventory. */
+export function onPlannerToggleTrigger(
+  source: string,
+  pushOverlayThemeVars: () => void,
+  bringOverlayToWarframeDisplayIfAvailable: () => Promise<void>,
+): void {
+  if (plannerWindowsController.isOverlayWindowVisible()) {
+    log.info(`[OverlayRoute] planner hidden via toggle; source=${source}`);
+    plannerWindowsController.clearOverlayAutoHideTimer();
+    plannerWindowsController.hideOverlayWindow();
+    return;
+  }
+  onRelicSelectionTrigger(source, pushOverlayThemeVars, bringOverlayToWarframeDisplayIfAvailable);
+}
+
 /** Planner rows cached from the previous relic database would outlive it by their TTL. */
 export function onRelicDatabaseChanged(): void {
   relicSelectionController.onRelicDatabaseChanged();

@@ -81,7 +81,7 @@
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `wfhelper-custom-css-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `tennodesk-custom-css-${new Date().toISOString().slice(0, 10)}.json`;
     document.body.appendChild(link);
     link.click();
     link.remove();

@@ -203,9 +203,11 @@
   const reviewRequired = $derived(mainState?.reviewRequired === true);
 
   // Built once on open: the queue is the snapshot of what the user ticked, so a
-  // later inventory push must not drop rows they are already pricing.
+  // later inventory push must not drop rows they are already pricing. Market data
+  // then loads on its own - reopening with a cached selection only fetches the
+  // rows that still lack a book, so this stays cheap on a warm queue.
   onMount(() => {
-    void openQueue();
+    void openQueue().then(() => void loadMarketForSelected());
   });
 
   // Survives a close/reopen for as long as the app runs, so reopening an

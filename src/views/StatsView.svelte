@@ -248,7 +248,7 @@
     const link = document.createElement("a");
     const datePart = exportedAt.toISOString().slice(0, 10);
     link.href = url;
-    link.download = `wfhelper-stats-${datePart}.json`;
+    link.download = `tennodesk-stats-${datePart}.json`;
     document.body.appendChild(link);
     link.click();
     link.remove();

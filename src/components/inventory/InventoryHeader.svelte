@@ -3,7 +3,6 @@
 
   import HeaderTabs from "../HeaderTabs.svelte";
   import SharedFilterBar from "../SharedFilterBar.svelte";
-  import DocsLink from "../DocsLink.svelte";
   import { tr } from "../../lib/i18n.js";
   import type { MessageKey } from "../../lib/i18n.js";
   import type { InventoryFilterTab } from "../../lib/inventoryMarket.js";
@@ -70,7 +69,6 @@
     {$tr("inventory.title", { count: totalCount })}
   </h2>
   <div class="ml-auto flex items-center gap-2">
-    <DocsLink page="inventory" />
     <slot name="actions" />
   </div>
 </div>

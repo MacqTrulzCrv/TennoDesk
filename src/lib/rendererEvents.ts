@@ -102,7 +102,7 @@ export function initRendererEvents(): () => void {
     on("notification-history-added", (entry) => addNotificationEntry(entry)),
 
     // The toast itself is silent; playing the clip in-app keeps it on the
-    // WFHelper mixer slider instead of the system master volume.
+    // TennoDesk mixer slider instead of the system master volume.
     on("notification-sound-play", (payload) => void playNotificationSound(payload)),
 
     // Post-run overlay "Detailed Stats" button: open the arbi tab on that run.

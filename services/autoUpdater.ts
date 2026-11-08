@@ -10,6 +10,7 @@ import { markQuitting } from "./appLifecycle";
 import { withScope } from "./logger";
 import { normalizeErrorMessage } from "../config/shared/errors";
 import { APP_UPDATE_STATUS } from "../config/shared/ipcChannels";
+import { APP_PRODUCT_NAME } from "../config/shared/appMeta";
 
 const log = withScope("autoUpdater");
 
@@ -117,7 +118,7 @@ function applyFakeUpdateState(): boolean {
 
   setUpdateState("available", {
     version,
-    releaseName: `WFHelper ${version}`,
+    releaseName: `${APP_PRODUCT_NAME} ${version}`,
     releaseDate: new Date().toISOString(),
     releaseNotes,
   });

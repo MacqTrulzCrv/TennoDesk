@@ -325,6 +325,8 @@
     "interactionHotkey",
     "rivenRescanHotkeyEnabled",
     "rivenRescanHotkey",
+    "plannerToggleHotkeyEnabled",
+    "plannerToggleHotkey",
     "linuxOverlaysInteractive",
   ] as const;
 
@@ -404,6 +406,16 @@
       hintKey: "settings.rivenRescanHotkeyHint",
       enabledAttrs: { dataSetting: "riven-rescan-hotkey-enabled" },
       attrs: { dataSetting: "riven-rescan-hotkey" },
+    },
+    {
+      enabledKey: "plannerToggleHotkeyEnabled",
+      field: "plannerToggleHotkey",
+      enabledLabelKey: "settings.plannerToggleHotkeyEnabled",
+      labelKey: "settings.plannerToggleHotkey",
+      placeholderKey: "settings.interactionHotkeyPlaceholder",
+      hintKey: "settings.plannerToggleHotkeyHint",
+      enabledAttrs: { dataSetting: "planner-toggle-hotkey-enabled" },
+      attrs: { dataSetting: "planner-toggle-hotkey" },
     },
   ];
 
@@ -663,7 +675,12 @@
     return parts.join("+");
   }
 
-  type HotkeyField = "hotkey" | "interactionHotkey" | "rivenRescanHotkey" | "tradeRepHotkey";
+  type HotkeyField =
+    | "hotkey"
+    | "interactionHotkey"
+    | "rivenRescanHotkey"
+    | "tradeRepHotkey"
+    | "plannerToggleHotkey";
 
   function recordHotkey(field: HotkeyField, e: KeyboardEvent): void {
     const accel = captureAccelerator(e);

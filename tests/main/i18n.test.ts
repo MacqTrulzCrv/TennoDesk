@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { overlayMessages, setOverlayLocale } from "../../ipc/overlayI18n";
 import de from "../../src/i18n/de.json";
+import tr from "../../src/i18n/tr.json";
 import zh from "../../src/i18n/zh.json";
 import { en } from "../../src/i18n/en";
 
@@ -62,6 +63,7 @@ const placeholders = (value: string): string[] =>
 // be an allow-list rather than a gate.
 const TRANSLATIONS: Array<[string, Record<string, string>]> = [
   ["German", de],
+  ["Turkish", tr],
   ["Chinese", zh],
 ];
 
@@ -95,6 +97,14 @@ describe("i18n dictionaries", () => {
   it("translates every key German is expected to carry", () => {
     const untranslated = Object.keys(en).filter(
       (key) => !(key in de) && !ENGLISH_ONLY.includes(key) && !LANGUAGE_NEUTRAL.test(key),
+    );
+
+    expect(untranslated).toEqual([]);
+  });
+
+  it("translates every key Turkish is expected to carry", () => {
+    const untranslated = Object.keys(en).filter(
+      (key) => !(key in tr) && !ENGLISH_ONLY.includes(key) && !LANGUAGE_NEUTRAL.test(key),
     );
 
     expect(untranslated).toEqual([]);

@@ -225,18 +225,6 @@ export interface IpcInvokeMap {
     return: import("../../config/shared/notificationSound.js").NotificationSoundAsset;
   };
   resetNotificationSound: { args: []; return: null };
-  getFeedbackContext: {
-    args: [];
-    return: {
-      appVersion: string;
-      platform: string;
-      diagnostics: { osVersion: string; arch: string };
-    };
-  };
-  submitFeedback: {
-    args: [report: import("../../config/shared/feedback.js").FeedbackReport];
-    return: import("../../config/shared/feedback.js").FeedbackResult;
-  };
   getOverlayPreview: {
     args: [kind: OverlayLayoutKind];
     return: {

@@ -1,0 +1,2912 @@
+{
+  "version": 2,
+  "updatedAt": "2026-11-07",
+  "notes": "Kasım 2026 metası. Kaynaklar her build altında; adlar @wfcd/items ile doğrulanır (pnpm run builds:validate). v2: items[] + type (warframe/primary/secondary/melee) + roles (dps/support/tank/farm/utility); silah buildleri eklendi.",
+  "items": [
+    {
+      "item": "Mesa Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "mesa-peacemaker-general",
+          "name": "Peacemaker DPS",
+          "focus": "general",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Pistol Amp",
+          "exilus": "Mesa's Waltz",
+          "mods": [
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Rolling Guard",
+            "Intensify",
+            "Steel Fiber"
+          ],
+          "arcanes": ["Secondary Merciless", "Arcane Energize"],
+          "archonShards": "1x Topaz (öldürmede ikincil crit şansı)",
+          "helminth": { "ability": "Nourish", "replaces": "Ballistic Battery" },
+          "notesTr": "Mesa'nın tüm hasarı Peacemaker/Regulators'tan gelir; strength yerine silah çarpanlarını (Galvanized Shot, Nourish Viral) yığmak daha çok DPS verir. Shatter Shield + Adaptation + Rolling Guard hayatta tutar.",
+          "sources": ["https://warframegodbuilds.com/frames/mesa/builds"]
+        },
+        {
+          "id": "mesa-peacemaker-sp",
+          "name": "Peacemaker Tank DPS",
+          "focus": "steelpath",
+          "roles": ["dps", "tank"],
+          "forma": 6,
+          "aura": "Growing Power",
+          "exilus": "Mesa's Waltz",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Primed Continuity",
+            "Primed Flow",
+            "Narrow Minded",
+            "Transient Fortitude",
+            "Adaptation",
+            "Primed Sure Footed"
+          ],
+          "arcanes": ["Arcane Velocity", "Arcane Energize"],
+          "archonShards": "2x Tauforged Amber (parkur hızı), 1x enerji orb etkinliği, 1x Equilibrium, 1x cast hızı",
+          "helminth": { "ability": "Nourish", "replaces": "Shooting Gallery" },
+          "notesTr": "Narrow Minded + Umbral strength ile uzun Peacemaker/Shatter Shield süresi; Umbral Vitality + Adaptation + Primed Sure Footed ile Steel Path'te ayakta kalırsın. Nourish hem Viral hem enerji döngüsü.",
+          "sources": [
+            "https://overframe.gg/build/315285/mesa-prime/mesa-solo-steel-path-dps-and-tank/"
+          ]
+        }
+      ]
+    },
+    {
+      "item": "Saryn Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "saryn-spore-general",
+          "name": "Spore Nuke / Venom Hybrid",
+          "focus": "general",
+          "roles": ["dps"],
+          "forma": 5,
+          "aura": "Brief Respite",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Primed Continuity",
+            "Streamline",
+            "Stretch",
+            "Transient Fortitude",
+            "Blind Rage",
+            "Catalyzing Shields",
+            "Venom Dose",
+            "Augur Reach"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "1x Tauforged Emerald (korozif stack), 3-4x Emerald (toxin), 1x Amber (cast hızı, opsiyonel)",
+          "helminth": { "ability": "Shooting Gallery", "replaces": "Molt" },
+          "notesTr": "Spores + Miasma ile Viral/korozif yayıp zırh soyar; Venom Dose silah hasarını Spore bulaşmasına çevirir. Brief Respite + Catalyzing Shields ile shield-gate dönerek hayatta kalırsın.",
+          "sources": [
+            "https://overframe.gg/build/876262/saryn-prime/venomous-spores-saryn-steel-path-general-use/"
+          ]
+        },
+        {
+          "id": "saryn-spore-sp",
+          "name": "Immortal Venom Spores",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "aura": "Brief Respite",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Transient Fortitude",
+            "Stretch",
+            "Primed Continuity",
+            "Primed Flow",
+            "Venom Dose",
+            "Augur Reach",
+            "Blind Rage",
+            "Streamline"
+          ],
+          "arcanes": ["Molt Augmented", "Molt Efficiency"],
+          "archonShards": "1x Tauforged Amber (cast hızı), 1x Tauforged Emerald (korozif stack), 3-4x Emerald",
+          "helminth": { "ability": "Roar", "replaces": "Molt" },
+          "notesTr": "Level-cap dayanıklılığı: spore ölçeklenmesi + Molt Efficiency ile neredeyse bedava verimlilik; shield-gate ile ölümsüzlük. Molt Augmented uzun seansta strength yığar. (Speedrun için Molt'u tutup Miasma'yı değiştirmek de yaygın.)",
+          "sources": [
+            "https://overframe.gg/build/207018/saryn-prime/venomous-spores-saryn-steel-path-spores-hybrid-general-use/"
+          ]
+        }
+      ]
+    },
+    {
+      "item": "Wisp Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "wisp-support-general",
+          "name": "Reservoir Support / Roar Buffer",
+          "focus": "general",
+          "roles": ["support"],
+          "forma": 3,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Archon Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Augur Secrets",
+            "Archon Stretch",
+            "Amar's Hatred",
+            "Flow",
+            "Narrow Minded"
+          ],
+          "arcanes": ["Molt Augmented", "Arcane Energize"],
+          "archonShards": "5x Tauforged Crimson (+15 strength her biri)",
+          "helminth": { "ability": "Roar", "replaces": "Will-O-Wisp" },
+          "notesTr": "Çok yüksek strength (~%400+) ile Haste/Vitality/Shock mote'lerini ve Roar'u maksimuma çıkarır; Archon Intensify, ability ile iyileştirmede +%30 strength verir. Takım desteği rolü.",
+          "sources": [
+            "https://overframe.gg/build/888237/wisp-prime/wisps-survival-dps-support-steel-path-viable/"
+          ]
+        },
+        {
+          "id": "wisp-breach-sp",
+          "name": "Breach Spark DPS / Eclipse",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 8,
+          "aura": "Growing Power",
+          "exilus": "Archon Stretch",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Umbral Fiber",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Augur Secrets",
+            "Fused Reservoir"
+          ],
+          "arcanes": ["Arcane Bellicose", "Arcane Crepuscular"],
+          "archonShards": "3-4x Tauforged Crimson (strength), 1x Violet (mini Equilibrium), opsiyonel 1x Amber",
+          "helminth": { "ability": "Eclipse", "replaces": "Sol Gate" },
+          "notesTr": "Will-O-Wisp görünmezliği + pasif ile hayatta kalır; Breach Surge spark'ları + Eclipse çarpanıyla oda temizler. 2026 Breach Surge buff'ı (18m menzil, öldürücü vuruşta garantili spark) bu build'i güçlendirdi. Yüksek forma = endgame yatırımı.",
+          "sources": [
+            "https://overframe.gg/build/800737/wisp-prime/wisp-steel-path-general-use-very-high-investment/"
+          ]
+        }
+      ]
+    },
+    {
+      "item": "Nekros Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "nekros-desecrate-general",
+          "name": "Desecrate Loot Farm",
+          "focus": "general",
+          "roles": ["farm"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Despoil",
+            "Equilibrium",
+            "Overextended",
+            "Stretch",
+            "Augur Reach",
+            "Fleeting Expertise",
+            "Streamline",
+            "Health Conversion"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Blessing"],
+          "archonShards": "Opsiyonel: 1-2x Azure (can) / Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Despoil, Desecrate'i enerji yerine 10 HP/ceset yapar; Equilibrium health orb'ları enerjiye çevirir — sonsuz döngü. Menzil yığını (Overextended + Stretch + Augur Reach) her cesetten ekstra loot şansı demek. Tank istersen 8. slota Shield of Shadows.",
+          "sources": ["https://warframe.today/frames/nekros/"]
+        },
+        {
+          "id": "nekros-oregaze-sp",
+          "name": "Tanky Resource Farm / Ore Gaze",
+          "focus": "steelpath",
+          "roles": ["farm", "tank"],
+          "forma": 6,
+          "aura": "Growing Power",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Health Conversion",
+            "Adaptation",
+            "Despoil",
+            "Equilibrium",
+            "Stretch",
+            "Ore Gaze"
+          ],
+          "arcanes": ["Arcane Guardian", "Arcane Blessing"],
+          "archonShards": "2x parkur hızı, 1x zırh, 2x cast hızı",
+          "helminth": { "ability": "Petrify", "replaces": "Shadows of the Dead" },
+          "notesTr": "Desecrate + Petrify (Ore Gaze augment) iki ayrı loot kaynağı; Umbral Vitality + Adaptation + Health Conversion + sürekli health orb akışıyla Steel Path'te çok tanklı. Hem kaynak farmı hem dayanıklılık.",
+          "sources": [
+            "https://overframe.gg/build/267653/nekros-prime/nekros-steel-path-resource-farming/"
+          ]
+        }
+      ]
+    },
+    {
+      "item": "Revenant Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "revenant-mesmer-general",
+          "name": "Mesmer Tank",
+          "focus": "general",
+          "roles": ["tank"],
+          "forma": 3,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Streamline",
+            "Stretch",
+            "Umbral Vitality"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Tauforged Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": { "ability": "Nourish", "replaces": "Enthrall" },
+          "notesTr": "Yüksek strength Mesmer Skin yük sayısını artırır (her %16.67 strength = +1 yük) — neredeyse tam hasar/status bağışıklığı. Basit, ölmeyen silah platformu.",
+          "sources": ["https://warframe.today/frames/revenant/"]
+        },
+        {
+          "id": "revenant-lichking-sp",
+          "name": "The Lich King / One-Shot Reave",
+          "focus": "steelpath",
+          "roles": ["tank", "dps"],
+          "forma": 5,
+          "aura": "Corrosive Projection",
+          "exilus": "Power Drift",
+          "mods": [
+            "Blind Rage",
+            "Primed Continuity",
+            "Fleeting Expertise",
+            "Equilibrium",
+            "Augur Reach",
+            "Transient Fortitude",
+            "Mesmer Shield",
+            "Primed Flow"
+          ],
+          "arcanes": ["Molt Augmented", "Arcane Energize"],
+          "archonShards": "1x Tauforged Amber (cast hızı) + istediğin kadar Crimson (strength)",
+          "helminth": { "ability": "Roar", "replaces": "Danse Macabre" },
+          "notesTr": "Çok yüksek strength ile 19-22 Mesmer Skin yükü; Mesmer Shield augment'i yükleri takıma yayar. Roar, Reave tek vuruşu için gereken Viral stack sayısını düşürür; Equilibrium enerji döngüsünü besler.",
+          "sources": [
+            "https://overframe.gg/build/374539/revenant-prime/the-lich-king-revenant-general-use-endurance-steel-path-mesmer-tank-and-one-shot-reave/"
+          ]
+        }
+      ]
+    },
+    {
+      "item": "Khora Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "khora-whipclaw-general",
+          "name": "Whipclaw DPS",
+          "focus": "general",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Accumulating Whipclaw",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Augur Reach",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2-3x Crimson (strength), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Whipclaw melee combo sayacıyla ve melee mod'larıyla ölçeklenir; Accumulating Whipclaw her öldürme grubunda +%35, toplamda +%350'ye kadar hasar yığar. Ensnare ile düşmanları toplayıp tek Whipclaw'la patlat. Venari pasif iyileştirme sunar.",
+          "sources": ["https://warframe.fandom.com/wiki/Khora/Prime"]
+        },
+        {
+          "id": "khora-pilfering-sp",
+          "name": "Pilfering Dome Farm",
+          "focus": "steelpath",
+          "roles": ["farm", "dps"],
+          "forma": 5,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Pilfering Strangledome",
+            "Accumulating Whipclaw",
+            "Umbral Intensify",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Overextended",
+            "Augur Reach"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Guardian"],
+          "archonShards": "1x Amber (cast hızı), 2x Crimson (strength), 1-2x Azure (can)",
+          "helminth": null,
+          "notesTr": "Pilfering Strangledome, dome'da ölen düşmanlardan %65 ekstra loot düşürür — Nekros'la aynı anda çalışır (kaynak farmının iki ayağı). Menzil yığını dome'u büyütür; Whipclaw dome içine vurunca hem combo hem hasar. Overextended'in strength kaybını Umbral Intensify dengeler.",
+          "sources": ["https://warframe.fandom.com/wiki/Khora/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Octavia Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "octavia-mallet-general",
+          "name": "Mallet / Amp Support",
+          "focus": "general",
+          "roles": ["dps", "support"],
+          "forma": 3,
+          "aura": "Energy Siphon",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Constitution",
+            "Primed Flow",
+            "Adaptation",
+            "Augur Secrets"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "1x Amber (cast hızı), 2x Crimson (strength)",
+          "helminth": null,
+          "notesTr": "Mallet düşman ateşini emip hasarı geri yansıtır — düşman leveli ne kadar yüksekse Mallet o kadar sert vurur, bu yüzden doğal olarak sonsuza ölçeklenir. Metronome'un Vivace ritmiyle görünmezlik al; Amp hem Mallet'i hem silah hasarını büyütür.",
+          "sources": ["https://warframe.fandom.com/wiki/Octavia/Prime"]
+        },
+        {
+          "id": "octavia-endurance-sp",
+          "name": "Invisible Endurance",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Corrosive Projection",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Augur Secrets",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Narrow Minded",
+            "Constitution"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Guardian"],
+          "archonShards": "2x Tauforged Amber (cast/enerji), 2x Crimson (strength)",
+          "helminth": null,
+          "notesTr": "Narrow Minded süre uzatır, menzil kaybını Stretch + Augur Reach geri alır. Döngü: Mallet + Resonator at, Metronome ritimleriyle görünmezlik ve hız al, Amp ile büyüt. Doğru oynanırsa level cap'e kadar gider; tek zayıflığı Nullifier'lar.",
+          "sources": ["https://warframe.fandom.com/wiki/Octavia/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Volt Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "volt-speed-general",
+          "name": "Speed Support / Discharge",
+          "focus": "general",
+          "roles": ["support", "dps"],
+          "forma": 3,
+          "aura": "Energy Siphon",
+          "exilus": "Power Drift",
+          "mods": [
+            "Transient Fortitude",
+            "Blind Rage",
+            "Stretch",
+            "Primed Continuity",
+            "Primed Flow",
+            "Streamline",
+            "Augur Secrets",
+            "Vitality"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Speed tüm takımı ve melee saldırı hızını büyütür; Discharge geniş alanda CC + elektrik hasarı verir. Shield'i kalkan olarak öne koy, Speed ile koş. Basit, her içeriğe uyan esnek bir frame.",
+          "sources": ["https://warframe.fandom.com/wiki/Volt/Prime"]
+        },
+        {
+          "id": "volt-capacitance-sp",
+          "name": "Discharge Capacitance",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 5,
+          "aura": "Brief Respite",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Capacitance",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Stretch",
+            "Overextended",
+            "Primed Continuity",
+            "Fleeting Expertise",
+            "Primed Flow"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Aegis"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (shield)",
+          "helminth": null,
+          "notesTr": "Capacitance, Discharge hasarının bir kısmını sana ve takıma overshield yapar — Brief Respite ile birlikte sürekli shield-gate döngüsü kurar. Overextended + Stretch devasa Discharge alanı açar; strength kaybını Umbral + Blind Rage kapatır.",
+          "sources": ["https://warframe.fandom.com/wiki/Volt/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Rhino Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "rhino-ironskin-general",
+          "name": "Iron Skin Tank / Roar",
+          "focus": "general",
+          "roles": ["tank", "support"],
+          "forma": 3,
+          "aura": "Steel Charge",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Steel Fiber",
+            "Armored Agility",
+            "Primed Continuity",
+            "Primed Flow",
+            "Ironclad Charge"
+          ],
+          "arcanes": ["Arcane Guardian", "Arcane Energize"],
+          "archonShards": "2x Azure (zırh), 2x Crimson (strength)",
+          "helminth": null,
+          "notesTr": "Iron Skin zırh ve strength ile ölçeklenir; cast etmeden önce Ironclad Charge'lı Rhino Charge ile kalabalığa dal — her çarpılan düşman zırhını katlar, sonra Iron Skin bas. Roar tüm takımın hasarını büyütür. Yeni başlayan için en sağlam tank.",
+          "sources": ["https://warframe.fandom.com/wiki/Rhino/Prime"]
+        },
+        {
+          "id": "rhino-roar-sp",
+          "name": "Roar Buffer",
+          "focus": "steelpath",
+          "roles": ["support", "tank"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Stretch"
+          ],
+          "arcanes": ["Molt Augmented", "Arcane Energize"],
+          "archonShards": "3x Tauforged Crimson (strength), 1x Amber (cast hızı)",
+          "helminth": { "ability": "Nourish", "replaces": "Rhino Charge" },
+          "notesTr": "Steel Path'te Iron Skin tek başına yetmez; bu build yüksek strength Roar + Nourish Viral ile takım çarpanı olmaya odaklanır. Umbral Vitality + Adaptation can havuzunu taşır. Roar, DoT'lara çift işlediğinden Slash/Viral takımlarında çok değerli.",
+          "sources": ["https://warframe.fandom.com/wiki/Rhino/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Wukong Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "wukong-twin-general",
+          "name": "Celestial Twin Platform",
+          "focus": "general",
+          "roles": ["dps", "tank"],
+          "forma": 3,
+          "aura": "Growing Power",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Adaptation",
+            "Rolling Guard",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Guardian"],
+          "archonShards": "2x Crimson (strength), 1x Azure (can), 1x Amber (cast hızı)",
+          "helminth": { "ability": "Nourish", "replaces": "Primal Fury" },
+          "notesTr": "İkiz, senin taşıdığın diğer silahla kendi başına ateş eder — iyi bir birincil ver, iki kişilik DPS al. Defy ile hasarı emip zırha çevir, Cloud Walker ile iyileş ve hızla ilerle. Nourish hem Viral hem enerji ekonomisi.",
+          "sources": ["https://warframe.fandom.com/wiki/Wukong/Prime"]
+        },
+        {
+          "id": "wukong-defy-sp",
+          "name": "Defy Tank",
+          "focus": "steelpath",
+          "roles": ["tank", "dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Umbral Fiber",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Equilibrium",
+            "Stretch"
+          ],
+          "arcanes": ["Molt Augmented", "Arcane Grace"],
+          "archonShards": "2x Azure (zırh/can), 2x Crimson (strength), 1x Amber",
+          "helminth": { "ability": "Nourish", "replaces": "Primal Fury" },
+          "notesTr": "Defy'ın verdiği zırh strength ve emilen hasarla ölçeklenir; Umbral seti + Adaptation ile Steel Path'te neredeyse ölümsüz. Cloud Walker hem kaçış hem tam iyileştirme. Pasif olarak ikiz şans verir; Equilibrium enerji döngüsünü rahatlatır.",
+          "sources": ["https://warframe.fandom.com/wiki/Wukong/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Dante",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "dante-tragedy-sp",
+          "name": "Tragedy Nuke / Overguard",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Overextended",
+            "Primed Continuity",
+            "Primed Flow",
+            "Umbral Vitality"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Tauforged Crimson (strength), 1x Amber (cast hızı), 1x Azure (can), 1x Emerald (korozif)",
+          "helminth": null,
+          "notesTr": "Döngü: 2x Dark Verse + Final Verse = Tragedy, odadaki tüm status etkilerini patlatır. Light Verse kombosu takıma Overguard basar; Pageflight kalabalığı işaretleyip sersemletir, Noctua gerçek bir silah gibi kullanılabilir. Kit kendi kendine yeter, helminth gerekmez.",
+          "sources": ["https://warframe.today/frames/dante/"]
+        }
+      ]
+    },
+    {
+      "item": "Protea Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "protea-artillery-sp",
+          "name": "Blaze Artillery / Roar",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Stretch",
+            "Primed Flow",
+            "Umbral Vitality",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "1x Tauforged Crimson + 1x Crimson (strength), 1x Tauforged Amber (cast hızı), 1x Azure (shield), 1x Violet",
+          "helminth": { "ability": "Roar", "replaces": "Temporal Anchor" },
+          "notesTr": "Blaze Artillery'yi düşmanların aktığı dar noktalara kur — strength ve süreyle ölçeklenir, Roar hasarını katlar. Grenade Fan'in alt ateşi shield uyduları (shield-gate desteği), basılı ateşi şarapnel. Dispensary takıma enerji/can/mermi dağıtır.",
+          "sources": ["https://warframe.today/frames/protea/"]
+        }
+      ]
+    },
+    {
+      "item": "Gauss Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "gauss-thermal-sp",
+          "name": "Thermal Sunder Nuke / Redline",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "aura": "Corrosive Projection",
+          "exilus": "Rush",
+          "mods": [
+            "Thermal Transfer",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Stretch",
+            "Augur Reach",
+            "Primed Flow",
+            "Archon Vitality"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "2026 Steel Path'te Gauss aynı zamanda alan temizleyici: Thermal Transfer ile önce Soğuk sonra Sıcak Thermal Sunder basarak odayı dondurup pişirirsin. Redline atış/hareket/doldurma hızını taşırır; Kinetic Plating hasarı pile çevirir. Oyundaki en hızlı frame.",
+          "sources": ["https://warframe.today/frames/gauss/"]
+        }
+      ]
+    },
+    {
+      "item": "Nova Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "nova-slowva-sp",
+          "name": "Slowva / MPrime Chain",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Corrosive Projection",
+          "exilus": "Power Drift",
+          "mods": [
+            "Blind Rage",
+            "Overextended",
+            "Primed Continuity",
+            "Primed Flow",
+            "Molecular Fission",
+            "Neutron Star",
+            "Equilibrium",
+            "Archon Vitality"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Molecular Prime düşmanları %75 yavaşlatır ve ölüm patlamalarını zincirler — savunma/survival kraliçesi. Null Star parçacıkları temas ettiği zayıf düşmanı tek vuruşta alır; Molecular Fission öldürmelerle parçacıkları yeniler (Neutron Star ile patlatılabilir). Archon Vitality, MPrime'ın Heat'ini ikiye katlar.",
+          "sources": ["https://warframe.today/frames/nova/"]
+        }
+      ]
+    },
+    {
+      "item": "Styanax",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "styanax-finalstand-sp",
+          "name": "Final Stand Overguard Support",
+          "focus": "steelpath",
+          "roles": ["support", "tank"],
+          "forma": 4,
+          "aura": "Brief Respite",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Stretch",
+            "Intrepid Stand"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (shield)",
+          "helminth": null,
+          "notesTr": "Intrepid Stand, Final Stand'in her mızrak isabetinde sana ve takıma Overguard yığar — tüm ekip neredeyse ölümsüz olur. Tharros Strike zırh/shield soyar ve kalkanlarını doldurur (shield-gate), Rally Point takıma enerji akıtır. Kendi başına nuke değil, takım omurgası.",
+          "sources": ["https://warframe.today/frames/styanax/"]
+        }
+      ]
+    },
+    {
+      "item": "Cyte-09",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "cyte09-neutralize-sp",
+          "name": "Neutralize Keskin Nişancı",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Worthy Comradery",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Augur Secrets",
+            "Rolling Guard",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Seek anteni düşmanları duvar arkasından işaretler ve zayıf nokta hasarını +%75 artırır; Resupply elemental şarjör doldurur (sniper'lara +%50). Evade zayıf nokta öldürmeleriyle uzayan görünmezlik verir; Neutralize sekmeli exalted sniper. Solo/duo Steel Path için tek hedef uzmanı.",
+          "sources": ["https://warframe.today/frames/cyte-09/"]
+        }
+      ]
+    },
+    {
+      "item": "Uriel",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "uriel-brimstone-sp",
+          "name": "İblis Komutanı / Brimstone",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Archon Intensify",
+            "Blind Rage",
+            "Archon Vitality",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium",
+            "Stretch",
+            "Overextended"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "2026'nın iblis komutanı: üç iblisi (Catenach, Gulphagor, Vythelas) yönetirsin. Remedium hem seni iyileştirir hem düşen iblisleri diriltir; Demonium kurbanlara hassasiyet basar; Brimstone genişleyen alev halkasıyla oda siler — menzil yığını bu yüzden. Archon Vitality Heat hasarını ikiye katlar.",
+          "sources": ["https://warframe.today/frames/uriel/"]
+        }
+      ]
+    },
+    {
+      "item": "Nokko",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "nokko-mushroom-sp",
+          "name": "Mantar Halkası Kontrolü",
+          "focus": "steelpath",
+          "roles": ["support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Blind Rage",
+            "Umbral Intensify",
+            "Archon Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Overextended",
+            "Augur Reach",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Hedefin çevresine mantar halkası kur ve izle: Stinkbrain Viral + uyku basar, Brightbonnet enerji ve strength buff'ı pulse'lar, Sporespring seken patlayıcı mantar fırlatır. Archon Continuity, Toksin proclarına Korozif ekler. Reroot ile hedeflenemez forma geçip iyileşirsin. Survival'ın yeni kamp ustası.",
+          "sources": ["https://warframe.today/frames/nokko/"]
+        }
+      ]
+    },
+    {
+      "item": "Mirage Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "mirage-hall-general",
+          "name": "Hall of Mirrors Silah Platformu",
+          "focus": "general",
+          "roles": ["dps"],
+          "forma": 3,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Streamline",
+            "Adaptation",
+            "Rolling Guard"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Hall of Mirrors klonları taşıdığın silahın hasarını fiilen katlar — AoE silahlarla (Kuva Zarr, Torid) çok güçlü. Eclipse ışıkta hasar çarpanı, karanlıkta hasar azaltımı verir. Kırılgandır: Rolling Guard + Adaptation ile açığı kapat.",
+          "sources": ["https://warframe.fandom.com/wiki/Mirage/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Titania Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "titania-razorwing-sp",
+          "name": "Razorwing DPS",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Energy Siphon",
+          "exilus": "Aviator",
+          "mods": [
+            "Umbral Intensify",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Augur Secrets",
+            "Adaptation",
+            "Streamline",
+            "Stretch"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Velocity"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Razorwing'de Dex Pixia taşır seni — tabanca modlarıyla (Hornet Strike, Galvanized seti) ayrı ekrandan modlanır, Arcane Velocity atış hızını uçurur. Havada küçük hedef olduğun için Aviator + Adaptation ile çok dayanıklısın. Tribute buff'larını unutma.",
+          "sources": ["https://warframe.fandom.com/wiki/Titania/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Baruuk Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "baruuk-serenestorm-sp",
+          "name": "Serene Storm Yumrukları",
+          "focus": "steelpath",
+          "roles": ["dps", "tank"],
+          "forma": 4,
+          "aura": "Steel Charge",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Adaptation",
+            "Streamline",
+            "Augur Secrets"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Restraint ölçüsü doldukça Desert Wind (exalted yumruklar) açılır — dalga atışları Steel Path'te oda temizler; yumruklar melee ekranından ayrıca modlanır. Elude + Lull pasif savunma ve uyku CC'si sağlar; Desolate Hands mermi hasarını keser. Hem vurur hem ölmez.",
+          "sources": ["https://warframe.fandom.com/wiki/Baruuk/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Xaku Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "xaku-grasp-sp",
+          "name": "Grasp of Lohk Void Nuke",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Overextended",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Grasp of Lohk düşman silahlarını çalıp çevrende otomatik Void taretlerine çevirir — menzil yığınıyla düzinelerce silah toplarsın. The Vast Untime %75 hasar azaltımı verir (iskelet form); Gaze zırh/kalkan soyar. Void hasarı her fraksiyona eşit işler.",
+          "sources": ["https://warframe.fandom.com/wiki/Xaku/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Jade",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "jade-glory-sp",
+          "name": "Glory on High / Destek Nuke",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Transient Fortitude",
+            "Blind Rage",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Rolling Guard",
+            "Jade's Judgment"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Glory on High ile havada süzülüp ana ateşi bas, alt ateşle Judgment kuyularını zincirleme patlat. Light's Judgment hem iyileştirir hem %50 hasar hassasiyeti basar; Ophanim Eyes yavaşlatıp zırh/kalkan soyar ve uzaktan diriltir. Pasifi iki aura yuvası verir — takım değeri yüksek.",
+          "sources": ["https://warframe.today/frames/jade/"]
+        }
+      ]
+    },
+    {
+      "item": "Hildryn Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "hildryn-pillage-sp",
+          "name": "Pillage Kalkan Destek",
+          "focus": "steelpath",
+          "roles": ["support", "tank"],
+          "forma": 4,
+          "aura": "Corrosive Projection",
+          "exilus": "Power Drift",
+          "mods": [
+            "Blind Rage",
+            "Umbral Intensify",
+            "Transient Fortitude",
+            "Augur Secrets",
+            "Stretch",
+            "Augur Accord",
+            "Redirection",
+            "Adaptation"
+          ],
+          "arcanes": ["Molt Augmented", "Arcane Aegis"],
+          "archonShards": "3x Tauforged Crimson (strength — tam zırh soyma hedefi), 2x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Pillage düşman kalkanını/zırhını yüzde olarak soyar ve soyduğunu kendi kalkanına ekler — strength yığını tam soyma içindir. Enerji yerine kalkan harcar, bu yüzden shield-gate doğal gelir; Haven takım arkadaşlarına kalkan taşır. Ölmesi çok zor bir destek.",
+          "sources": ["https://warframe.fandom.com/wiki/Hildryn/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Harrow Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "harrow-covenant-sp",
+          "name": "Covenant Crit Destek",
+          "focus": "steelpath",
+          "roles": ["support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Constitution",
+            "Primed Flow",
+            "Stretch",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Covenant kısa süreli tam ölümsüzlük + ardından takıma dev crit şansı verir — Harrow'un imzası. Thurible öldürmelerden enerji üretir, Penance yaşam çalma ve atış hızı basar, Condemn kalkan doldurup kalabalığı sabitler. Eldiven değil, orkestra şefi: zamanlama her şeydir.",
+          "sources": ["https://warframe.fandom.com/wiki/Harrow/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Citrine Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "citrine-crystal-sp",
+          "name": "Kristal Destek",
+          "focus": "steelpath",
+          "roles": ["support"],
+          "forma": 3,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Constitution",
+            "Primed Flow",
+            "Stretch",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Fractured Blast sürekli health orb yağdırır (Equilibrium ile enerjiye döner), Preserving Shell takıma ölçeklenen hasar azaltımı giydirir, Prismatic Gem crit/status destekler. Sessiz ama ekibi ayakta tutan tam bir omurga framesi.",
+          "sources": ["https://warframe.fandom.com/wiki/Citrine/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Ash Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "ash-shuriken-sp",
+          "name": "Shuriken Zırh Soyucu",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Seeking Shuriken",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Rolling Guard"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Seeking Shuriken yeterli strength ile zırhı tamamen soyar; Blade Storm işaretlenen her şeyi biçer, Smoke Screen görünmezlik verir. Sessiz, hızlı, tek hedefte acımasız.",
+          "sources": ["https://warframe.fandom.com/wiki/Ash/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Atlas Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "atlas-landslide-sp",
+          "name": "Landslide Yumruğu",
+          "focus": "steelpath",
+          "roles": ["tank", "dps"],
+          "forma": 4,
+          "aura": "Steel Charge",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Stretch"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (zırh), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Landslide melee modlarıyla ölçeklenen ardışık yumruk kombosudur; vururken hasar almazsın. Rubble toplayarak zırhını sürekli tazele — Atlas doğru oynanınca sarsılmaz.",
+          "sources": ["https://warframe.fandom.com/wiki/Atlas/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Banshee Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "banshee-sonar-sp",
+          "name": "Sonar Çarpan Desteği",
+          "focus": "steelpath",
+          "roles": ["support", "dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Savage Silence",
+            "Resonance",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Rolling Guard"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Sonar zayıf nokta boyayıp tüm takımın hasarını katlar; Resonance ile noktalar zincirlenir. Savage Silence sersemletip dev finisher çarpanı açar. Camdan topçu: Rolling Guard şart.",
+          "sources": ["https://warframe.fandom.com/wiki/Banshee/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Caliban Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "caliban-fusion-sp",
+          "name": "Fusion Strike Soyucu",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Rework sonrası Caliban ciddi güçlü: Fusion Strike kesişiminde kalıcı tam zırh/kalkan soyma alanı bırakır, Lethal Progeny kalkan yeniler ve Sentient yavruları savaştırır. Sentient Wrath kalabalığı havaya diker.",
+          "sources": ["https://warframe.fandom.com/wiki/Caliban/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Chroma Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "chroma-vex-sp",
+          "name": "Vex Armor Buffer",
+          "focus": "steelpath",
+          "roles": ["tank", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Umbral Fiber",
+            "Blind Rage",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (zırh), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Vex Armor hasar aldıkça dev zırh (Scorn) ve silah hasarı (Fury) bonusu yığar — hâlâ en iyi boss/eidolon buffer'larından. Element rengi pasifini amaçla seç (beyaz/gri = ekstra zırh).",
+          "sources": ["https://warframe.fandom.com/wiki/Chroma/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Dagath",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "dagath-doom-sp",
+          "name": "Doom Laneti",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Stretch",
+            "Augur Reach",
+            "Primed Flow",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Doom işareti Viral basar ve işaretli düşmanlara tüm hasarı büyütür; Wyrd Scythes yavaşlatıp biçer, Rakhali'nin hayalet atları odayı ezer. Pasifiyle ölümcül vuruşları atlatır.",
+          "sources": ["https://warframe.fandom.com/wiki/Dagath"]
+        }
+      ]
+    },
+    {
+      "item": "Ember Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "ember-exothermic-sp",
+          "name": "Exothermic Inferno",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Exothermic",
+            "Archon Vitality",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Fire Blast zırh soyar, Inferno odayı yakar; Exothermic öldürmelerden enerji küresi düşürür, Archon Vitality Heat'i ikiye katlar. Immolation ölçeğini %90 civarında tutup patlamadan yönet.",
+          "sources": ["https://warframe.fandom.com/wiki/Ember/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Equinox Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "equinox-maim-sp",
+          "name": "Maim Nuke",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 5,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Peaceful Provocation",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Overextended",
+            "Stretch",
+            "Primed Continuity",
+            "Primed Flow",
+            "Fleeting Expertise"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Gece formu uyutur ve Peaceful Provocation ile yavaşlatır; gündüz formunda Maim, biriken Slash hasarını tüm odaya boşaltır. İki frame bir arada — duruma göre form değiştir.",
+          "sources": ["https://warframe.fandom.com/wiki/Equinox/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Excalibur Umbra",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "excalibur-chromatic-sp",
+          "name": "Chromatic Exalted Blade",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Steel Charge",
+          "exilus": "Power Drift",
+          "mods": [
+            "Chromatic Blade",
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Chromatic Blade, Exalted Blade'in elementini enerji rengine göre değiştirir ve status şansını fırlatır (Korozif ya da Viral seç). Radial Blind finisher penceresi açar; Umbra'nın pasif Umbral polariteleri build'i ucuzlatır.",
+          "sources": ["https://warframe.fandom.com/wiki/Excalibur_Umbra"]
+        }
+      ]
+    },
+    {
+      "item": "Frost Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "frost-avalanche-sp",
+          "name": "Avalanche Soyucu / Kale",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Biting Frost",
+            "Icy Avalanche",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Avalanche yeterli strength ile zırhı komple soyar; Icy Avalanche takıma öldürme başına Overguard giydirir. Biting Frost donmuş hedeflere crit bonusu verir; Snow Globe hâlâ en iyi hedef koruması.",
+          "sources": ["https://warframe.fandom.com/wiki/Frost/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Garuda Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "garuda-talons-sp",
+          "name": "Kan Pençeleri",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Blood Forge",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Dread Mirror önden gelen hasarı tamamen keser ve hasar yükü biriktirir; Seeking Talons dev Slash açılımı yapar. Blood Forge, Blood Altar'dayken şarjörleri bedavaya doldurur. Can azaldıkça pasif hasarı artar — cesur oyna.",
+          "sources": ["https://warframe.fandom.com/wiki/Garuda/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Grendel Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "grendel-feast-sp",
+          "name": "Feast Tankı",
+          "focus": "steelpath",
+          "roles": ["tank"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Umbral Fiber",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium",
+            "Adaptation",
+            "Stretch"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Guardian"],
+          "archonShards": "2x Azure (zırh/can), 2x Crimson (strength), 1x Amber",
+          "helminth": null,
+          "notesTr": "Karnındaki her düşman zırh bonusu verir; Feast ile yut, Nourish ile sindirip buff al (Nourish'in asıl sahibi burası — kendi kitinde tam güçte), Regurgitate ile zehirli mermi olarak tükür. Yavaş ama ezilmez.",
+          "sources": ["https://warframe.fandom.com/wiki/Grendel/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Gyre Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "gyre-rotorswell-sp",
+          "name": "Rotorswell Elektrik Fırtınası",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Cathode Current",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Rotorswell aktifken crit'ler çevreye elektrik boşaltır — tüm kit crit şansı buff'larıyla beslenir. Cathode Current öldürmelerle 4'ün süresini uzatır; Coil Horizon kalabalığı toplayıp patlatır.",
+          "sources": ["https://warframe.fandom.com/wiki/Gyre/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Hydroid Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "hydroid-pilfering-sp",
+          "name": "Pilfering Korsan",
+          "focus": "steelpath",
+          "roles": ["farm", "dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Pilfering Swarm",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Rework sonrası pasifi düşmanlara Korozif yığar; Tentacle Swarm + Pilfering Swarm yakalanan düşmanlardan ekstra loot düşürür (Nekros/Khora ile üçlü farm). Plunder zırh çalıp kendine katar.",
+          "sources": ["https://warframe.fandom.com/wiki/Hydroid/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Inaros Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "inaros-scarab-sp",
+          "name": "Scarab Firavunu",
+          "focus": "steelpath",
+          "roles": ["tank"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Primed Sure Footed",
+          "mods": [
+            "Negation Armor",
+            "Umbral Vitality",
+            "Umbral Intensify",
+            "Umbral Fiber",
+            "Adaptation",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Grace", "Molt Augmented"],
+          "archonShards": "2x Azure (can/zırh), 2x Crimson (strength), 1x Amber",
+          "helminth": null,
+          "notesTr": "Rework sonrası Scarab Shell status bloklar (Negation Armor ile ölümcül vuruşları da yutar); dev can havuzu + Adaptation + Grace ile pratikte ölümsüz. Basit, dayanıklı, her göreve girer.",
+          "sources": ["https://warframe.fandom.com/wiki/Inaros/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Ivara Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "ivara-prowl-sp",
+          "name": "Prowl Hırsızı",
+          "focus": "steelpath",
+          "roles": ["utility"],
+          "forma": 3,
+          "aura": "Energy Siphon",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Infiltrate",
+            "Umbral Intensify",
+            "Primed Continuity",
+            "Narrow Minded",
+            "Augur Secrets",
+            "Primed Flow",
+            "Streamline",
+            "Constitution"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Guardian"],
+          "archonShards": "2x Tauforged Amber (enerji), 1x Crimson (strength)",
+          "helminth": null,
+          "notesTr": "Prowl kalıcı görünmezlik + düşmanlardan ekstra loot çalma; Infiltrate lazer bariyerlerden geçirir ve hız verir. Spy, Riven açma ve kamp avcılığının tartışmasız ustası.",
+          "sources": ["https://warframe.fandom.com/wiki/Ivara/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Koumei",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "koumei-fate-sp",
+          "name": "Kader Zarları",
+          "focus": "steelpath",
+          "roles": ["tank", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Archon Continuity",
+            "Archon Stretch",
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Adaptation",
+            "Equilibrium",
+            "Primed Flow",
+            "Primed Continuity"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (can), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Zar frame'i: Omamori üç-altı tutturursa dokunulmazlık, Omikuji görev tamamlayınca kalıcı Decree'ler verir — uzun seansta kartopu gibi büyür. Kumihimo iplikleri rastgele elementler basar; Archon Continuity Toksin'e Korozif ekler.",
+          "sources": ["https://warframe.today/frames/koumei/"]
+        }
+      ]
+    },
+    {
+      "item": "Kullervo",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "kullervo-wrath-sp",
+          "name": "Wrathful Advance Crit",
+          "focus": "steelpath",
+          "roles": ["dps", "tank"],
+          "forma": 4,
+          "aura": "Steel Charge",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Adaptation",
+            "Rolling Guard"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Wrathful Advance kısa teleport + melee'ye devasa crit şansı buff'ı — her melee silahı kırmızı crit canavarına çevirir. Recompense Overguard yığar, Storm of Ukko bıçak yağmuru yağdırır. Melee sevenin rüya frame'i.",
+          "sources": ["https://warframe.fandom.com/wiki/Kullervo"]
+        }
+      ]
+    },
+    {
+      "item": "Lavos Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "lavos-alchemy-sp",
+          "name": "Simyacı",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Stretch",
+            "Augur Reach",
+            "Adaptation"
+          ],
+          "arcanes": ["Molt Augmented", "Arcane Grace"],
+          "archonShards": "2x Crimson (strength), 2x Azure (can/zırh), 1x Amber",
+          "helminth": null,
+          "notesTr": "Enerji yerine bekleme süresi kullanır — Energize gerekmez, Rage/Flow boşa gider. Yetenek tuşlarını basılı tutarak her yeteneğe istediğin elementi karıştır (Korozif/Viral); Catalyze bekleme sürelerini kısaltır. Element ustası, her fraksiyona uyar.",
+          "sources": ["https://warframe.fandom.com/wiki/Lavos/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Limbo Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "limbo-stasis-sp",
+          "name": "Stasis Kontrolü",
+          "focus": "steelpath",
+          "roles": ["support", "utility"],
+          "forma": 4,
+          "aura": "Energy Siphon",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Cataclysmic Continuum",
+            "Umbral Intensify",
+            "Primed Continuity",
+            "Narrow Minded",
+            "Augur Secrets",
+            "Primed Flow",
+            "Streamline",
+            "Stretch"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Tauforged Amber (enerji/cast), 1x Crimson (strength)",
+          "helminth": null,
+          "notesTr": "Cataclysm + Stasis: baloncuğun içindeki her şey donar, hedef tamamen güvende — mobil savunma ve kurtarmanın kralı. Cataclysmic Continuum öldürmelerle süreyi uzatır. Takım arkadaşlarını Rift'e istemeden almamaya dikkat et.",
+          "sources": ["https://warframe.fandom.com/wiki/Limbo/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Loki Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "loki-invis-sp",
+          "name": "Görünmez Sabotajcı",
+          "focus": "steelpath",
+          "roles": ["utility"],
+          "forma": 3,
+          "aura": "Energy Siphon",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Hushed Invisibility",
+            "Primed Continuity",
+            "Narrow Minded",
+            "Constitution",
+            "Augur Secrets",
+            "Primed Flow",
+            "Streamline",
+            "Rolling Guard"
+          ],
+          "arcanes": ["Arcane Energize", "Arcane Guardian"],
+          "archonShards": "2x Tauforged Amber (enerji), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Uzun süreli görünmezlik (Hushed ile tamamen sessiz) + Radial Disarm ile en tehlikeli odayı sopa dövüşüne çevirirsin. Switch Teleport hâlâ en iyi tuzak/kurtarma aracı. Spy ve solo sabotajın klasiği.",
+          "sources": ["https://warframe.fandom.com/wiki/Loki/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Mag Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "mag-magnetize-sp",
+          "name": "Magnetize Soyucu",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Fracturing Crush",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Magnetize balonuna sıkılan her mermi içeride katlanarak döner — tek hedefe silah hasarını patlatır. Fracturing Crush ile Crush zırh soyar; Polarize kalkanları kırıp seninkini doldurur. Shield-gate ustası.",
+          "sources": ["https://warframe.fandom.com/wiki/Mag/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Nezha Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "nezha-safeguard-sp",
+          "name": "Safeguard Koruyucusu",
+          "focus": "steelpath",
+          "roles": ["tank", "support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Safeguard",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Warding Halo hasarı %90 keser; Safeguard ile halo'yu takım arkadaşlarına ve hedeflere de giydirirsin. Divine Spears odayı şişler, Blazing Chakram can küresi düşürür. Hızlı, dayanıklı, takım dostu.",
+          "sources": ["https://warframe.fandom.com/wiki/Nezha/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Nidus Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "nidus-mutation-sp",
+          "name": "Mutasyon Yığını",
+          "focus": "steelpath",
+          "roles": ["tank", "dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Abundant Mutation",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Stretch",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (can), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Larva ile topla, Virulence ile vur: her isabet Mutation yığını verir — yığınlar hem hasarını hem dayanıklılığını büyütür, 15 yığında ölümü atlatırsın. Abundant Mutation yığın üretimini hızlandırır. Sonsuz görevin maratoncusu.",
+          "sources": ["https://warframe.fandom.com/wiki/Nidus/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Nyx Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "nyx-assimilate-sp",
+          "name": "Assimilate Kontrolü",
+          "focus": "steelpath",
+          "roles": ["support", "utility"],
+          "forma": 4,
+          "aura": "Energy Siphon",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Assimilate",
+            "Chaos Sphere",
+            "Umbral Intensify",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Augur Reach",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Tauforged Amber (enerji), 1x Crimson (strength), 1x Azure",
+          "helminth": null,
+          "notesTr": "Chaos tüm odayı birbirine düşürür — en ucuz kalabalık kontrolü; Chaos Sphere alanı sürekli tazeler. Assimilate ile Absorb içinde yürüyebilen bir ölümsüzlük küresi olursun. Rework ile Mind Control hedefi gerçek silaha dönüştü.",
+          "sources": ["https://warframe.fandom.com/wiki/Nyx/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Oberon Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "oberon-paladin-sp",
+          "name": "Paladin Desteği",
+          "focus": "steelpath",
+          "roles": ["support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Phoenix Renewal",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Renewal sürekli iyileştirir; Phoenix Renewal ölümcül hasarı iki dakikada bir diriltmeye çevirir. Hallowed Ground status temizler ve bağışıklık verir, Reckoning radyasyonla kör edip zırh soyar. Dört başı mamur takım çapası.",
+          "sources": ["https://warframe.fandom.com/wiki/Oberon/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Oraxia",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "oraxia-spider-sp",
+          "name": "Toksin Örümceği",
+          "focus": "steelpath",
+          "roles": ["tank", "dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Archon Continuity",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Umbral Vitality",
+            "Stretch",
+            "Equilibrium",
+            "Primed Continuity",
+            "Primed Flow"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (can), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "2026'nın örümcek frame'i: Webbed Embrace kozaları +%50 hasar hassasiyeti basar, Widow's Brood zehirli ölülerden Scuttler yavruları çıkarır. Silken Stride formunda status bağışıklığı + çift can ile duvardan duvara atlarsın. Archon Continuity Toksin'e Korozif ekler.",
+          "sources": ["https://warframe.today/frames/oraxia/"]
+        }
+      ]
+    },
+    {
+      "item": "Qorvex",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "qorvex-radiation-sp",
+          "name": "Radyasyon Kulesi",
+          "focus": "steelpath",
+          "roles": ["dps", "tank"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Augur Reach",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (zırh), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Chyrinka Sütunu bölgeyi yavaşlatıp radyasyon basar; Disometric Guard takıma status bağışıklığı verir. Crucible Blast, 5 radyasyon yüklü düşmanları patlatarak zincirleme temizler. Beton gibi gövde, alan hakimiyeti yüksek.",
+          "sources": ["https://warframe.fandom.com/wiki/Qorvex"]
+        }
+      ]
+    },
+    {
+      "item": "Sevagoth Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "sevagoth-gloom-sp",
+          "name": "Gloom Orakçısı",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 5,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Stretch",
+            "Primed Continuity",
+            "Primed Flow",
+            "Equilibrium",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Gloom çevredeki her şeyi yavaşlatır ve vuruşlarını yaşam çalmaya çevirir (helminth'te herkesin istediği yetenek, burada tam güçte). Reap + Sow kombinasyonu ruh patlamasıyla oda siler; ölünce Shadow formunda savaşmaya devam edersin.",
+          "sources": ["https://warframe.fandom.com/wiki/Sevagoth/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Temple",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "temple-backbeat-sp",
+          "name": "Backbeat Gitaristi",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Archon Vitality",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Yetenekleri Backbeat metronomuyla zamanında basarsan bedava ve güçlenmiş çıkar: Pyrotechnics ekstra alev sütunu, Overdrive çift crit şansı. Lizzie (exalted gitar) sürekli Heat kusar — Archon Vitality Heat'i ikiye katlar. Ritim tutabilen için S-tier.",
+          "sources": ["https://warframe.today/frames/temple/"]
+        }
+      ]
+    },
+    {
+      "item": "Trinity Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "trinity-ev-sp",
+          "name": "EV / Blessing Şifacısı",
+          "focus": "steelpath",
+          "roles": ["support"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Champion's Blessing",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Augur Secrets",
+            "Constitution"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Energy Vampire takımın pili: hedefi sağ, enerji akar. Blessing anında tam can + %75 hasar azaltımı; Champion's Blessing üstüne silah buff'ı ekler. Eidolon'dan Netracell'e, şifacıların kraliçesi.",
+          "sources": ["https://warframe.fandom.com/wiki/Trinity/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Valkyr Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "valkyr-eternalwar-sp",
+          "name": "Eternal War Pençesi",
+          "focus": "steelpath",
+          "roles": ["dps", "tank"],
+          "forma": 4,
+          "aura": "Steel Charge",
+          "exilus": "Power Drift",
+          "mods": [
+            "Eternal War",
+            "Umbral Intensify",
+            "Umbral Vitality",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Adaptation",
+            "Streamline"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Azure (zırh), 1x Amber (cast hızı)",
+          "helminth": null,
+          "notesTr": "Warcry saldırı hızı + zırh verir; Eternal War ile melee öldürmeleri süreyi sonsuz uzatır. Talons (exalted pençeler) melee ekranından ayrı modlanır; Hysteria'da tam ölümsüzsün. Öfkenin ta kendisi.",
+          "sources": ["https://warframe.fandom.com/wiki/Valkyr/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Vauban Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "vauban-bastille-sp",
+          "name": "Bastille Mühendisi",
+          "focus": "steelpath",
+          "roles": ["support", "dps"],
+          "forma": 5,
+          "aura": "Energy Siphon",
+          "exilus": "Cunning Drift",
+          "mods": [
+            "Photon Repeater",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Overextended",
+            "Stretch",
+            "Primed Continuity",
+            "Fleeting Expertise",
+            "Primed Flow"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Bastille havaya kaldırıp zırh çalar ve sana katar; Vortex her şeyi tek noktaya emer — AoE silahla rüya ikilisi. Photon Repeater ile Photon Strike zincirleme bedava gelir. Savunmanın baş mühendisi.",
+          "sources": ["https://warframe.fandom.com/wiki/Vauban/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Voruna Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "voruna-ulfrun-sp",
+          "name": "Ulfrun'un Beş Kurdu",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Ulfrun's Endurance",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Equilibrium"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Ulfrun's Descent beş şarjlı dalış saldırısıyla tek tek hedef patlatır — Slash ağırlıklı, zırh umursamaz; augment öldürmelerde şarjları yeniler. Fangs of Raksh 5 farklı status basıp Condition Overload'u hazırlar. Kurt sürüsünün gücü.",
+          "sources": ["https://warframe.fandom.com/wiki/Voruna/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Yareli Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "yareli-merulina-sp",
+          "name": "Merulina Sörfçüsü",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Loyal Merulina",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Adaptation"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
+          "helminth": null,
+          "notesTr": "Loyal Merulina ile board'a binmeden Merulina'nın hasar emilimini yanında taşırsın — ikincil silah odaklı oynarsan K-Drive zorunluluğu kalkar. Aquablades sürekli Slash keser, Riptide topla-patlat. Sualtı kızı karada da sörf yapar.",
+          "sources": ["https://warframe.fandom.com/wiki/Yareli/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Zephyr Prime",
+      "type": "warframe",
+      "builds": [
+        {
+          "id": "zephyr-turbulence-sp",
+          "name": "Turbulence Kasırgası",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "aura": "Growing Power",
+          "exilus": "Power Drift",
+          "mods": [
+            "Jet Stream",
+            "Umbral Intensify",
+            "Blind Rage",
+            "Transient Fortitude",
+            "Primed Continuity",
+            "Primed Flow",
+            "Stretch",
+            "Augur Reach"
+          ],
+          "arcanes": ["Arcane Energize", "Molt Augmented"],
+          "archonShards": "2x Crimson (strength), 1x Amber (cast hızı), 1x Azure (kalkan)",
+          "helminth": null,
+          "notesTr": "Turbulence tüm mermileri saptırır — menzilli düşmana karşı fiilen ölümsüzsün; Jet Stream üstüne hareket ve mermi hızı ekler. Tornado'lar vurduğun hasarı emip çevreye yayar: AoE silahla kasırgayı besle. Havada süzülen bir kale.",
+          "sources": ["https://warframe.fandom.com/wiki/Zephyr/Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Torid",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "torid-incarnon-sp",
+          "name": "Incarnon Corrosive Beam",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Galvanized Chamber",
+            "Galvanized Aptitude",
+            "Galvanized Scope",
+            "Critical Delay",
+            "Vile Acceleration",
+            "Stormbringer",
+            "Malignant Force",
+            "Hunter Munitions"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Incarnon formu hedefler arasında zincirlenen ışın atar; Galvanized mod'ları öldürme/status ile ölçeklenir. Elektrik+Toksin = Korozif zırh soyar, Hunter Munitions crit üzerinden Slash kanaması ekler. Incarnon Genesis adaptörü ve evrimler gerekir (Duviri Steel Path Circuit haftalık rotasyonu).",
+          "sources": ["https://warframe.fandom.com/wiki/Torid"]
+        }
+      ]
+    },
+    {
+      "item": "Phenmor",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "phenmor-incarnon-sp",
+          "name": "Incarnon Viral Headshot",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Galvanized Scope",
+            "Galvanized Aptitude",
+            "Critical Delay",
+            "Vile Acceleration",
+            "Malignant Force",
+            "Rime Rounds"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Kafa vuruşları Incarnon şarjını hızla doldurur; Incarnon formda atış hızı ve hasar katlanır. Soğuk+Toksin = Viral, Galvanized Scope + Deadhead headshot çarpanlarıyla tek hedefi eritir. Tek hedef/boss odaklı en güçlü seçeneklerden.",
+          "sources": ["https://warframe.fandom.com/wiki/Phenmor"]
+        }
+      ]
+    },
+    {
+      "item": "Felarx",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "felarx-incarnon-sp",
+          "name": "Incarnon Viral Shotgun",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Galvanized Savvy",
+            "Critical Deceleration",
+            "Blaze",
+            "Frigid Blast",
+            "Toxic Barrage",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Yakın mesafede çok yüksek vuruş; Soğuk+Toksin = Viral, Blaze Heat ekler. Incarnon formda eski usul çift tabanca görünümüne geçip mermi yağdırır. Galvanized Savvy status çeşitliliğiyle ölçeklenir.",
+          "sources": ["https://warframe.fandom.com/wiki/Felarx"]
+        }
+      ]
+    },
+    {
+      "item": "Kuva Zarr",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "kuva-zarr-launcher-sp",
+          "name": "Viral Topçu",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Vital Sense",
+            "Point Strike",
+            "Primed Firestorm",
+            "Galvanized Aptitude",
+            "Malignant Force",
+            "Rime Rounds"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Topçu modunda geniş alana yüksek hasar; Primed Firestorm patlama yarıçapını büyütür. Soğuk+Toksin = Viral, progenitor elementi olarak Heat önerilir (Viral+Heat kombinasyonu). Kendine hasardan korunmak için Primed Sure Footed'lı bir frame ile oyna.",
+          "sources": ["https://warframe.fandom.com/wiki/Kuva_Zarr"]
+        }
+      ]
+    },
+    {
+      "item": "Soma Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "soma-incarnon-sp",
+          "name": "Incarnon Crit Makinesi",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Galvanized Scope",
+            "Critical Delay",
+            "Vital Sense",
+            "Hunter Munitions",
+            "Primed Cryo Rounds",
+            "Malignant Force"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Incarnon evrimi Hata-Satya: isabetler crit şansı yığar, tam şarjda devasa crit'lere ulaşır. Hunter Munitions crit'leri Slash kanamasına çevirir, Soğuk+Toksin = Viral kanamayı büyütür. Klasik bir efsanenin 2026'da hâlâ geçerli dönüşü.",
+          "sources": ["https://warframe.fandom.com/wiki/Soma_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Boar Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "boar-incarnon-sp",
+          "name": "Incarnon Status Fırtınası",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Galvanized Savvy",
+            "Blaze",
+            "Frigid Blast",
+            "Toxic Barrage",
+            "Chilling Reload",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Incarnon formu patlayıcı saçma yağdırır ve saniyede düzinelerce status basar — Galvanized Savvy ile hasar katlanır. Soğuk+Toksin = Viral, Blaze Heat ekler; Chilling Reload hem Soğuk hem doldurma hızı. Yakın-orta mesafede oda süpürür.",
+          "sources": ["https://warframe.fandom.com/wiki/Boar_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Burston Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "burston-incarnon-sp",
+          "name": "Incarnon Viral Burst",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Galvanized Scope",
+            "Critical Delay",
+            "Vital Sense",
+            "Vile Acceleration",
+            "Malignant Force",
+            "Rime Rounds"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Incarnon formu burst yerine tam otomatik lazere döner; evrimlerle crit ve atış hızı tavan yapar. Soğuk+Toksin = Viral. Ucuz, erken erişilebilir ve Steel Path'te hâlâ üst sıralarda.",
+          "sources": ["https://warframe.fandom.com/wiki/Burston_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Latron Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "latron-incarnon-sp",
+          "name": "Incarnon Tek Atış Topu",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Galvanized Scope",
+            "Galvanized Aptitude",
+            "Critical Delay",
+            "Vital Sense",
+            "Stormbringer",
+            "Malignant Force"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Incarnon formda her mermi patlayıcı bir topa döner; isabetler hasar yığar. Elektrik+Toksin = Korozif zırhlılara işler. Sabırlı nişancının tek-atış-tek-ölüm silahı.",
+          "sources": ["https://warframe.fandom.com/wiki/Latron_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Strun Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "strun-incarnon-sp",
+          "name": "Incarnon Pompalı",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Galvanized Savvy",
+            "Blaze",
+            "Frigid Blast",
+            "Toxic Barrage",
+            "Critical Deceleration",
+            "Chilling Reload"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Incarnon formu geniş yayılımlı yüksek status küresi atar; Galvanized Savvy ile her status hasarı büyütür. Soğuk+Toksin = Viral, Blaze Heat ekler. Yakın mesafenin öğütücüsü.",
+          "sources": ["https://warframe.fandom.com/wiki/Strun_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Acceltra Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "acceltra-rocket-sp",
+          "name": "Roket Yağmuru",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Critical Delay",
+            "Vital Sense",
+            "Primed Firestorm",
+            "Galvanized Aptitude",
+            "Malignant Force",
+            "Rime Rounds"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Koşarken doldurma hızlanır — Gauss/Volt gibi hızlı frame'lerle doğal eş. Mikro roketler crit ağırlıklı patlar; Primed Firestorm alanı büyütür, Soğuk+Toksin = Viral. Hareket halindeki bombardıman.",
+          "sources": ["https://warframe.fandom.com/wiki/Acceltra_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Laetum",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "laetum-incarnon-sp",
+          "name": "Incarnon Explosive DPS",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Primed Pistol Gambit",
+            "Pistol Pestilence",
+            "Convulsion"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Incarnon formda patlayıcı mermiler alan hasarı verir; evrim seçimine göre status şansı ya da crit yığılır. Elektrik+Toksin = Korozif. Steel Path'te tek başına oda temizleyebilen nadir ikincillerden.",
+          "sources": ["https://warframe.fandom.com/wiki/Laetum"]
+        }
+      ]
+    },
+    {
+      "item": "Kuva Nukor",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "kuva-nukor-primer",
+          "name": "Viral Primer / Zincir Işını",
+          "focus": "general",
+          "roles": ["support", "dps"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Primed Pistol Gambit",
+            "Pistol Pestilence",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Işın birden çok hedefe zincirlenir; Toksin+Soğuk = Viral yığıp melee/Condition Overload için düşmanı hazırlar (primer). Progenitor elementi olarak Heat ya da Magnetic tercih edilir. Encumber her vuruşta rastgele ekstra status yayar.",
+          "sources": ["https://warframe.fandom.com/wiki/Kuva_Nukor"]
+        }
+      ]
+    },
+    {
+      "item": "Epitaph",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "epitaph-primer",
+          "name": "Full Status Primer",
+          "focus": "general",
+          "roles": ["support"],
+          "forma": 3,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Fulmination",
+            "Scorch",
+            "Jolt",
+            "Pistol Pestilence",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Şarjsız hızlı atışla geniş alana dört 60/60 element + silahın kendi Soğuk/Blast proclarını basar; Primed Fulmination patlama yarıçapını büyütür. Condition Overload ve Galvanized mod'lar için ideal primer — hasarı silahın değil, hazırladığı statusler taşır.",
+          "sources": ["https://warframe.fandom.com/wiki/Epitaph"]
+        }
+      ]
+    },
+    {
+      "item": "Dual Toxocyst",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "dual-toxocyst-incarnon-sp",
+          "name": "Incarnon Frenzy Headshot",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Primed Pistol Gambit",
+            "Deep Freeze",
+            "Augur Pact"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Kafa vuruşları Frenzy tetikler (atış hızı artışı) ve Incarnon şarjını doldurur; Incarnon formda patlayıcı yüksek hasarlı atışlara dönüşür. Silahın kendi Toksini + Deep Freeze Soğuk = Viral. 2026 metasının zirve ikincillerinden.",
+          "sources": ["https://warframe.fandom.com/wiki/Dual_Toxocyst"]
+        }
+      ]
+    },
+    {
+      "item": "Grimoire",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "grimoire-primer",
+          "name": "Tome Primer / Destek",
+          "focus": "general",
+          "roles": ["support"],
+          "forma": 3,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Jolt",
+            "Scorch",
+            "Pistol Pestilence",
+            "Deep Freeze",
+            "Augur Pact"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Şarjlı atışı geniş alanda patlayıp dört 60/60 elementi birden basar — Condition Overload ve Galvanized mod'lar için mükemmel primer. Kendi tome mod yuvası da vardır (ör. enerji yenileme). Hasarı değil, hazırladığı statusleri taşırsın.",
+          "sources": ["https://warframe.fandom.com/wiki/Grimoire"]
+        }
+      ]
+    },
+    {
+      "item": "Lex Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "lex-incarnon-sp",
+          "name": "Incarnon Ağır Tabanca",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Primed Pistol Gambit",
+            "Convulsion",
+            "Pistol Pestilence"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Incarnon formda her atış patlayıcı bir el topuna döner — tek hedefi siler, çevresini sarsar. Elektrik+Toksin = Korozif. Başlangıç silahının efsanevi son hâli.",
+          "sources": ["https://warframe.fandom.com/wiki/Lex_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Atomos",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "atomos-chain-primer",
+          "name": "Zincir Eriticisi / Primer",
+          "focus": "general",
+          "roles": ["support", "dps"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Pistol Pestilence",
+            "Deep Freeze",
+            "Augur Pact"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Isın hedefler arasında zincirlenir; silahın kendi Heat'i + Toksin/Soğuk modlarıyla Viral+Heat basar — hem primer hem düşük seviyede eritici. Kuva Nukor'un mütevazı ama hâlâ çok iyi atası.",
+          "sources": ["https://warframe.fandom.com/wiki/Atomos"]
+        }
+      ]
+    },
+    {
+      "item": "Tenet Cycron",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "tenet-cycron-sp",
+          "name": "Sonsuz Şarjör Işını",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Primed Pistol Gambit",
+            "Pistol Pestilence",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Şarjörü kendini doldurur — hiç doldurma yok, kesintisiz ışın. Zincirlenen atış Toksin+Soğuk = Viral basar; progenitor olarak Magnetic ya da Heat seç. Tembel ama ölümcül.",
+          "sources": ["https://warframe.fandom.com/wiki/Tenet_Cycron"]
+        }
+      ]
+    },
+    {
+      "item": "Sicarus Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "sicarus-incarnon-sp",
+          "name": "Incarnon Burst Suikastçısı",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Lethal Torrent",
+            "Primed Target Cracker",
+            "Primed Pistol Gambit",
+            "Scorch",
+            "Jolt"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Kafa vuruşları Incarnon şarjını doldurur; dönüşünce patlayıcı burst'ler atar. Heat+Elektrik = Radyasyon, 60/60'larla status da taşır. Hassas nişancının burst tabancası.",
+          "sources": ["https://warframe.fandom.com/wiki/Sicarus_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Glaive Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "glaive-prime-heavy",
+          "name": "Heavy Throw Nuke",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Astral Twilight",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Amalgam Organ Shatter",
+            "Primed Fever Strike",
+            "North Wind",
+            "Condition Overload"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Fırlat ve havada patlat: ağır saldırı patlaması Slash ağırlıklı alan hasarı verir. Killing Blow + Corrupt Charge ile anında tam güçlü ağır atış; Amalgam Organ Shatter şarj süresini kısaltır. Toksin+Soğuk = Viral. Crescendo ağır öldürmelerle kalıcı combo kazandırır.",
+          "sources": ["https://warframe.fandom.com/wiki/Glaive_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Dual Ichor",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "dual-ichor-influence",
+          "name": "Incarnon Electric Influence",
+          "focus": "steelpath",
+          "roles": ["dps", "farm"],
+          "forma": 5,
+          "stance": "Carving Mantis",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Reach",
+            "Shocking Touch",
+            "Focus Energy"
+          ],
+          "arcanes": ["Melee Influence"],
+          "notesTr": "Melee Influence, elektrik statusunu çevredeki düşmanlara kopyalar — Shocking Touch + Focus Energy saf elektrik ekler, innate Toksin ayrı kalır (birleşmez). Incarnon formdaki zehir bulutu oda temizliğine katkıda bulunur. Kalabalık misyonlarda çok güçlü.",
+          "sources": ["https://warframe.fandom.com/wiki/Dual_Ichor"]
+        }
+      ]
+    },
+    {
+      "item": "Praedos",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "praedos-parkour",
+          "name": "Parkour Utility / CO",
+          "focus": "general",
+          "roles": ["utility", "dps"],
+          "forma": 3,
+          "stance": "Sovereign Outcast",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Incarnon evrimleri silah kınındayken bile parkur/koşma hızı verir — çoğu oyuncu Praedos'u sırf hız pasifi için taşır. Mod dizilimi standart hibrit crit/status; silah zaten sağlam bir tonfa. Hız pasifi için evrim II seçimi önemli.",
+          "sources": ["https://warframe.fandom.com/wiki/Praedos"]
+        }
+      ]
+    },
+    {
+      "item": "Kronen Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "kronen-influence-sp",
+          "name": "Electric Influence Hibrit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Sovereign Outcast",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Reach",
+            "Shocking Touch",
+            "Focus Energy"
+          ],
+          "arcanes": ["Melee Influence"],
+          "notesTr": "Yüksek saldırı hızı + geniş menzil + hibrit crit/status: Kronen Prime yıllardır her içeriğin güvenilir melee'si. Saf elektrik + Melee Influence, her elektrik statusunu çevreye kopyalayıp kalabalığı eritir. Combo büyüdükçe Blood Rush/Weeping Wounds taşırır.",
+          "sources": ["https://warframe.fandom.com/wiki/Kronen_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Ceramic Dagger",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "ceramic-dagger-incarnon-sp",
+          "name": "Incarnon CO Hançeri",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Pointed Wind",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Incarnon evrimleriyle mütevazı hançer tam bir canavara dönüşür: yüksek crit, combo başlangıcı ve hız bonusları. Bir primer'la (Nukor/Epitaph) eşleşince Condition Overload tavan yapar. MR5'te bile erişilebilir olması en büyük artısı.",
+          "sources": ["https://warframe.fandom.com/wiki/Ceramic_Dagger"]
+        }
+      ]
+    },
+    {
+      "item": "Hate",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "hate-incarnon-heavy-sp",
+          "name": "Incarnon Heavy Tırpan",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Reaping Spiral",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Amalgam Organ Shatter",
+            "Condition Overload",
+            "Primed Fever Strike",
+            "North Wind"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Incarnon evrimleri crit ve ağır saldırı verimliliğini uçurur; ağır vuruşlar geniş yayla biçer. Killing Blow + Corrupt Charge anında tam güçlü ağır saldırı sağlar, Crescendo öldürmelerle kalıcı combo yığar. Toksin+Soğuk = Viral.",
+          "sources": ["https://warframe.fandom.com/wiki/Hate"]
+        }
+      ]
+    },
+    {
+      "item": "Innodem",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "innodem-incarnon-sp",
+          "name": "Incarnon Void Hançeri",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Pointed Wind",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Zariman hançeri: Incarnon formda menzili ve crit'i katlanır, hareketle şarj olur. Hızlı vuruş temposu Blood Rush/Weeping Wounds'u anında doldurur. Kullervo'yla birleşince kırmızı crit şelalesi.",
+          "sources": ["https://warframe.fandom.com/wiki/Innodem"]
+        }
+      ]
+    },
+    {
+      "item": "Nikana Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "nikana-hybrid-sp",
+          "name": "Hibrit Katana",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Blind Justice",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Reach",
+            "Primed Fever Strike",
+            "North Wind"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Dengeli crit/status katana; Toksin+Soğuk = Viral, Slash ağırlıklı vuruş kanatır. Blind Justice duruşu hızlı ve mobil. Primer'la eşleşince Condition Overload tavan yapar. Zarif ve ölümcül.",
+          "sources": ["https://warframe.fandom.com/wiki/Nikana_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Reaper Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "reaper-heavy-sp",
+          "name": "Ağır Tırpan Hasadı",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Reaping Spiral",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Amalgam Organ Shatter",
+            "Condition Overload",
+            "Primed Fever Strike",
+            "North Wind"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Yüksek crit'li klasik tırpan: Killing Blow + Corrupt Charge ile anında tam güçlü ağır saldırı, Slash kanamaları zırhı umursamaz. Toksin+Soğuk = Viral. Azrail estetiği, Steel Path performansı.",
+          "sources": ["https://warframe.fandom.com/wiki/Reaper_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Sancti Magistar",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "sancti-magistar-incarnon-sp",
+          "name": "Incarnon Şifa Çekici",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 5,
+          "stance": "Crushing Ruin",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Amalgam Organ Shatter",
+            "Condition Overload",
+            "Primed Fever Strike",
+            "Shocking Touch"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Vuruşları seni ve yakın takım arkadaşlarını iyileştirir — Incarnon evrimleriyle hem çekiç hem gezgin şifa istasyonu olur. Ağır saldırı yapısı Killing Blow/Corrupt Charge ile tek vuruş odaklı. Vururken iyileştiren tek silah.",
+          "sources": ["https://warframe.fandom.com/wiki/Sancti_Magistar"]
+        }
+      ]
+    },
+    {
+      "item": "Xoris",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "xoris-glaive-sp",
+          "name": "Sonsuz Combo Glaive",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "stance": "Astral Twilight",
+          "mods": [
+            "Primed Pressure Point",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Amalgam Organ Shatter",
+            "Primed Fever Strike",
+            "Shocking Touch",
+            "Condition Overload"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Combo sayacı hiç sıfırlanmaz — ağır saldırı harcamaz, bu yüzden glaive patlatmaları hep tam güçte. Elektrik patlaması sersemletir; Toksin+Elektrik = Korozif. Glaive Prime'ın pratik, bakımsız alternatifi.",
+          "sources": ["https://warframe.fandom.com/wiki/Xoris"]
+        }
+      ]
+    }
+  ]
+}

@@ -75,8 +75,11 @@ type Lifecycle = typeof import("../../services/warframeLifecycle");
 let lifecycle: Lifecycle;
 const configPath = path.join("C:\\App Data\\WFHelper", "warframe-watcher.json");
 const taskPath = path.join("C:\\App Data\\WFHelper", "warframe-watcher-task.xml");
+const LOGIN_ITEM = "TennoDeskWarframeWatcher";
+const LEGACY_LOGIN_ITEM = "WFHelperWarframeWatcher";
 const LEGACY_TASK = "WFHelperWarframeWatcher";
-const USER_TASK = "WFHelper\\WarframeWatcher-Tester";
+const LEGACY_USER_TASK = "WFHelper\\WarframeWatcher-Tester";
+const USER_TASK = "TennoDesk\\WarframeWatcher-Tester";
 const quit = vi.fn();
 
 function schtasksCalls(): string[] {
@@ -215,7 +218,12 @@ describe("Warframe lifecycle", () => {
     );
     expect(h.spawn.mock.calls[0]?.[1]?.[1]).toContain("powershell.exe");
     expect(h.login).toHaveBeenCalledWith({
-      name: LEGACY_TASK,
+      name: LOGIN_ITEM,
+      openAtLogin: false,
+    });
+    // The old WFHelper-branded startup item is cleared on migration.
+    expect(h.login).toHaveBeenCalledWith({
+      name: LEGACY_LOGIN_ITEM,
       openAtLogin: false,
     });
     expect(h.execFile).toHaveBeenCalledWith(
@@ -249,6 +257,8 @@ describe("Warframe lifecycle", () => {
     const enabling = schtasksCalls();
     expect(enabling).toContain(`/Query /TN ${LEGACY_TASK}`);
     expect(enabling).toContain(`/Delete /TN ${LEGACY_TASK} /F`);
+    // The old WFHelper per-user task is scrubbed too, not just the flat one.
+    expect(enabling).toContain(`/Delete /TN ${LEGACY_USER_TASK} /F`);
     expect(enabling.some((args) => args.startsWith(`/Create /TN ${USER_TASK} `))).toBe(true);
     await lifecycle.configureWarframeLifecycle(false);
     const disabling = schtasksCalls();
@@ -270,7 +280,13 @@ describe("Warframe lifecycle", () => {
     h.files.set(path.join("C:\\App Data\\WFHelper", "warframe-watcher.ps1"), "old script");
     h.taskMissing = true;
     await lifecycle.configureWarframeLifecycle(false);
-    expect(schtasksCalls().map((args) => args.split(" ")[0])).toEqual(["/Query", "/Query"]);
+    // Probes the legacy flat task, the legacy per-user task, then the current one;
+    // all are absent, so nothing is deleted and no warning fires.
+    expect(schtasksCalls().map((args) => args.split(" ")[0])).toEqual([
+      "/Query",
+      "/Query",
+      "/Query",
+    ]);
     expect(h.warn).not.toHaveBeenCalled();
   });
 

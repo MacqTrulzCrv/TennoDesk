@@ -59,7 +59,7 @@
       const url = URL.createObjectURL(new Blob([payload], { type: "application/json" }));
       const link = document.createElement("a");
       link.href = url;
-      link.download = "wfhelper-customization.json";
+      link.download = "tennodesk-customization.json";
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (error) {

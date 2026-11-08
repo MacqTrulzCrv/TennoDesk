@@ -1,6 +1,5 @@
 <script lang="ts">
   import ModalShell from "./ModalShell.svelte";
-  import { PATREON_URL } from "../config/links.js";
   import { locale, tr } from "../lib/i18n.js";
   import { parseReleaseNotes } from "../lib/releaseNotes.js";
   import type { AppUpdateState } from "../types/ipc.js";
@@ -102,14 +101,6 @@
     </div>
 
     <div class="update-modal-footer">
-      <button
-        type="button"
-        class="btn-patreon btn-sm"
-        on:click={() => openLink(PATREON_URL)}
-        data-update-patreon
-      >
-        {$tr("update.supportPatreon")}
-      </button>
       <div class="update-modal-actions">
         {#if state.status === "available"}
           <button type="button" class="btn-success btn-sm" disabled={pending} on:click={onDownload}>
@@ -209,26 +200,5 @@
   .update-modal-actions {
     display: flex;
     gap: 0.5rem;
-  }
-  /* Its own class rather than btn-danger: red, but nothing here is destructive. */
-  .btn-patreon {
-    display: inline-flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--danger);
-    font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    color: var(--danger);
-    background: color-mix(in oklab, var(--danger) 18%, transparent);
-    transition:
-      background-color 0.15s,
-      border-color 0.15s,
-      color 0.15s;
-  }
-  .btn-patreon:hover {
-    background: color-mix(in oklab, var(--danger) 28%, transparent);
   }
 </style>

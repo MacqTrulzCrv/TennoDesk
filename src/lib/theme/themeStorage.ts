@@ -30,14 +30,17 @@ import { OVERLAY_OPACITY_MAX, OVERLAY_OPACITY_MIN } from "../../../config/shared
 import { asRecord } from "../../../config/shared/objectValidation.js";
 
 const STORAGE_KEY = "wf_theme_settings";
-const CURRENT_VERSION = 1;
+const CURRENT_VERSION = 2;
+
+// v1 defaults retired in the v2 defaults refresh (sharper corners, brighter
+// secondary text). The first-run save pins whatever the defaults were, so a
+// stored value equal to a retired default follows the new default; anything
+// the user actually changed passes through untouched.
+const V1_DEFAULT_TEXT_SECONDARY = "#8b93a5";
+const V1_DEFAULT_TEXT_MUTED = "#8d9ab3";
 
 function migrateAndNormalize(raw: Record<string, unknown>): ThemeSettings {
   const version = typeof raw.version === "number" ? raw.version : 0;
-
-  if (version < CURRENT_VERSION) {
-    // Treat as fresh and merge with defaults.
-  }
 
   const rawColors = (raw.colors && typeof raw.colors === "object" ? raw.colors : {}) as Record<
     string,
@@ -54,10 +57,16 @@ function migrateAndNormalize(raw: Record<string, unknown>): ThemeSettings {
     unknown
   >;
 
+  if (version < 2) {
+    if (rawColors.textSecondary === V1_DEFAULT_TEXT_SECONDARY) delete rawColors.textSecondary;
+    if (rawColors.textMuted === V1_DEFAULT_TEXT_MUTED) delete rawColors.textMuted;
+    if (rawEffects.cornerStyle === "soft") delete rawEffects.cornerStyle;
+  }
+
   const viewAccents = normalizeViewAccents(raw.viewAccents);
 
   return {
-    version: CURRENT_VERSION as 1,
+    version: CURRENT_VERSION as 2,
     activePreset:
       typeof raw.activePreset === "string" && raw.activePreset ? raw.activePreset : "default",
     colors: normalizeColors(rawColors),

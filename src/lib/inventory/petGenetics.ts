@@ -197,6 +197,11 @@ function fallbackLabel(kind: PetTraitKind, path: string, translate: Translator):
   return humanizeLeaf(leaf);
 }
 
+// The generated table only carries en/de/zh; any other app locale reads English.
+function petTraitLabel(name: { en: string }, locale: LocaleCode): string {
+  return (name as Partial<Record<LocaleCode, string>>)[locale] || name.en;
+}
+
 export function resolvePetTrait(
   kind: PetTraitKind,
   path: string | undefined,
@@ -206,10 +211,10 @@ export function resolvePetTrait(
   if (!path) return null;
 
   const color = PET_TRAITS.colors[path];
-  if (color) return { label: color.name[locale] || color.name.en, hex: color.hex };
+  if (color) return { label: petTraitLabel(color.name, locale), hex: color.hex };
 
   const pattern = PET_TRAITS.patterns[path];
-  if (pattern) return { label: pattern.name[locale] || pattern.name.en, hex: null };
+  if (pattern) return { label: petTraitLabel(pattern.name, locale), hex: null };
 
   return { label: fallbackLabel(kind, path, translate), hex: null };
 }

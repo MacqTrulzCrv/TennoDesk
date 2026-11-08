@@ -12,6 +12,7 @@ import {
 } from "./rewardScannerPipeline";
 import type { SortedItem } from "./rewardScannerMatch";
 import type { RewardReader } from "./rewardScannerSlotScan";
+import { localizedNameFields } from "./itemDatabase";
 import { REFERENCE_WARFRAME_UI_SCALE } from "../config/runtime/overlaySettings";
 
 export { captureSourceMeta } from "./screenCapture";
@@ -37,9 +38,26 @@ let relicItems: SortedItem[] = [];
 let sortedItems: SortedItem[] = [];
 
 export function setRelicItems(items: SortedItem[]): void {
-  relicItems = Array.isArray(items) ? items : [];
+  const base = Array.isArray(items) ? items : [];
+  // A localized client prints the game-language name on the card, so each item
+  // whose localized spelling differs joins the pool again under that spelling;
+  // canonicalName carries the English join key back out of the scan.
+  const expanded: SortedItem[] = [];
+  for (const item of base) {
+    expanded.push(item);
+    const uniqueName = typeof item.uniqueName === "string" ? item.uniqueName : null;
+    const { displayName } = localizedNameFields(uniqueName, item.name);
+    if (displayName && displayName !== item.name) {
+      expanded.push({ ...item, name: displayName, canonicalName: item.name });
+    }
+  }
+  relicItems = expanded;
   sortedItems = [...relicItems].sort((a, b) => b.name.length - a.name.length);
-  log.info(`[RewardScanner] Item list updated: ${relicItems.length} items`);
+  const aliases = expanded.length - base.length;
+  log.info(
+    `[RewardScanner] Item list updated: ${base.length} items` +
+      (aliases > 0 ? ` (+${aliases} localized aliases)` : ""),
+  );
 }
 
 const eraOcr = createEraOcr({
@@ -68,7 +86,7 @@ export async function scanRewardsDetailed(
     return null;
   }
 
-  return runRewardScanPipeline({
+  const result = await runRewardScanPipeline({
     preCapture,
     sortedItems,
     settings: {
@@ -79,4 +97,15 @@ export async function scanRewardsDetailed(
     // Windows OCR does not exist off-Windows; pin the cross-platform onnx reader.
     reader: process.platform === "win32" ? scanOptions?.reader : "onnx",
   });
+  if (!result) return result;
+  // Every consumer joins on the English name, so an alias hit hands back its
+  // canonical spelling before it leaves the scanner.
+  return {
+    ...result,
+    items: result.items.map((item) =>
+      typeof item.canonicalName === "string" && item.canonicalName
+        ? { ...item, name: item.canonicalName }
+        : item,
+    ),
+  };
 }

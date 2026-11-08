@@ -18,8 +18,8 @@ export const DEFAULT_BASE_COLORS: Readonly<ThemeBaseColors> = Object.freeze({
   accentDim: "#a07830",
   accentBright: "#f0c95c",
   textPrimary: "#e8e4dc",
-  textSecondary: "#8b93a5",
-  textMuted: "#8d9ab3",
+  textSecondary: "#9aa3b5",
+  textMuted: "#95a1b9",
   success: "#4ade80",
   warning: "#fbbf24",
   danger: "#f87171",
@@ -47,7 +47,7 @@ export const DEFAULT_FONT_SIZES: Readonly<ThemeFontSizes> = Object.freeze({
 export const GLASS_BLUR_MIN_PX = 2;
 export const GLASS_BLUR_MAX_PX = 24;
 export const DEFAULT_EFFECTS: Readonly<ThemeEffects> = Object.freeze({
-  cornerStyle: "soft",
+  cornerStyle: "sharp",
   surfaceStyle: "full",
   glass: false,
   glassBlurPx: 5,
@@ -61,7 +61,7 @@ export const DEFAULT_BRANDING: Readonly<ThemeBranding> = Object.freeze({
 });
 
 export const DEFAULT_THEME: Readonly<ThemeSettings> = Object.freeze({
-  version: 1 as const,
+  version: 2 as const,
   activePreset: "default",
   colors: { ...DEFAULT_COLORS },
   fontSizes: { ...DEFAULT_FONT_SIZES },
@@ -84,4 +84,4 @@ export const VIEW_FONT_SIZE_MAX = 3;
 /** Base font size in px (from app.css html rule) */
 export const BASE_FONT_SIZE_PX = 15;
 
-export const DEFAULT_APP_NAME = "WFHELPER";
+export const DEFAULT_APP_NAME = "TENNODESK";

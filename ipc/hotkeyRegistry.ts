@@ -22,7 +22,8 @@ export function registerTransientHotkey(accelerator: string, callback: () => voi
   if (
     accelerator === ctx.overlayHotkeyRegistered ||
     accelerator === ctx.overlayInteractionHotkeyRegistered ||
-    accelerator === ctx.rivenRescanHotkeyRegistered
+    accelerator === ctx.rivenRescanHotkeyRegistered ||
+    accelerator === ctx.plannerToggleHotkeyRegistered
   ) {
     log.warn("[TransientHotkey] refusing overlay-owned accelerator:", accelerator);
     return false;
@@ -40,7 +41,8 @@ export function unregisterTransientHotkey(accelerator: string): void {
   if (
     accelerator === ctx.overlayHotkeyRegistered ||
     accelerator === ctx.overlayInteractionHotkeyRegistered ||
-    accelerator === ctx.rivenRescanHotkeyRegistered
+    accelerator === ctx.rivenRescanHotkeyRegistered ||
+    accelerator === ctx.plannerToggleHotkeyRegistered
   ) {
     return;
   }

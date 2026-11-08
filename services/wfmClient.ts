@@ -305,6 +305,24 @@ export function clearCsrfToken(): void {
   _cookieJwt = null;
 }
 
+/** The browser-identifying headers a non-Chromium transport (the ws handshake)
+ *  must present to clear the same Cloudflare edge the REST path already passes:
+ *  the earned clearance cookie only rides with the exact UA it was earned under,
+ *  and the session JWT travels as the cookie the socket then authenticates with.
+ *  Without these the raw `ws` upgrade is scored as a bot and 403s before the
+ *  signIn message is ever sent. */
+export function wfmHandshakeHeaders(token?: string | null): Record<string, string> {
+  const headers: Record<string, string> = {
+    "User-Agent": _clearanceUa ?? _browserUa(),
+  };
+  const cookies: string[] = [];
+  const jwt = token ?? _cookieJwt;
+  if (jwt) cookies.push(`JWT=${jwt}`);
+  if (_clearanceCookie) cookies.push(_clearanceCookie);
+  if (cookies.length) headers["Cookie"] = cookies.join("; ");
+  return headers;
+}
+
 function _makeResponse(
   status: number,
   rawHeaders: Record<string, string | string[] | undefined>,

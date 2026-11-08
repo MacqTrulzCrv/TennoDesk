@@ -76,6 +76,7 @@
   import {
     computeInventoryValueTotals,
     isCountedForValue,
+    isPrimeRow,
     type InventoryValueScope,
   } from "../lib/inventory/valueTotals.js";
   import {
@@ -236,8 +237,8 @@
     hydration.enqueue(background, $wfmItems, { ...needs, ducats: false, orders: false });
   }
 
-  function handleFilterSelect(event: CustomEvent<InventoryFilterTab>): void {
-    filter = event.detail;
+  function applyFilterTab(next: InventoryFilterTab): void {
+    filter = next;
     writeStorage(FILTER_TAB_KEY, filter);
     if (filter === "pets") {
       clearHotsetRefreshTimer();
@@ -251,6 +252,10 @@
     if (filter === "resources" && $inventoryFilters.minimumAmount > 0) {
       updateSharedFilters("inventory", { minimumAmount: 0 });
     }
+  }
+
+  function handleFilterSelect(event: CustomEvent<InventoryFilterTab>): void {
+    applyFilterTab(event.detail);
   }
 
   function toggleHidden(key: string, hidden: string[], entry: string): string[] {
@@ -588,16 +593,25 @@
     filter === "full_sets" && hiddenSetCategories.length > 0
       ? sortedTabItems.filter((item) => enabledSetCategories.has(setCategoryFor(item, $itemDb)))
       : sortedTabItems;
+  // The scope toggle is a lens over the open tab: prime-only narrows the list
+  // to prime rows, all-tradables lifts the lens so everything shows. The
+  // counter reads the same rows through visibleItems, so figure and list agree.
+  // The lens is category-aware: a tab with no prime rows (mods, arcanes,
+  // resources, pets) has nothing to narrow to, so it ignores the lens and shows
+  // its full stock instead of emptying out.
+  $: tabHasPrime = filtered.some(isPrimeRow);
+  $: scopedItems =
+    $inventoryValueAllTradables || !tabHasPrime ? filtered : filtered.filter(isPrimeRow);
   $: visibleItems =
     $devMode && missingIconsOnly
-      ? filtered.filter(
+      ? scopedItems.filter(
           (item) =>
             !item.displayImageUrl ||
             item.usesFallbackArt ||
             ARCANE_STAND_IN_ART.has(item.internalName) ||
             $degradedIcons.has(item.name),
         )
-      : filtered;
+      : scopedItems;
   // Annotated so the reactive assignment keeps the literal union instead of string.
   let valueScope: InventoryValueScope;
   let valueSourceTab: InventoryFilterTab;
@@ -751,6 +765,7 @@
           inView={inViewValueTotals}
           inventory={inventoryValueTotals}
           allTradables={$inventoryValueAllTradables}
+          primeApplicable={tabHasPrime}
           onSelectScope={setValueScope}
           minPlatinum={$inventoryValueMinPlatinum}
           onSelectMinPlatinum={setValueMinPlatinum}

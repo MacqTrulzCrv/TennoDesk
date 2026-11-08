@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="kBronze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b3a071"/>
+      <stop offset="1" stop-color="#776645"/>
+    </linearGradient>
+    <linearGradient id="kPlat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d4dbe2"/>
+      <stop offset="1" stop-color="#97a2ae"/>
+    </linearGradient>
+    <radialGradient id="kBg" cx="0.5" cy="0.42" r="0.9">
+      <stop offset="0" stop-color="#151a20"/>
+      <stop offset="1" stop-color="#0c1014"/>
+    </radialGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="110" fill="url(#kBg)"/>
+  <!-- bronze relic frame -->
+  <path d="M256 88 L416 256 L256 424 L96 256 Z" fill="none" stroke="url(#kBronze)" stroke-width="20"/>
+  <path d="M256 88 L256 154 M416 256 L350 256 M256 424 L256 358 M96 256 L162 256" stroke="url(#kBronze)" stroke-width="9"/>
+  <!-- platinum T inside -->
+  <path d="M176 200 L336 200 L336 248 L276 248 L276 342 L256 362 L236 342 L236 248 L176 248 Z"
+        fill="url(#kPlat)"/>
+</svg>

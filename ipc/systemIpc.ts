@@ -4,6 +4,7 @@ import { unwrapInventoryPayload } from "../config/shared/inventoryPayload";
 import { getLogDirectory, withScope } from "../services/logger";
 import * as itemDb from "../services/itemDatabase";
 import { setGameLocale } from "../services/gameLocale";
+import * as rewardScanner from "../services/rewardScanner";
 import * as wfmCatalog from "../services/wfmCatalog";
 import * as masteryHelper from "../services/masteryHelper";
 import * as codexProfile from "../services/codexProfile";
@@ -81,11 +82,17 @@ function register(): void {
   );
 
   // Names are localized on the way out of the database, so a language change only
-  // has to make the renderer re-pull; nothing in the database itself is rebuilt.
+  // has to make the renderer re-pull. The reward scanner is the exception: its
+  // match pool bakes the localized aliases in, so it rebuilds here.
   onAuthorized(GAME_LOCALE_UPDATED, assertMainRendererSender, (_event, rawLocale: unknown) => {
     const locale = setGameLocale(rawLocale);
     if (!locale) return;
     log.info(`[GameLocale] locale=${locale}`);
+    try {
+      rewardScanner.setRelicItems(relicService.getRelicRewardItems());
+    } catch (err) {
+      log.warn("[GameLocale] Reward scanner pool rebuild failed:", (err as Error).message);
+    }
     ctx.mainWindow?.webContents.send(ITEM_DB_UPDATED);
   });
 

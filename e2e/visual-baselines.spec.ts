@@ -8,7 +8,7 @@ import {
   type ElectronTestHarness,
 } from "./electronTestHarness";
 
-test("Settings, feedback and overlay previews keep their reviewed appearance", async () => {
+test("Settings and overlay previews keep their reviewed appearance", async () => {
   test.skip(process.platform !== "win32", "Reviewed Windows font and Chromium baselines");
   let harness: ElectronTestHarness | undefined;
   try {
@@ -35,16 +35,6 @@ test("Settings, feedback and overlay previews keep their reviewed appearance", a
       animations: "disabled",
       maxDiffPixelRatio: 0.005,
     });
-    await page.locator("#sidebar [data-feedback-open]").click();
-    const modal = page.locator("[data-feedback-modal]");
-    await expect(modal).toBeVisible();
-    await expect(page.locator("[data-feedback-metadata]")).toBeVisible();
-    await expect(modal).toHaveScreenshot("feedback.png", {
-      animations: "disabled",
-      mask: [page.locator("[data-feedback-metadata]")],
-      maxDiffPixelRatio: 0.005,
-    });
-    await page.locator("[data-feedback-cancel]").click();
     await setLayoutViewport(page, 1280, 1000);
     await page.locator('[data-tour-tab="appearance"]').click();
     await page.locator('[data-appearance-tab="overlays"]').click();

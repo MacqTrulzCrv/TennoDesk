@@ -23,6 +23,7 @@ interface MainProcessContext {
   overlayHotkeyRegistered: string | null;
   overlayInteractionHotkeyRegistered: string | null;
   rivenRescanHotkeyRegistered: string | null;
+  plannerToggleHotkeyRegistered: string | null;
   overlayInteractiveMode: boolean;
   overlayDismissedUntilMs: number;
   /** Relic era of the running fissure from EE.log ("omnia" = any era); null off-fissure. */
@@ -43,7 +44,8 @@ type PresenceKey =
 type QuotedKey =
   | "overlayHotkeyRegistered"
   | "overlayInteractionHotkeyRegistered"
-  | "rivenRescanHotkeyRegistered";
+  | "rivenRescanHotkeyRegistered"
+  | "plannerToggleHotkeyRegistered";
 
 const log = withScope("ctx");
 const presenceKeys: ReadonlySet<ContextKey> = new Set<PresenceKey>([
@@ -61,6 +63,7 @@ const quotedKeys: ReadonlySet<ContextKey> = new Set<QuotedKey>([
   "overlayHotkeyRegistered",
   "overlayInteractionHotkeyRegistered",
   "rivenRescanHotkeyRegistered",
+  "plannerToggleHotkeyRegistered",
 ]);
 
 const state: MainProcessContext = {
@@ -79,6 +82,7 @@ const state: MainProcessContext = {
   overlayHotkeyRegistered: null,
   overlayInteractionHotkeyRegistered: null,
   rivenRescanHotkeyRegistered: null,
+  plannerToggleHotkeyRegistered: null,
   overlayInteractiveMode: false,
   overlayDismissedUntilMs: 0,
   activeFissureTier: null,

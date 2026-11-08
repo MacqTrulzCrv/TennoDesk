@@ -361,7 +361,7 @@ describe("ayatanOrderWhisper", () => {
 
   it("adds warframe.market's star text to the app's whisper for a sculpture", () => {
     expect(ayatanOrderWhisper(t, "sell", order({ userName: "Seller", ...full }), name, piv)).toBe(
-      "/w Seller Hi! I want to buy: Ayatan Piv Sculpture (2 cyan, 1 amber) for 4 platinum. (warframe.market via WFHelper)",
+      "/w Seller Hi! I want to buy: Ayatan Piv Sculpture (2 cyan, 1 amber) for 4 platinum. (warframe.market via TennoDesk)",
     );
   });
 
@@ -381,13 +381,13 @@ describe("ayatanOrderWhisper", () => {
 
   it("answers a buy order with a sell message", () => {
     expect(ayatanOrderWhisper(t, "buy", order({ userName: "Buyer" }), name, piv)).toBe(
-      "/w Buyer Hi! I want to sell: Ayatan Piv Sculpture for 4 platinum. (warframe.market via WFHelper)",
+      "/w Buyer Hi! I want to sell: Ayatan Piv Sculpture for 4 platinum. (warframe.market via TennoDesk)",
     );
   });
 
   it("leaves every other item on the app's whisper", () => {
     expect(ayatanOrderWhisper(t, "sell", order({ ...full }), "Forma Blueprint", null)).toBe(
-      "/w Seller Hi! I want to buy: Forma Blueprint for 4 platinum. (warframe.market via WFHelper)",
+      "/w Seller Hi! I want to buy: Forma Blueprint for 4 platinum. (warframe.market via TennoDesk)",
     );
     expect(
       ayatanOrderWhisper(t, "sell", order({ platinum: 60, perTrade: 6 }), "Forma Blueprint", null),
