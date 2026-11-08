@@ -1,4 +1,4 @@
-import { importCache } from "./priceCache.js";
+import { importCache, exportCache } from "./priceCache.js";
 import { WFM_PRICE_BASIS } from "../../../config/shared/wfmStats.js";
 import type { CachedPriceEntry } from "./priceCache.js";
 import { importOrderSummaryCache } from "./orderSummaryCache.js";
@@ -6,6 +6,7 @@ import type { CachedOrderSummaryEntry } from "./orderSummaryCache.js";
 import { importMetaFromSnapshot, importSetCatalogFromSnapshotMeta } from "./wfmItemMeta.js";
 import type { WfmItemMeta } from "./wfmItemMeta.js";
 import { fetchBackendRaw, isBackendLiteConfigured } from "./backendLite.js";
+import { BACKEND_SERVES_WFM_PRICES } from "../../../config/shared/backendConfig.js";
 import { schedulePriceCacheRevision } from "../../stores/pricing.js";
 import { log } from "../log.js";
 import { invoke } from "../ipc.js";
@@ -39,6 +40,13 @@ function isValidSnapshot(d: unknown): d is SnapshotBlob {
 // Failures are logged and do not reject startup.
 export async function tryLoadSnapshot(): Promise<void> {
   if (!isBackendLiteConfigured()) return;
+  // The Worker cannot build a WFM price snapshot (warframe.market blocks its
+  // egress), so there is nothing to fetch. Instead restore the locally-persisted
+  // client price cache; hydration fills the rest on demand and re-persists it.
+  if (!BACKEND_SERVES_WFM_PRICES) {
+    await loadClientPriceCacheFromDisk();
+    return;
+  }
 
   try {
     let snapshot: SnapshotBlob | null = null;
@@ -142,5 +150,62 @@ export async function tryLoadSnapshot(): Promise<void> {
       "[Snapshot] Load failed - continuing without snapshot",
       err instanceof Error ? err : undefined,
     );
+  }
+}
+
+// ── Client price cache disk persistence (direct-WFM mode) ───────────────────
+// With the backend disabled for prices, the client fetches them itself; persist
+// the cache so a restart shows prices instantly instead of re-fetching hundreds
+// of items from warframe.market. The snapshot cache file is reused (prices only;
+// meta and order summaries re-fetch on demand).
+const PERSIST_INTERVAL_MS = 5 * 60 * 1000;
+let _persistTimer: ReturnType<typeof setInterval> | null = null;
+
+async function loadClientPriceCacheFromDisk(): Promise<void> {
+  try {
+    const disk = await invoke("loadSnapshotCache");
+    if (disk && isValidSnapshot(disk)) {
+      const count = importCache(disk.prices);
+      if (count > 0) {
+        // Log before signalling subscribers so a store-update hiccup cannot hide
+        // the restore trace.
+        log.info(`[PriceCache] Restored ${count} prices from disk`);
+        schedulePriceCacheRevision();
+      }
+    }
+  } catch (err) {
+    // Non-fatal: hydration fetches prices on demand.
+    log.warn("[PriceCache] Disk restore failed", err instanceof Error ? err : undefined);
+  }
+}
+
+/** Flush the live client price cache to disk as a prices-only snapshot blob. */
+export async function persistClientPriceCache(): Promise<void> {
+  if (BACKEND_SERVES_WFM_PRICES) return;
+  try {
+    const prices = exportCache();
+    if (Object.keys(prices).length === 0) return;
+    const blob: SnapshotBlob = {
+      version: 1,
+      generatedAt: Date.now(),
+      prices,
+      meta: {},
+      orderSummaries: {},
+    };
+    await invoke("saveSnapshotCache", blob);
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** Start periodic persistence plus a final flush on window unload. Idempotent. */
+export function startClientPriceCachePersistence(): void {
+  if (BACKEND_SERVES_WFM_PRICES || _persistTimer) return;
+  // An early one-shot flush captures short sessions that close before the first
+  // interval tick; the interval then keeps the on-disk copy current.
+  setTimeout(() => void persistClientPriceCache(), 90_000);
+  _persistTimer = setInterval(() => void persistClientPriceCache(), PERSIST_INTERVAL_MS);
+  if (typeof window !== "undefined") {
+    window.addEventListener("beforeunload", () => void persistClientPriceCache());
   }
 }

@@ -1,7 +1,11 @@
 import { normalizeDucats, toFiniteNumber } from "../../../config/shared/numeric.js";
 import { WFM_PRICE_BASIS } from "../../../config/shared/wfmStats.js";
 import { BACKEND_BOOTSTRAP_FAILURE_COOLDOWN_MS } from "../../../config/runtime/cacheConfig.js";
-import { backendClientHeader, BACKEND_URL } from "../../../config/shared/backendConfig.js";
+import {
+  backendClientHeader,
+  BACKEND_URL,
+  BACKEND_SERVES_WFM_PRICES,
+} from "../../../config/shared/backendConfig.js";
 import { normalizeWfmSlug } from "../../../config/shared/wfm.js";
 import { normalizeSubtype } from "../../../config/shared/wfmOrders.js";
 import type { RequestPriority } from "./wfmPrice.js";
@@ -118,6 +122,8 @@ export function isBackendLiteConfigured(): boolean {
 
 export function shouldDirectFallback(priority: BackendRequestPriority): boolean {
   if (!isBackendLiteConfigured()) return true;
+  // The Worker cannot serve WFM prices, so every price request must go direct.
+  if (!BACKEND_SERVES_WFM_PRICES) return true;
   if (FALLBACK_MODE === "always") return true;
   if (FALLBACK_MODE === "never") return false;
   return priority === "high";
@@ -237,6 +243,11 @@ async function fetchBackendJson(
   pathname: string,
 ): Promise<BackendFetchResult<Record<string, unknown>>> {
   if (!isBackendLiteConfigured()) return { status: "unavailable" };
+  // Price, meta and order-summary all route through here and all depend on the
+  // Worker reaching warframe.market, which it cannot. Report unavailable so the
+  // caller falls back to a direct client-side WFM fetch instead of caching a
+  // bogus "no data" from the Worker's 404.
+  if (!BACKEND_SERVES_WFM_PRICES) return { status: "unavailable" };
 
   const response = await requestBackend(pathname, { allowStatuses: [404] });
   if (!response) return { status: "error" };

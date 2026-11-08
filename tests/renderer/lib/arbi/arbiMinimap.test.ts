@@ -153,7 +153,7 @@ describe("resolveMinimap", () => {
     expect(map?.transform).toBe("x,z");
     expect(map?.matchedPoints.size).toBe(ALPHA_CLOUD.length);
     expect(map?.score).toBe(1);
-    expect(map?.imageUrl).toBe("https://assets.wfhelper.com/arbi-minimaps/alpha.webp");
+    expect(map?.imageUrl).toBe("https://assets.tennodesk.workers.dev/arbi-minimaps/alpha.webp");
     const placed = map?.place({ x: 16, y: 0, z: 5 });
     expect(placed?.px).toBeCloseTo(660, 6);
     expect(placed?.py).toBeCloseTo(550, 6);

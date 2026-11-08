@@ -10,6 +10,12 @@ vi.mock("../../../src/lib/wfm/backendLite.js", () => ({
   fetchBackendRaw: mocks.fetchBackendRaw,
   isBackendLiteConfigured: () => true,
 }));
+// The backend snapshot path is disabled by default in TennoDesk; force the flag
+// on so this suite keeps covering the (still-present) snapshot loader code.
+vi.mock("../../../config/shared/backendConfig.js", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../../../config/shared/backendConfig.js")>();
+  return { ...actual, BACKEND_SERVES_WFM_PRICES: true };
+});
 vi.mock("../../../src/lib/log.js", () => ({
   log: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }));

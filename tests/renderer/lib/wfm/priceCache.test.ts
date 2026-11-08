@@ -27,14 +27,14 @@ describe("priceCache", () => {
     expect(getCachedPriceState("old")).toBeNull();
   });
 
-  it("keeps snapshot prices within the worker refresh window", () => {
-    // Worker entries can be ~42h old (21h staleness + ranked prewarm walk).
+  it("keeps prices within the 12h freshness window", () => {
+    // Client-fetched prices stay valid for 12h before hydration re-fetches them.
     const imported = importCache({
       ash_prime_set: {
         status: "ok",
         priceBasis: WFM_PRICE_BASIS,
         median: 55,
-        timestamp: Date.now() - 42 * 60 * 60 * 1000,
+        timestamp: Date.now() - 6 * 60 * 60 * 1000,
       },
     });
 
@@ -45,13 +45,13 @@ describe("priceCache", () => {
     });
   });
 
-  it("ignores expired snapshot prices", () => {
+  it("ignores expired prices past the 12h window", () => {
     const imported = importCache({
       ash_prime_set: {
         status: "ok",
         priceBasis: WFM_PRICE_BASIS,
         median: 55,
-        timestamp: Date.now() - 49 * 60 * 60 * 1000,
+        timestamp: Date.now() - 13 * 60 * 60 * 1000,
       },
     });
 

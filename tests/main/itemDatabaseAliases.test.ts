@@ -227,10 +227,10 @@ describe("itemDatabase WFCD alias enrichment", () => {
     );
 
     expect(boarPrime?.imageUrl).toBe(
-      "https://assets.wfhelper.com/icons/f79f9d2264f511aceb6c4358.png",
+      "https://assets.tennodesk.workers.dev/icons/f79f9d2264f511aceb6c4358.png",
     );
     expect(boarBarrel?.imageUrl).toBe(
-      "https://assets.wfhelper.com/icons/493b1285dd73868e5da6ca92.png",
+      "https://assets.tennodesk.workers.dev/icons/493b1285dd73868e5da6ca92.png",
     );
   });
 });

@@ -8,7 +8,7 @@ import { fallbackNameFromUniqueName, sanitizeDisplayName } from "../config/share
 import { wfcdDropOrderKey } from "../config/shared/dropOrder";
 import { normalizeErrorMessage } from "../config/shared/errors";
 import { normalizeDucats } from "../config/shared/numeric";
-import { normalizeWfmSlug } from "../config/shared/wfm";
+import { ICON_MIRROR_BASE, normalizeWfmSlug } from "../config/shared/wfm";
 import type { MarketAcquisition } from "../config/shared/marketAcquisition";
 import { WIKI_ITEM_ART } from "../config/shared/wikiItemArt";
 import { WIKI_MOD_ART, WIKI_MOD_ART_BY_NAME } from "../config/shared/wikiModArt";
@@ -30,9 +30,8 @@ const log = withScope("itemDatabase");
 // Source image URLs are rewritten to the WFHelper icon mirror before they reach the renderer.
 const WFCD_CDN = "https://cdn.warframestat.us/img/";
 const BROWSE_WF = "https://browse.wf";
-const ICON_MIRROR_BASE_URL = (
-  process.env.WFHELPER_ICON_MIRROR_URL || "https://assets.wfhelper.com"
-).replace(/\/+$/, "");
+// Single source of truth lives in config/shared/wfm.ts (ICON_MIRROR_BASE).
+const ICON_MIRROR_BASE_URL = ICON_MIRROR_BASE;
 const IMAGE_LOG_CATEGORY_LIMIT = 5;
 const IMAGE_LOG_SAMPLE_LIMIT = 5;
 

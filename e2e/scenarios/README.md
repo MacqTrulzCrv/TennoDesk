@@ -19,7 +19,7 @@ assertion. Loading the warframe.market item list gets an empty fixture answer,
 so it never falls back to its own Node HTTPS request.
 
 Startup services that have nothing to do with the test get an "unavailable"
-answer on purpose, and images from `assets.wfhelper.com` get a 404. The fonts
+answer on purpose, and images from `assets.tennodesk.workers.dev` get a 404. The fonts
 ship with the app in `renderer/fonts`, so they load normally, and so does the
 catalog data packaged with the app. Use these scenarios for
 layout, loading and error states. They are not meant for screenshot baselines,

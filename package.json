@@ -1,6 +1,6 @@
 {
   "name": "tennodesk",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Warframe companion: inventory, foundry, relic and riven scanning, market orders.",
   "main": ".electron-build/main.js",
   "desktopName": "tennodesk.desktop",
@@ -69,7 +69,7 @@
     "icons:download:wfm": "electron scripts/icon-mirror/download-wfm-thumbs.cjs",
     "icons:download:enemies": "node scripts/icon-mirror/download-enemy-images.mjs",
     "icons:download:minimaps": "node scripts/icon-mirror/download-arbi-minimaps.mjs",
-    "icons:deploy": "npm --prefix backend/worker exec -- wrangler pages deploy .icon-mirror/public --project-name wfhelper-icons --branch pre-production --commit-dirty=true",
+    "icons:deploy": "npm --prefix backend/worker exec -- wrangler pages deploy .icon-mirror/public --project-name tennodesk-icons --branch main --commit-dirty=true",
     "icons:sync": "pnpm run icons:download && pnpm run icons:deploy",
     "rebuild": "electron-rebuild -f",
     "prepare": "husky",

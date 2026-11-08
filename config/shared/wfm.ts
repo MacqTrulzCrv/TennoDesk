@@ -47,7 +47,18 @@ function readEnv(name: string): string | undefined {
   return proc?.env?.[name];
 }
 
-const ICON_MIRROR_BASE = readEnv("WFHELPER_ICON_MIRROR_URL") || "https://assets.wfhelper.com";
+// ── TennoDesk icon mirror (single source of truth) ───────────────────────────
+// WFM item thumbnails sit behind a Cloudflare challenge and cannot be hotlinked,
+// so every mirror URL (thumbs here, @wfcd icons in services/itemDatabase.ts,
+// codex enemies in src/lib/codexScans.ts, arbi minimaps in arbiMinimap.ts, plus
+// the CSP in config/runtime/security.ts) derives from THIS base.
+// CUTOVER to your own Cloudflare R2: change the default below to your public R2
+// URL (or set WFHELPER_ICON_MIRROR_URL at build time) - that one switch moves
+// every runtime-derived icon. Baked data (src/data/codexScanRequirements.json)
+// is host-swapped separately at deploy; see the backend bağımsızlık planı.
+export const ICON_MIRROR_BASE = (
+  readEnv("WFHELPER_ICON_MIRROR_URL") || "https://assets.tennodesk.workers.dev"
+).replace(/\/+$/, "");
 
 // Strip content hashes so mirror keys survive WFM re-exports.
 // Non-thumbnail assets stay upstream and return null.

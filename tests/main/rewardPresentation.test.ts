@@ -22,7 +22,7 @@ function presentation() {
           setParts: [
             {
               name: "Neuroptics",
-              imageUrl: "https://assets.wfhelper.com/test.png",
+              imageUrl: "https://assets.tennodesk.workers.dev/test.png",
               ownedCount: 3,
               requiredCount: 1,
               isReward: true,

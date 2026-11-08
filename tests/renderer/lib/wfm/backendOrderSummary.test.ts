@@ -2,6 +2,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { APP_PRODUCT_NAME } from "../../../../config/shared/appMeta.js";
 
+// Covers the backend order-summary route, which TennoDesk disables by default
+// (the Worker cannot reach warframe.market). Force the flag on to keep testing
+// the still-present backend code.
+vi.mock("../../../../config/shared/backendConfig.js", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../../../config/shared/backendConfig.js")>();
+  return { ...actual, BACKEND_SERVES_WFM_PRICES: true };
+});
+
 const BACKEND_URL = "https://backend.test";
 const originalFetch = globalThis.fetch;
 

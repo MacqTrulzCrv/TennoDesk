@@ -1,4 +1,5 @@
 import { BACKEND_URL } from "../shared/backendConfig";
+import { ICON_MIRROR_BASE } from "../shared/wfm";
 
 const OPEN_EXTERNAL_ALLOWED_HOSTS: readonly string[] = Object.freeze([
   "warframe.market",
@@ -20,8 +21,9 @@ const BASE_CONNECT_SRC_ALLOWLIST: readonly string[] = Object.freeze([
   "https://content.warframe.com",
   "https://api.warframestat.us",
   "https://drops.warframestat.us",
-  // html-to-image fetch()es the arbitration tile map from the mirror into run captures.
-  "https://assets.wfhelper.com",
+  // The icon mirror origin (html-to-image fetch()es the arbitration tile map from
+  // it into run captures) is added dynamically in buildConnectSrcAllowlist so it
+  // follows ICON_MIRROR_BASE on cutover.
 ]);
 
 export function toAllowedConnectOrigin(value: unknown): string | null {
@@ -59,6 +61,13 @@ function buildConnectSrcAllowlist(): string {
   const backendOrigin = toAllowedConnectOrigin(backendUrl);
   if (backendOrigin) {
     entries.add(backendOrigin);
+  }
+
+  // Icon mirror (WFM thumbs, codex enemies, arbi minimaps) - a single switch in
+  // config/shared/wfm.ts moves this to your own R2 origin on cutover.
+  const mirrorOrigin = toAllowedConnectOrigin(ICON_MIRROR_BASE);
+  if (mirrorOrigin) {
+    entries.add(mirrorOrigin);
   }
 
   const extraRaw = String(process.env.WF_CONNECT_SRC_EXTRA || "").trim();

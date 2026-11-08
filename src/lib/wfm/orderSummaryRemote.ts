@@ -3,6 +3,8 @@ import {
   type BackendFetchResult,
   type BackendOrderSummaryPayload,
 } from "./backendLite.js";
+import { BACKEND_SERVES_WFM_PRICES } from "../../../config/shared/backendConfig.js";
+import { fetchItemOrderBookBySlug } from "./orderBook.js";
 import { normalizeWfmSlug } from "../../../config/shared/wfm.js";
 import { normalizeRankFilter } from "../../../config/shared/numeric.js";
 import { rendererOrderBookCacheKey } from "../../../config/shared/wfmCacheKeys.js";
@@ -61,6 +63,34 @@ export function resetOrderSummaryDebugState(): void {
   }
 }
 
+// When the Worker cannot serve WFM prices, derive the {wts, wtb} summary from a
+// direct warframe.market order-book fetch (reuses orderBook.ts: live v2/v1 orders,
+// its own 4-way concurrency throttle and 45s cache). The best sell is the lowest
+// online ask, the best buy the highest online bid, both per-unit.
+async function fetchDirectOrderSummary(
+  slug: string,
+  rank: number | null,
+  subtype: string | null,
+): Promise<BackendFetchResult<BackendOrderSummaryPayload>> {
+  const book = await fetchItemOrderBookBySlug(slug, { rank, subtype, priority: "background" });
+  if (book.status === "ok") {
+    const wtsUnit = book.data.sell[0]?.unitPlatinum ?? null;
+    const wtbUnit = book.data.buy[0]?.unitPlatinum ?? null;
+    return {
+      status: "ok",
+      data: {
+        slug: book.data.slug,
+        rank,
+        wts: wtsUnit != null ? Math.round(wtsUnit) : null,
+        wtb: wtbUnit != null ? Math.round(wtbUnit) : null,
+        timestamp: book.data.timestamp,
+      },
+    };
+  }
+  if (book.status === "not_found") return { status: "not_found" };
+  return { status: "unavailable" };
+}
+
 export async function fetchOrderSummaryBySlug(
   slugInput: string | null | undefined,
   options?: { rank?: number | null; subtype?: string | null },
@@ -89,7 +119,9 @@ export async function fetchOrderSummaryBySlug(
   return inFlightByKey.run(requestKey, async () => {
     await fetchLimiter.acquire();
     try {
-      const result = await fetchBackendOrderSummaryBySlug(slug, { rank, subtype });
+      const result = BACKEND_SERVES_WFM_PRICES
+        ? await fetchBackendOrderSummaryBySlug(slug, { rank, subtype })
+        : await fetchDirectOrderSummary(slug, rank, subtype);
       if (result.status === "ok") {
         breaker.noteSuccess();
         bumpCounter("backendHitOk");

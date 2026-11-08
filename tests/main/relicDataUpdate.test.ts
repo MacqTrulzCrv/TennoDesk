@@ -203,7 +203,7 @@ describe("relic data updates", () => {
     update.stopRelicDataUpdates();
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock.mock.calls[0][0]).toBe("https://api.wfhelper.com/v1/wfcd-relics");
+    expect(fetchMock.mock.calls[0][0]).toBe("https://api.tennodesk.workers.dev/v1/wfcd-relics");
     expect(rebuilt).toHaveBeenCalledTimes(1);
     expect(rewardNames).toContain("Zeta Prime Blueprint");
     const db = relics.getRelicDatabase();

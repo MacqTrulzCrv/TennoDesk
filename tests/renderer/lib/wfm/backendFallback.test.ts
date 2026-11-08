@@ -1,6 +1,16 @@
 import { WFM_PRICE_BASIS } from "../../../../config/shared/wfmStats.js";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+// This suite exercises the backend-served price/meta/order-summary path, which
+// TennoDesk disables by default (the Worker cannot reach warframe.market). The
+// code still exists, so force the flag on to keep covering it; the fork's own
+// direct-WFM default is covered in backendDirectPrices.test.ts.
+vi.mock("../../../../config/shared/backendConfig.js", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../../../config/shared/backendConfig.js")>();
+  return { ...actual, BACKEND_SERVES_WFM_PRICES: true };
+});
+
 const BACKEND_URL = "https://backend.test";
 const originalFetch = globalThis.fetch;
 

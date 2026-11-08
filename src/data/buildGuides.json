@@ -27,7 +27,10 @@
           ],
           "arcanes": ["Secondary Merciless", "Arcane Energize"],
           "archonShards": "1x Topaz (öldürmede ikincil crit şansı)",
-          "helminth": { "ability": "Nourish", "replaces": "Ballistic Battery" },
+          "helminth": {
+            "ability": "Nourish",
+            "replaces": "Ballistic Battery"
+          },
           "notesTr": "Mesa'nın tüm hasarı Peacemaker/Regulators'tan gelir; strength yerine silah çarpanlarını (Galvanized Shot, Nourish Viral) yığmak daha çok DPS verir. Shatter Shield + Adaptation + Rolling Guard hayatta tutar.",
           "sources": ["https://warframegodbuilds.com/frames/mesa/builds"]
         },
@@ -51,7 +54,10 @@
           ],
           "arcanes": ["Arcane Velocity", "Arcane Energize"],
           "archonShards": "2x Tauforged Amber (parkur hızı), 1x enerji orb etkinliği, 1x Equilibrium, 1x cast hızı",
-          "helminth": { "ability": "Nourish", "replaces": "Shooting Gallery" },
+          "helminth": {
+            "ability": "Nourish",
+            "replaces": "Shooting Gallery"
+          },
           "notesTr": "Narrow Minded + Umbral strength ile uzun Peacemaker/Shatter Shield süresi; Umbral Vitality + Adaptation + Primed Sure Footed ile Steel Path'te ayakta kalırsın. Nourish hem Viral hem enerji döngüsü.",
           "sources": [
             "https://overframe.gg/build/315285/mesa-prime/mesa-solo-steel-path-dps-and-tank/"
@@ -83,7 +89,10 @@
           ],
           "arcanes": ["Arcane Energize", "Molt Augmented"],
           "archonShards": "1x Tauforged Emerald (korozif stack), 3-4x Emerald (toxin), 1x Amber (cast hızı, opsiyonel)",
-          "helminth": { "ability": "Shooting Gallery", "replaces": "Molt" },
+          "helminth": {
+            "ability": "Shooting Gallery",
+            "replaces": "Molt"
+          },
           "notesTr": "Spores + Miasma ile Viral/korozif yayıp zırh soyar; Venom Dose silah hasarını Spore bulaşmasına çevirir. Brief Respite + Catalyzing Shields ile shield-gate dönerek hayatta kalırsın.",
           "sources": [
             "https://overframe.gg/build/876262/saryn-prime/venomous-spores-saryn-steel-path-general-use/"
@@ -109,7 +118,10 @@
           ],
           "arcanes": ["Molt Augmented", "Molt Efficiency"],
           "archonShards": "1x Tauforged Amber (cast hızı), 1x Tauforged Emerald (korozif stack), 3-4x Emerald",
-          "helminth": { "ability": "Roar", "replaces": "Molt" },
+          "helminth": {
+            "ability": "Roar",
+            "replaces": "Molt"
+          },
           "notesTr": "Level-cap dayanıklılığı: spore ölçeklenmesi + Molt Efficiency ile neredeyse bedava verimlilik; shield-gate ile ölümsüzlük. Molt Augmented uzun seansta strength yığar. (Speedrun için Molt'u tutup Miasma'yı değiştirmek de yaygın.)",
           "sources": [
             "https://overframe.gg/build/207018/saryn-prime/venomous-spores-saryn-steel-path-spores-hybrid-general-use/"
@@ -141,7 +153,10 @@
           ],
           "arcanes": ["Molt Augmented", "Arcane Energize"],
           "archonShards": "5x Tauforged Crimson (+15 strength her biri)",
-          "helminth": { "ability": "Roar", "replaces": "Will-O-Wisp" },
+          "helminth": {
+            "ability": "Roar",
+            "replaces": "Will-O-Wisp"
+          },
           "notesTr": "Çok yüksek strength (~%400+) ile Haste/Vitality/Shock mote'lerini ve Roar'u maksimuma çıkarır; Archon Intensify, ability ile iyileştirmede +%30 strength verir. Takım desteği rolü.",
           "sources": [
             "https://overframe.gg/build/888237/wisp-prime/wisps-survival-dps-support-steel-path-viable/"
@@ -167,7 +182,10 @@
           ],
           "arcanes": ["Arcane Bellicose", "Arcane Crepuscular"],
           "archonShards": "3-4x Tauforged Crimson (strength), 1x Violet (mini Equilibrium), opsiyonel 1x Amber",
-          "helminth": { "ability": "Eclipse", "replaces": "Sol Gate" },
+          "helminth": {
+            "ability": "Eclipse",
+            "replaces": "Sol Gate"
+          },
           "notesTr": "Will-O-Wisp görünmezliği + pasif ile hayatta kalır; Breach Surge spark'ları + Eclipse çarpanıyla oda temizler. 2026 Breach Surge buff'ı (18m menzil, öldürücü vuruşta garantili spark) bu build'i güçlendirdi. Yüksek forma = endgame yatırımı.",
           "sources": [
             "https://overframe.gg/build/800737/wisp-prime/wisp-steel-path-general-use-very-high-investment/"
@@ -223,7 +241,10 @@
           ],
           "arcanes": ["Arcane Guardian", "Arcane Blessing"],
           "archonShards": "2x parkur hızı, 1x zırh, 2x cast hızı",
-          "helminth": { "ability": "Petrify", "replaces": "Shadows of the Dead" },
+          "helminth": {
+            "ability": "Petrify",
+            "replaces": "Shadows of the Dead"
+          },
           "notesTr": "Desecrate + Petrify (Ore Gaze augment) iki ayrı loot kaynağı; Umbral Vitality + Adaptation + Health Conversion + sürekli health orb akışıyla Steel Path'te çok tanklı. Hem kaynak farmı hem dayanıklılık.",
           "sources": [
             "https://overframe.gg/build/267653/nekros-prime/nekros-steel-path-resource-farming/"
@@ -255,7 +276,10 @@
           ],
           "arcanes": ["Arcane Energize", "Molt Augmented"],
           "archonShards": "2x Tauforged Crimson (strength), 1x Amber (cast hızı), 1x Azure (can)",
-          "helminth": { "ability": "Nourish", "replaces": "Enthrall" },
+          "helminth": {
+            "ability": "Nourish",
+            "replaces": "Enthrall"
+          },
           "notesTr": "Yüksek strength Mesmer Skin yük sayısını artırır (her %16.67 strength = +1 yük) — neredeyse tam hasar/status bağışıklığı. Basit, ölmeyen silah platformu.",
           "sources": ["https://warframe.today/frames/revenant/"]
         },
@@ -279,7 +303,10 @@
           ],
           "arcanes": ["Molt Augmented", "Arcane Energize"],
           "archonShards": "1x Tauforged Amber (cast hızı) + istediğin kadar Crimson (strength)",
-          "helminth": { "ability": "Roar", "replaces": "Danse Macabre" },
+          "helminth": {
+            "ability": "Roar",
+            "replaces": "Danse Macabre"
+          },
           "notesTr": "Çok yüksek strength ile 19-22 Mesmer Skin yükü; Mesmer Shield augment'i yükleri takıma yayar. Roar, Reave tek vuruşu için gereken Viral stack sayısını düşürür; Equilibrium enerji döngüsünü besler.",
           "sources": [
             "https://overframe.gg/build/374539/revenant-prime/the-lich-king-revenant-general-use-endurance-steel-path-mesmer-tank-and-one-shot-reave/"
@@ -497,7 +524,10 @@
           ],
           "arcanes": ["Molt Augmented", "Arcane Energize"],
           "archonShards": "3x Tauforged Crimson (strength), 1x Amber (cast hızı)",
-          "helminth": { "ability": "Nourish", "replaces": "Rhino Charge" },
+          "helminth": {
+            "ability": "Nourish",
+            "replaces": "Rhino Charge"
+          },
           "notesTr": "Steel Path'te Iron Skin tek başına yetmez; bu build yüksek strength Roar + Nourish Viral ile takım çarpanı olmaya odaklanır. Umbral Vitality + Adaptation can havuzunu taşır. Roar, DoT'lara çift işlediğinden Slash/Viral takımlarında çok değerli.",
           "sources": ["https://warframe.fandom.com/wiki/Rhino/Prime"]
         }
@@ -527,7 +557,10 @@
           ],
           "arcanes": ["Arcane Energize", "Arcane Guardian"],
           "archonShards": "2x Crimson (strength), 1x Azure (can), 1x Amber (cast hızı)",
-          "helminth": { "ability": "Nourish", "replaces": "Primal Fury" },
+          "helminth": {
+            "ability": "Nourish",
+            "replaces": "Primal Fury"
+          },
           "notesTr": "İkiz, senin taşıdığın diğer silahla kendi başına ateş eder — iyi bir birincil ver, iki kişilik DPS al. Defy ile hasarı emip zırha çevir, Cloud Walker ile iyileş ve hızla ilerle. Nourish hem Viral hem enerji ekonomisi.",
           "sources": ["https://warframe.fandom.com/wiki/Wukong/Prime"]
         },
@@ -551,7 +584,10 @@
           ],
           "arcanes": ["Molt Augmented", "Arcane Grace"],
           "archonShards": "2x Azure (zırh/can), 2x Crimson (strength), 1x Amber",
-          "helminth": { "ability": "Nourish", "replaces": "Primal Fury" },
+          "helminth": {
+            "ability": "Nourish",
+            "replaces": "Primal Fury"
+          },
           "notesTr": "Defy'ın verdiği zırh strength ve emilen hasarla ölçeklenir; Umbral seti + Adaptation ile Steel Path'te neredeyse ölümsüz. Cloud Walker hem kaçış hem tam iyileştirme. Pasif olarak ikiz şans verir; Equilibrium enerji döngüsünü rahatlatır.",
           "sources": ["https://warframe.fandom.com/wiki/Wukong/Prime"]
         }
@@ -611,7 +647,10 @@
           ],
           "arcanes": ["Arcane Energize", "Molt Augmented"],
           "archonShards": "1x Tauforged Crimson + 1x Crimson (strength), 1x Tauforged Amber (cast hızı), 1x Azure (shield), 1x Violet",
-          "helminth": { "ability": "Roar", "replaces": "Temporal Anchor" },
+          "helminth": {
+            "ability": "Roar",
+            "replaces": "Temporal Anchor"
+          },
           "notesTr": "Blaze Artillery'yi düşmanların aktığı dar noktalara kur — strength ve süreyle ölçeklenir, Roar hasarını katlar. Grenade Fan'in alt ateşi shield uyduları (shield-gate desteği), basılı ateşi şarapnel. Dispensary takıma enerji/can/mermi dağıtır.",
           "sources": ["https://warframe.today/frames/protea/"]
         }
@@ -2905,6 +2944,1534 @@
           "arcanes": ["Melee Crescendo"],
           "notesTr": "Combo sayacı hiç sıfırlanmaz — ağır saldırı harcamaz, bu yüzden glaive patlatmaları hep tam güçte. Elektrik patlaması sersemletir; Toksin+Elektrik = Korozif. Glaive Prime'ın pratik, bakımsız alternatifi.",
           "sources": ["https://warframe.fandom.com/wiki/Xoris"]
+        }
+      ]
+    },
+    {
+      "item": "Braton Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "braton-prime-incarnon-viral-crit",
+          "name": "Incarnon Viral Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Incarnon Genesis ile Braton Prime yüksek crit şansına ulaşır; Point Strike ve Vital Sense crit çarpanını zirveye taşır. Malignant Force (Toksin) ve Rime Rounds (Soğuk) birleşip Viral verir, Hellfire ile Viral+Heat kombosu zırh/et karşısında en yüksek hasarı sağlar. Galvanized Chamber ve Vigilante Armaments çoklu atışı katlar; Primary Deadhead kafa vuruşlarında hasarı stack'ler.",
+          "sources": ["https://warframe.fandom.com/wiki/Braton_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Boltor Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "boltor-prime-viral-crit",
+          "name": "Viral Crit Hızlı",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Vile Acceleration",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Boltor Prime sağlam crit tabanıyla Point Strike ve Vital Sense'ten faydalanır. Malignant Force + Rime Rounds ile Viral kurulur, dual-stat mod oldukları için yüksek status şansı da gelir. Vile Acceleration atış hızını artırarak DPS'i yükseltir, Vigilante Armaments ile Galvanized Chamber çoklu atışı büyütür. Primary Merciless öldürdükçe hasar stack'leyip sürdürülebilir temizlik verir.",
+          "sources": ["https://warframe.fandom.com/wiki/Boltor_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Dread",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "dread-incarnon-viral-crit",
+          "name": "Incarnon Viral Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Dread'in Incarnon Genesis formu onu yarı-otomatik, yüksek crit'li bir makineye çevirir. Point Strike ve Vital Sense zaten devasa olan crit'i patlatır. Malignant Force + Rime Rounds ile Viral, Hellfire ile Viral+Heat kurulur. Galvanized Chamber ve Vigilante Armaments çoklu atışla ok başına isabeti artırır; Primary Deadhead kafa vuruşu hasarını stack'ler.",
+          "sources": ["https://warframe.fandom.com/wiki/Dread"]
+        }
+      ]
+    },
+    {
+      "item": "Paris Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "paris-prime-incarnon-viral-crit",
+          "name": "Incarnon Viral Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Paris Prime, Incarnon Genesis ile yüksek crit şansı ve zincirleme/patlama atışlarına kavuşur. Point Strike ve Vital Sense crit çekirdeğini kurar; Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat sağlar. Galvanized Chamber ve Vigilante Armaments çoklu atışı yükseltir, Primary Deadhead kafa vuruşlarında hasarı stack'leyerek Steel Path'te tek atış öldürme sağlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Paris_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Rubico Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "rubico-prime-sniper-crit",
+          "name": "Sniper Tek-Hedef Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Argon Scope"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Rubico Prime, sniper combo sayacıyla crit çarpanını katladığı için tek-hedef eritme kralıdır. Point Strike ve Vital Sense crit'i, Argon Scope kafa vuruşlarında ek crit şansı verir. Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat kurar; Galvanized Chamber çoklu atışla isabet başına hasarı artırır. Primary Deadhead kafa vuruşu hasarını stack'leyerek Eidolon ve boss eritmede zirve yapar.",
+          "sources": ["https://warframe.fandom.com/wiki/Rubico_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Vectis Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "vectis-prime-sniper-crit",
+          "name": "Sniper Tek-Atış Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Primed Fast Hands"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Vectis Prime'ın tek-mermilik şarjörü her atışta anında yeniden yüklenir, bu yüzden sniper combo'yu çok hızlı biriktirir ve devasa tek-atış crit hasarı verir. Point Strike ve Vital Sense crit çekirdeğini kurar; Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat sağlar. Primed Fast Hands atışlar arası ölü zamanı azaltır, Galvanized Chamber isabet başına hasarı büyütür. Primary Deadhead kafa vuruşlarında hasarı stack'ler.",
+          "sources": ["https://warframe.fandom.com/wiki/Vectis_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Kuva Bramma",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "kuva-bramma-viral-crit-cautious",
+          "name": "Launcher Viral Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Cautious Shot"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Kuva Bramma AoE patlama okuyla kalabalıkları siler; Cautious Shot self-stagger'ı azaltarak güvenli hızlı ateşi mümkün kılar. Point Strike ve Vital Sense yüksek crit tabanını güçlendirir. Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat sağlar; Galvanized Chamber cluster bomb isabetlerini artırır. Primary Merciless öldürdükçe hasar stack'leyerek Steel Path temizliğini sürdürür.",
+          "sources": ["https://warframe.fandom.com/wiki/Kuva_Bramma"]
+        }
+      ]
+    },
+    {
+      "item": "Kuva Ogris",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "kuva-ogris-viral-heat-status-aoe",
+          "name": "Launcher Viral+Heat Status",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Aptitude",
+            "Galvanized Chamber",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Primed Firestorm",
+            "Cautious Shot"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Kuva Ogris, Nightwatch Napalm radial fuze ile geniş AoE status yayar; Cautious Shot self-stagger'ı kesip yakın mesafede güvenli ateş sağlar. Galvanized Aptitude çok hedefte status hasarını katlar, Primed Firestorm patlama yarıçapını büyütür. Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat yığarak zırh ve et bölmesinde erime yaratır. Primary Merciless öldürdükçe temel hasarı yükseltir.",
+          "sources": ["https://warframe.fandom.com/wiki/Kuva_Ogris"]
+        }
+      ]
+    },
+    {
+      "item": "Ignis Wraith",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "ignis-wraith-viral-heat-status-beam",
+          "name": "Status Beam Viral+Heat",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Aptitude",
+            "Galvanized Chamber",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Vigilante Armaments",
+            "Primed Shred"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Ignis Wraith'in sürekli ışını geniş alanı anında kaplar ve her hedefe status yığar; Galvanized Aptitude çok hedefte status hasarını devasa büyütür. Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat kurar — kalabalıkta hızlı stack. Primed Shred punch-through ve atış hızıyla ışını duvarların ardına taşır, Galvanized Chamber ile Vigilante Armaments çoklu atış ekler. Primary Merciless sürekli öldürmeyle hasarı sürekli yüksek tutar.",
+          "sources": ["https://warframe.fandom.com/wiki/Ignis_Wraith"]
+        }
+      ]
+    },
+    {
+      "item": "Amprex",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "amprex-viral-crit-chain",
+          "name": "Crit Beam Zincir Viral",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Amprex'in zincirleyen ışını düşmandan düşmana atlayarak tüm odayı birden vurur; yüksek crit tabanı Point Strike ve Vital Sense ile eritme seviyesine çıkar. Malignant Force + Rime Rounds Viral, Hellfire ile Viral+Heat sağlar ve zincir sayesinde status bütün gruba yayılır. Galvanized Chamber ve Vigilante Armaments çoklu atışla zincir yoğunluğunu artırır; Primary Deadhead kafa vuruşlarında hasarı stack'ler.",
+          "sources": ["https://warframe.fandom.com/wiki/Amprex"]
+        }
+      ]
+    },
+    {
+      "item": "Cedo",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "cedo-viral-status-sp",
+          "name": "Viral Status Glaive-Shotgun",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Galvanized Savvy",
+            "Frigid Blast",
+            "Contagious Spread",
+            "Scattering Inferno",
+            "Blaze",
+            "Blunderbuss"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Cedo bir shotgun olduğu için rifle moddu Galvanized Aptitude yerine shotgun statü moddu Galvanized Savvy ve çoklu-atış için Galvanized Hell kullanılır. Frigid Blast + Contagious Spread ile Viral kurulur, Scattering Inferno + Blaze ile Heat eklenir; glaive diskleri zaten yüksek Slash bastığından Viral+Slash+Heat üçlüsü ortaya çıkar. Yoğun statü yükü Galvanized modlarını ve Primary Merciless'i besler, Blunderbuss ise %20 crit'i değerlendirir.",
+          "sources": ["https://warframe.fandom.com/wiki/Cedo"]
+        }
+      ]
+    },
+    {
+      "item": "Nataruk",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "nataruk-incarnon-viral-crit-sp",
+          "name": "Incarnon Viral Crit Tek-Ok",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Hunter Munitions",
+            "Malignant Force",
+            "Rime Rounds",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Nataruk bir yay olduğundan rifle modlarıyla kurulur; tam çekilmiş tek ok çok yüksek crit ile vurur. Point Strike + Vital Sense crit çekirdeğini, Hunter Munitions ise crit'lerde Slash DoT'u sağlar. Malignant Force + Rime Rounds ile Viral kurularak Slash hasarı katlanır. Primary Deadhead headshot temelli olduğu için hassas tek-ok atışıyla mükemmel uyum verir.",
+          "sources": ["https://warframe.fandom.com/wiki/Nataruk"]
+        }
+      ]
+    },
+    {
+      "item": "Sporothrix",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "sporothrix-crit-viral-dot-sp",
+          "name": "Crit Sniper Viral DoT",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Hunter Munitions",
+            "Malignant Force",
+            "Rime Rounds",
+            "Argon Scope"
+          ],
+          "arcanes": ["Primary Deadhead"],
+          "notesTr": "Sporothrix bir sniper olup her isabette yayılan Toxin DoT (spore) bırakır. Point Strike + Vital Sense + Argon Scope ile headshot'larda devasa crit üretir, Hunter Munitions crit'leri Slash DoT'a çevirir. Malignant Force + Rime Rounds ile Viral kurulur; Malignant Force ayrıca silahın kendi Toxin DoT'unu büyütür. Primary Deadhead sniper headshot'larıyla kusursuz çalışır.",
+          "sources": ["https://warframe.fandom.com/wiki/Sporothrix"]
+        }
+      ]
+    },
+    {
+      "item": "Trumna",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "trumna-crit-viral-sp",
+          "name": "Crit Viral Bombardıman",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Hunter Munitions",
+            "Malignant Force",
+            "Rime Rounds",
+            "Vile Acceleration"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Trumna'nın birincil ateşi crit temelli otomatik tüfektir ve öldürmelerle alt-ateş bombardıman cephanesini doldurur. Point Strike + Vital Sense crit çekirdeği, Hunter Munitions ise Slash DoT sağlar; Malignant Force + Rime Rounds Viral kurar. Vile Acceleration atış hızını yükselterek hem DPS'i hem de alt-ateş doldurma hızını artırır. Primary Merciless sürekli öldürmelerle hasarı katlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Trumna"]
+        }
+      ]
+    },
+    {
+      "item": "Tenet Tetra",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "tenet-tetra-crit-viral-sp",
+          "name": "Crit Viral Tenet",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Hunter Munitions",
+            "Malignant Force",
+            "Rime Rounds",
+            "Heavy Caliber"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Tenet Tetra, Tenet silahı olduğu için arcane slotu kullanabilir ve seçilen bonus element ile gelir. Point Strike + Vital Sense crit çekirdeği, Hunter Munitions Slash DoT, Malignant Force + Rime Rounds ise Viral kurar. Heavy Caliber ham hasarı yükseltir; isabet hassas olmasa da yakın-orta menzilde sorun değildir. Primary Merciless yüksek atış hızıyla hızla yığılır.",
+          "sources": ["https://warframe.fandom.com/wiki/Tenet_Tetra"]
+        }
+      ]
+    },
+    {
+      "item": "Tenet Envoy",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "tenet-envoy-crit-viral-sp",
+          "name": "Crit Viral Güdümlü Roket",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "mods": [
+            "Serration",
+            "Split Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Malignant Force",
+            "Rime Rounds",
+            "Hellfire",
+            "Vile Acceleration"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Tenet Envoy güdümlü roketler atan, crit temelli bir launcher'dır ve Tenet silahı olarak arcane kullanabilir. Point Strike + Vital Sense crit çekirdeğini kurar; Malignant Force + Rime Rounds ile Viral, Hellfire ile de patlamaya Heat ve zırh eritme eklenir. Split Chamber ikinci roket üreterek patlama alanını katlar. Primary Merciless çok vuruşlu patlamalarla hızla yığılır.",
+          "sources": ["https://warframe.fandom.com/wiki/Tenet_Envoy"]
+        }
+      ]
+    },
+    {
+      "item": "Corinth Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "corinth-prime-crit-viral-sp",
+          "name": "Crit Viral Airburst",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Blunderbuss",
+            "Ravage",
+            "Frigid Blast",
+            "Contagious Spread",
+            "Blaze",
+            "Laser Sight"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Corinth Prime yüksek crit'li pompalı shotgun ve havada patlayan airburst alt-ateşiyle öldürür. Blunderbuss + Ravage + Laser Sight ile crit çekirdeği kurulur, Galvanized Hell çoklu-atışı yükseltir. Frigid Blast + Contagious Spread Viral verir, Blaze ise ham hasar ve Heat ekler. Primary Merciless yüksek per-vuruş hasarıyla hızla katlanır.",
+          "sources": ["https://warframe.fandom.com/wiki/Corinth_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Tigris Prime",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "tigris-prime-viral-status-sp",
+          "name": "Viral Status Burst",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Galvanized Savvy",
+            "Frigid Blast",
+            "Contagious Spread",
+            "Scattering Inferno",
+            "Blaze",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Tigris Prime Duplex tetikle her iki namluyu birden boşaltır ve yüksek Slash ile statü basar. Galvanized Savvy + Galvanized Hell statü ve çoklu-atışı zirveye taşır; Frigid Blast + Contagious Spread Viral, Scattering Inferno + Blaze ise Heat ekler. Yüksek innate Slash sayesinde Viral+Slash+Heat kombinasyonu tek patlamada yığılır. Primary Merciless ani öldürmelerle hasarı katlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Tigris_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Fulmin",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "fulmin-electric-crit-status-sp",
+          "name": "Elektrik Crit/Status",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Serration",
+            "Galvanized Chamber",
+            "Point Strike",
+            "Vital Sense",
+            "Hunter Munitions",
+            "Malignant Force",
+            "Rime Rounds",
+            "High Voltage"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Fulmin innate Electric'li, full-auto modunda hızlı ateş eden crit/statü silahıdır. Point Strike + Vital Sense crit çekirdeği, Hunter Munitions Slash DoT sağlar; Malignant Force + Rime Rounds Viral kurar. High Voltage innate Electric'i büyütüp statü şansını yükseltir, böylece Viral+Electric birlikte çalışır. Primary Merciless yüksek atış hızıyla hızla yığılır.",
+          "sources": ["https://warframe.fandom.com/wiki/Fulmin"]
+        }
+      ]
+    },
+    {
+      "item": "Arca Plasmor",
+      "type": "primary",
+      "builds": [
+        {
+          "id": "arca-plasmor-radiation-viral-sp",
+          "name": "Radyasyon/Viral Status",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "mods": [
+            "Primed Point Blank",
+            "Galvanized Hell",
+            "Galvanized Savvy",
+            "Frigid Blast",
+            "Contagious Spread",
+            "Blunderbuss",
+            "Ravage",
+            "Vigilante Armaments"
+          ],
+          "arcanes": ["Primary Merciless"],
+          "notesTr": "Arca Plasmor geniş plazma mermisi atan, innate Radiation'lı statü shotgun'ıdır. Galvanized Savvy + Galvanized Hell statü ve çoklu-atışı yükseltir; Frigid Blast + Contagious Spread ile Viral eklenir, böylece innate Radiation + Viral birlikte basar. Blunderbuss + Ravage %22 crit'i değerlendirir, Vigilante Armaments ise ek çoklu-atış verir. Primary Merciless geniş isabetli öldürmelerle hızla yığılır.",
+          "sources": ["https://warframe.fandom.com/wiki/Arca_Plasmor"]
+        }
+      ]
+    },
+    {
+      "item": "Pyrana Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "pyrana-prime-viral-crit-sp",
+          "name": "Viral Crit Galvanized",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Pyrana Prime yüksek crit şansıyla klasik Galvanized crit çekirdeğini sever. Pathogen Rounds + Deep Freeze ile Viral, üstüne Primed Heated Charge ile Viral+Heat kuruyoruz; Galvanized Shot hedefteki status türü başına ek hasar verir. Secondary Merciless öldürdükçe hasarı katlar, spiral modunda akan fodder'ı eritir.",
+          "sources": ["https://warframe.fandom.com/wiki/Pyrana_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Akarius Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "akarius-prime-viral-crit-aoe-sp",
+          "name": "Viral Crit Launcher",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Fulmination"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Akarius Prime bir roket launcher olduğundan crit çekirdeğe Primed Fulmination ekleyip patlama yarıçapını büyütüyoruz; böylece Galvanized Shot ve Viral status tek atışta daha fazla düşmana yayılıyor. Pathogen Rounds + Deep Freeze Viral kurar, Galvanized Diffusion çoklu-atışı yükseltir. Secondary Merciless kill zincirinde hasarı patlatır; self-stagger için düşmana biraz mesafeli ateş et.",
+          "sources": ["https://warframe.fandom.com/wiki/Akarius_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Tenet Diplos",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "tenet-diplos-viral-crit-homing-sp",
+          "name": "Viral Crit Homing",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Tenet Diplos'un alt-ateş homing modu birden fazla hedefi kilitleyip otomatik vurur; bu yüzden crit çekirdek + Galvanized çoklu-atış her lock'ta maksimum hasar verir. Pathogen Rounds + Deep Freeze + Primed Heated Charge ile Viral+Heat. Progenitor bonusu olarak Heat veya Toxin seçersen ikinci bir element katmanı bedava gelir. Secondary Merciless sürekli kill akışında hasarı yukarı taşır.",
+          "sources": ["https://warframe.fandom.com/wiki/Tenet_Diplos"]
+        }
+      ]
+    },
+    {
+      "item": "Vasto Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "vasto-prime-viral-crit-sp",
+          "name": "Viral Crit Revolver",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Vasto Prime yüksek crit katsayılı bir revolverdir; tek tek nişancı atışlarla kafadan vurmaya elverişli. Primed Pistol Gambit + Primed Target Cracker ile crit, Pathogen Rounds + Deep Freeze + Primed Heated Charge ile Viral+Heat. Secondary Deadhead headshot'larda crit hasarını stack'leyerek bu revolveri tek-atış ölüm makinesine çevirir.",
+          "sources": ["https://warframe.fandom.com/wiki/Vasto_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Aklex Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "aklex-prime-viral-crit-sp",
+          "name": "Viral Crit Revolver",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Aklex Prime akimbo Lex Prime'dır: devasa isabet başına hasar ve yüksek crit. Crit çekirdeği + Galvanized çoklu-atış ile her mermi ağır vurur; Pathogen Rounds + Deep Freeze + Primed Heated Charge Viral+Heat kurar. Secondary Deadhead headshot crit damage stack'iyle tek mermide ağır birimleri düşürür. Nişan alıp kafadan vurmaya odaklan.",
+          "sources": ["https://warframe.fandom.com/wiki/Aklex_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Knell Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "knell-prime-headshot-crit-sp",
+          "name": "Headshot Crit Viral",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Galvanized Crosshairs",
+            "Primed Target Cracker",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Knell Prime headshot kill'lerde şarjörü doldurup buff verir; bu yüzden Galvanized Crosshairs (headshot kill'de stack'leyen crit şansı) + Secondary Deadhead (headshot crit damage) ikilisi silahın DNA'sıyla birebir uyumludur. Pathogen Rounds + Deep Freeze + Primed Heated Charge ile Viral+Heat. Harrow sinerjisi: Knell headshot'ları Harrow'un enerji/ateş hızı ekonomisini besler, Covenant ile crit tavana vurur. Çoklu-atış yerine isabetli tek-mermi nişancılığına güven.",
+          "sources": ["https://warframe.fandom.com/wiki/Knell_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Euphona Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "euphona-prime-slug-crit-sp",
+          "name": "Slug Crit Viral",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Euphona Prime hibrit bir silahtır: slug atışı devasa crit ve headshot çarpanı taşırken diğer mod shotgun saçması atar. Build'i slug crit'e optimize ediyoruz; Primed Pistol Gambit + Primed Target Cracker ile crit, Pathogen Rounds + Deep Freeze + Primed Heated Charge ile Viral+Heat. Secondary Deadhead slug headshot'larında crit hasarını katlar. Galvanized Diffusion saçma modunda da fazladan pellet sağlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Euphona_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Akbolto Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "akbolto-prime-viral-hybrid-sp",
+          "name": "Viral Status/Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Akbolto Prime yüksek ateş hızıyla hem iyi status hem iyi crit sunan hibrit bir akimbo bolt tabancasıdır. Galvanized Shot + hızlı atışlar Viral status'u çabuk yığar, crit çekirdek de her mermiyi sertleştirir. Pathogen Rounds + Deep Freeze + Primed Heated Charge ile Viral+Heat. Secondary Merciless yoğun kill akışında hasarı patlatır; fodder temizlemede çok verimli.",
+          "sources": ["https://warframe.fandom.com/wiki/Akbolto_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Hikou Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "hikou-prime-viral-status-sp",
+          "name": "Viral Status Spread",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Primed Heated Charge"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Hikou Prime çok yüksek atış hızlı fırlatma shuriken'idir ve status'a yatkındır; Galvanized Shot + hızlı çoklu-isabet Viral yığınlarını saniyeler içinde kurar. Pathogen Rounds + Deep Freeze + Primed Heated Charge ile Viral+Heat, crit çekirdek de hasar tabanını yükseltir. Secondary Encumber öldürdükçe rastgele element status'u yayarak kalabalıkları zincirleme çürütür; kalabalık Steel Path odalarında parlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Hikou_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Pox",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "pox-corrosive-status-sp",
+          "name": "Korozif Tam Status",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pistol Pestilence",
+            "Pathogen Rounds",
+            "Jolt",
+            "Convulsion",
+            "Lethal Torrent"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Pox fırlatılan, geniş alana gaz bulutu yayan bir status silahıdır; saf hasar yerine prosedür yığmaya odaklanır. Toksin (Pistol Pestilence + Pathogen Rounds) ile elektrik (Jolt + Convulsion) birleşince Corrosive çıkar ve Steel Path zırhını soyar. Galvanized Shot ile status başına hasar katlanır, Secondary Encumber her isabette ek status atar. Crit yok, bu yüzden tüm slotlar status/çoğaltmaya ayrıldı.",
+          "sources": ["https://warframe.fandom.com/wiki/Pox"]
+        }
+      ]
+    },
+    {
+      "item": "Zakti Prime",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "zakti-prime-viral-status-sp",
+          "name": "Viral Status Açıcı",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pistol Pestilence",
+            "Pathogen Rounds",
+            "Frostbite",
+            "Deep Freeze",
+            "Lethal Torrent"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Zakti Prime doğal toksin hasarı ve alt-ateş gaz bombasıyla hızlı status yığar; burada Toksin (Pistol Pestilence + Pathogen Rounds) ve Soğuk (Frostbite + Deep Freeze) birleşerek Viral verir ve düşman can hasarını 2.75x'e kadar artırır. Yüksek status şansı sayesinde alt-ateş bombası düşmanları sersemletip melee finisher'a açar (kılıç-açıcı rolü). Galvanized Shot ve Secondary Encumber status hasarını ve ek prosedürleri besler.",
+          "sources": ["https://warframe.fandom.com/wiki/Zakti_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Cyanex",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "cyanex-corrosive-homing-sp",
+          "name": "Korozif Homing Status",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pistol Pestilence",
+            "Pathogen Rounds",
+            "Jolt",
+            "Convulsion",
+            "Lethal Torrent"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Cyanex, hedefe kilitlenen (homing) mermileriyle nişan almadan bile isabet sağlayan bir status silahıdır. Toksin + Elektrik birleşimi Corrosive üretir ve Steel Path zırhını eritir; homing sayesinde her mermi status atmaya devam eder. Galvanized Diffusion + Lethal Torrent çoklu-atışı yükseltir, Galvanized Shot status hasarını katlar, Secondary Encumber ek prosedür yığar.",
+          "sources": ["https://warframe.fandom.com/wiki/Cyanex"]
+        }
+      ]
+    },
+    {
+      "item": "Kompressa",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "kompressa-viral-status-sp",
+          "name": "Viral Kabarcık Status",
+          "focus": "steelpath",
+          "roles": ["dps", "support"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Galvanized Shot",
+            "Pistol Pestilence",
+            "Pathogen Rounds",
+            "Frostbite",
+            "Deep Freeze",
+            "Galvanized Acceleration"
+          ],
+          "arcanes": ["Secondary Encumber"],
+          "notesTr": "Kompressa, patlayınca status yayan kabarcık mermiler fırlatır; yüksek ateş hızı ve çoklu-atışla devasa prosedür yoğunluğu kurar. Toksin + Soğuk ile Viral verip can hasarını büyütür. Galvanized Acceleration hem ateş hızını hem status şansını artırarak kabarcık spam'ini besler; Galvanized Shot ve Secondary Encumber status hasarını katlar. Kuva silahı değildir ama status kapasitesi benzer biçimde patlayıcıdır.",
+          "sources": ["https://warframe.fandom.com/wiki/Kompressa"]
+        }
+      ]
+    },
+    {
+      "item": "Sepulcrum",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "sepulcrum-viral-crit-sp",
+          "name": "Viral Crit Lock-On",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Lethal Torrent",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Sepulcrum yüksek crit şansına sahiptir ve alt-ateşi, hedef işaretleyip güdümlü füzeler kilitleyerek (lock-on) devreye girer. Primed Pistol Gambit + Primed Target Cracker crit çekirdeğini kurar, Toksin + Soğuk Viral verip can hasarını büyütür. Galvanized Shot status hasarını ekler, Secondary Deadhead headshot'larda büyük hasar bonusu yığarak füzeleri birer infaza çevirir.",
+          "sources": ["https://warframe.fandom.com/wiki/Sepulcrum"]
+        }
+      ]
+    },
+    {
+      "item": "Prisma Angstrum",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "prisma-angstrum-viral-crit-sp",
+          "name": "Viral Crit Füze",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Pathogen Rounds",
+            "Deep Freeze",
+            "Lethal Torrent",
+            "Cautious Shot"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Prisma Angstrum, şarjlı roketler fırlatan bir patlayıcı pistoldür; iyi crit ve status kombinasyonu sunar. Primed Pistol Gambit + Primed Target Cracker crit kurar, Toksin + Soğuk Viral verir. Cautious Shot, patlamanın geri tepmesini (self-stagger) büyük ölçüde azaltarak yakın menzilde kendine düşmeni önler. Secondary Merciless, öldürdükçe hasarı istifleyerek sürüleri temizler.",
+          "sources": ["https://warframe.fandom.com/wiki/Prisma_Angstrum"]
+        }
+      ]
+    },
+    {
+      "item": "Kuva Twin Stubbas",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "kuva-twin-stubbas-viral-crit-sp",
+          "name": "Viral Crit Tam-Oto",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Lethal Torrent",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Kuva Twin Stubbas, yüksek ateş hızlı tam-otomatik bir crit silahıdır ve Kuva bonus elementi (ör. +%60 Heat) hasara doğrudan katkı verir. Primed Pistol Gambit + Primed Target Cracker crit çekirdeğini kurar; Toksin + Soğuk Viral verir, Kuva elementin Heat ise Viral+Heat meta kombosu çıkar. Galvanized Shot status hasarını ekler, Secondary Merciless öldürdükçe hasarı yükseltir.",
+          "sources": ["https://warframe.fandom.com/wiki/Kuva_Twin_Stubbas"]
+        }
+      ]
+    },
+    {
+      "item": "Tenet Spirex",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "tenet-spirex-viral-crit-sp",
+          "name": "Viral Crit Puncture",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Lethal Torrent",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Galvanized Shot",
+            "Pathogen Rounds",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Deadhead"],
+          "notesTr": "Tenet Spirex yüksek crit şansı, ağırlıklı Puncture hasarı ve öldürdüğünde ceset patlatan bir yarı-otomatik nişancı tabancadır; Tenet silahı olarak Lich arcane yuvasıyla uyumludur. Primed Pistol Gambit + Primed Target Cracker crit'i tavana taşır, Toksin + Soğuk Viral verir. Puncture zaten zırhlı hedeflere iyidir; Secondary Deadhead headshot hasarını istifleyerek tek-atış infazları sağlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Tenet_Spirex"]
+        }
+      ]
+    },
+    {
+      "item": "Secura Dual Cestra",
+      "type": "secondary",
+      "builds": [
+        {
+          "id": "secura-dual-cestra-viral-crit-sp",
+          "name": "Viral Crit Tam-Oto",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "mods": [
+            "Hornet Strike",
+            "Galvanized Diffusion",
+            "Barrel Diffusion",
+            "Lethal Torrent",
+            "Primed Pistol Gambit",
+            "Primed Target Cracker",
+            "Pathogen Rounds",
+            "Deep Freeze"
+          ],
+          "arcanes": ["Secondary Merciless"],
+          "notesTr": "Secura Dual Cestra, yüksek ateş hızlı tam-otomatik ikiz silahtır; üç ayrı çoklu-atış modu (Galvanized Diffusion + Barrel Diffusion + Lethal Torrent) mermi duvarı kurarak crit şansını pratikte katlar. Primed Pistol Gambit + Primed Target Cracker crit çekirdeğini, Toksin + Soğuk ise Viral'ı sağlar. Secondary Merciless öldürdükçe hasarı istifleyerek sürekli ateşi ödüllendirir.",
+          "sources": ["https://warframe.fandom.com/wiki/Secura_Dual_Cestra"]
+        }
+      ]
+    },
+    {
+      "item": "Gram Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "gram-prime-heavy-crit-sp",
+          "name": "Heavy Attack Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 6,
+          "stance": "Tempo Royale",
+          "mods": [
+            "Primed Pressure Point",
+            "Organ Shatter",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Condition Overload",
+            "Molten Impact",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Gram Prime'ın yüksek crit multiplier'ını (2.6x) heavy attack'e yönlendiren bir build. Corrupt Charge ile başlangıç combo dolu gelir, Killing Blow heavy hasarı patlatır, Sacrificial Steel + Organ Shatter crit'i tavana taşır. Molten Impact + Condition Overload ile Heat proc hem zırh söker hem CO çarpanını besler, Primed Reach ise Heavy Blade'in salınımını genişletir. Melee Crescendo Tennokai kill'lerinde combo başına melee hasarı yığar.",
+          "sources": ["https://warframe.fandom.com/wiki/Gram_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Guandao Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "guandao-prime-crit-sp",
+          "name": "Polearm Crit Combo",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Shimmering Blight",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Primed Fever Strike",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Klasik polearm crit çekirdeği: Blood Rush combo sayacıyla crit şansını katlar, Weeping Wounds status şansını, Berserker Fury ise saldırı hızını yükseltir. Condition Overload aktif status türü başına hasarı çarparken Primed Fever Strike Toksin ekleyip kalkanı deler ve CO'yu besler. Primed Reach ile geniş süpürme alanı Steel Path'te kalabalıkları temizler; Melee Duplicate ek vuruşlarla DPS'i artırır.",
+          "sources": ["https://warframe.fandom.com/wiki/Guandao_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Pennant",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "pennant-crit-sp",
+          "name": "Viral Crit Rapier",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Vulpine Mask",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Vicious Frost",
+            "Virulent Scourge"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Pennant'ın Incarnon'u yoktur (doğrulandı), bu yüzden saf crit/combo rapier build'i en güçlüsüdür. Rapier kısa bir silah olduğundan Primed Reach yerine iki adet 60/60 dual-stat mod kullanıldı: Vicious Frost + Virulent Scourge, Soğuk+Toksin birleşip Viral verir ve iki ayrı status türüyle Condition Overload'u besler. Blood Rush + Berserker Fury combo'yla crit ve hızı tavana çıkarır; Melee Duplicate ek vuruş sağlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Pennant"]
+        }
+      ]
+    },
+    {
+      "item": "Nami Skyla Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "nami-skyla-prime-influence-sp",
+          "name": "Melee Influence Electric",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Swirling Tiger",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Shocking Touch",
+            "Gladiator Might"
+          ],
+          "arcanes": ["Melee Influence"],
+          "notesTr": "Nami Skyla Prime'ın yüksek status şansını Melee Influence ile AoE'ye çeviren build. Tek element olarak Shocking Touch (Elektrik) kullanıldı: başka element eklenmedi ki Elektrik status saf kalsın, böylece Melee Influence her Elektrik proc'unda radyal Elektrik hasarı yayar. Gladiator Might, Blood Rush ile set sinerjisi kurarak combo başına ekstra crit şansı verir; Weeping Wounds ve CO status yoğunluğunu ve hasar çarpanını büyütür.",
+          "sources": ["https://warframe.fandom.com/wiki/Nami_Skyla_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Dual Keres Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "dual-keres-prime-crit-slash-sp",
+          "name": "Viral Slash Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Swirling Tiger",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Vicious Frost",
+            "Virulent Scourge"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Dual Keres Prime yüksek crit (32%/2.6x) ve ağır Slash hasarına sahip; bu yüzden Viral+Slash slash-bleed build'i idealdir. Vicious Frost + Virulent Scourge, Soğuk+Toksin ile Viral verir — Viral düşman can hasarını %325'e kadar artırarak slash kanamalarını katlar. Blood Rush + Weeping Wounds + Berserker Fury combo'yla crit, status ve hızı yükseltir; kısa dual sword olduğu için Primed Reach kullanılmadı.",
+          "sources": ["https://warframe.fandom.com/wiki/Dual_Keres_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Arca Titron",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "arca-titron-heavy-crit-sp",
+          "name": "Battery Heavy Slam",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 6,
+          "stance": "Crushing Ruin",
+          "mods": [
+            "Primed Pressure Point",
+            "Organ Shatter",
+            "Sacrificial Steel",
+            "Killing Blow",
+            "Corrupt Charge",
+            "Condition Overload",
+            "Molten Impact",
+            "True Steel"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Arca Titron normal vuruşlarla batarya doldurur; heavy slam o enerjiyi dev bir radyal crit patlamasına çevirir. Sacrificial Steel + True Steel + Organ Shatter crit şansını ve multiplier'ı tavana çıkarır, Killing Blow heavy hasarı, Corrupt Charge ise başlangıç combo'yu doldurup ilk slam'i güçlendirir. Molten Impact + Condition Overload zırhı eritip hasar çarpanını büyütür. Hammer kısa erişimli olduğundan Primed Reach kullanılmadı; Melee Crescendo heavy kill'lerde hasar yığar.",
+          "sources": ["https://warframe.fandom.com/wiki/Arca_Titron"]
+        }
+      ]
+    },
+    {
+      "item": "Lesion",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "lesion-status-toxin-sp",
+          "name": "Toxin Status Polearm",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Bleeding Willow",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Primed Fever Strike",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Lesion pasifi sayesinde status aktifken +%15 saldırı hızı ve +%100 status süresi alır; innate Toksin proc'u da ekler. Primed Fever Strike ile Toksin yüklenir — Toksin kalkanı bypass eder ve innate Toksin ile birleşip yoğun DoT yapar. Weeping Wounds + yüksek base status Condition Overload'u maksimize eder, Blood Rush crit'i besler, Primed Reach polearm süpürmesini genişletir.",
+          "sources": ["https://warframe.fandom.com/wiki/Lesion"]
+        }
+      ]
+    },
+    {
+      "item": "Zenistar",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "zenistar-status-disk-sp",
+          "name": "Viral Disk Status",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "stance": "Tempo Royale",
+          "mods": [
+            "Primed Pressure Point",
+            "Killing Blow",
+            "Condition Overload",
+            "Drifting Contact",
+            "Vicious Frost",
+            "Virulent Scourge",
+            "Weeping Wounds",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Zenistar'ın heavy attack'i, yere sabitlenen ve etrafa sürekli status yayan bir disk fırlatır; bu yüzden status yoğunluğu önceliklidir. Killing Blow disk/heavy hasarını büyütür, Vicious Frost + Virulent Scourge Viral verir, Drifting Contact status süresini ve combo'yu uzatır, Weeping Wounds + CO status başına hasarı patlatır. Heavy Blade olduğu için Primed Reach hem disk alanını hem normal süpürmeyi genişletir; disk bir alan-kontrol utility'si olarak da çalışır.",
+          "sources": ["https://warframe.fandom.com/wiki/Zenistar"]
+        }
+      ]
+    },
+    {
+      "item": "Orthos Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "orthos-prime-crit-sp",
+          "name": "Polearm Crit Combo",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Shimmering Blight",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Primed Fever Strike",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Orthos Prime geniş süpürme alanı ve sağlam crit tabanıyla Steel Path kalabalık temizliğinin klasiğidir. Blood Rush combo ile crit'i, Weeping Wounds status'u, Berserker Fury hızı yükseltir; Primed Fever Strike Toksin ekleyip kalkanı deler ve Condition Overload'u besler. Primed Reach polearm erişimini daha da büyütür, Melee Duplicate ek vuruşlarla DPS katar.",
+          "sources": ["https://warframe.fandom.com/wiki/Orthos_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Tatsu Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "tatsu-prime-crit-sp",
+          "name": "Two-Handed Nikana Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Wise Razor",
+          "mods": [
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Condition Overload",
+            "Organ Shatter",
+            "Primed Pressure Point",
+            "Primed Fever Strike",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Tatsu Prime bir Two-Handed Nikana'dır (Dual Nikana değil), tek geçerli stance'i Wise Razor'dır. Sevagoth'un imza silahı olduğundan Tatsu kill'leri Sevagoth'un pasifini ve Shadow/Death's Harvest ekonomisini besler; ayrıca kılıfta combo yükledikçe fırlatma saldırısı güçlenir. Crit çekirdeği Blood Rush + Berserker Fury ile kurulur, Primed Fever Strike Toksin'i CO ile birleştirir. Uzun erişimli bir silah olduğundan Primed Reach süpürmeyi genişletir.",
+          "sources": ["https://warframe.fandom.com/wiki/Tatsu_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Paracesis",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "paracesis-crit-heavy-sp",
+          "name": "Crit Heavy Blade",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Tempo Royale",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Paracesis geniş Heavy Blade erişimiyle Tempo Royale'de büyük gruplari biçer; innate Sentient bonusu Murmur/Sentient düşmanlarda ekstra hasar verir. Blood Rush + Weeping Wounds combo ilerledikçe crit ve status'u tavana vurdurur, Condition Overload da Toxin proc'uyla katlanır. Primed Reach devasa menzil sağlar, heavy attack vuruşları tek hedefi anında siler.",
+          "sources": ["https://warframe.fandom.com/wiki/Paracesis"]
+        }
+      ]
+    },
+    {
+      "item": "Masseter Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "masseter-prime-crit-status-sp",
+          "name": "Crit-Status Scythe",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Reaping Spiral",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Masseter Prime yüksek status şansını (0.36) Weeping Wounds ile birleştirerek saniyeler içinde birçok proc yığar, bu da Condition Overload'u uç noktaya taşır. Blood Rush ve Berserker Fury combo yükseldikçe crit'i garantiler; Reaping Spiral AoE spin saldırılarıyla kalabalıkları temizler. Primed Reach scythe menzilini genişletir, Toxin elementi armor'lı etlere karşı güçlü kalır.",
+          "sources": ["https://warframe.fandom.com/wiki/Masseter_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Venka Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "venka-prime-crit-claws-sp",
+          "name": "Crit Claws",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Four Riders",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Venka Prime'ın yüksek crit (0.32) ve çok hızlı saldırı hızı, Blood Rush ile Berserker Fury'yi mükemmel eşleştirir; combo sayacı anında zirveye çıkar ve her vuruş red crit'e döner. Four Riders agresif pençe comboları sunar, Condition Overload birikmiş status'larla hasarı katlar. Kısa pençe menzili yüzünden Primed Reach kritik; Valkyr'in Hysteria bonuslarıyla (pençe sinerjisi) çıplak elle de ölümcüldür.",
+          "sources": ["https://warframe.fandom.com/wiki/Venka_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Ninkondi Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "ninkondi-prime-status-nunchaku-sp",
+          "name": "Status Nunchaku",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Atlantis Vulcan",
+          "mods": [
+            "Primed Pressure Point",
+            "Weeping Wounds",
+            "Blood Rush",
+            "Condition Overload",
+            "Organ Shatter",
+            "Berserker Fury",
+            "Primed Fever Strike",
+            "Primed Reach"
+          ],
+          "arcanes": ["Melee Influence"],
+          "notesTr": "Ninkondi Prime innate Electricity hasarı ve 0.36 status şansıyla tam bir status makinesidir; Primed Fever Strike eklenen Toxin ile Corrosive oluşturup zırhı eritir. Weeping Wounds combo'yla status şansını fırlatır, Condition Overload her farklı proc başına hasarı yığar. Melee Influence electric proc'larını düşmanlar arası yayarak grup temizliğini uçurur; Blood Rush ile crit de devrede kalır.",
+          "sources": ["https://warframe.fandom.com/wiki/Ninkondi_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Redeemer Prime",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "redeemer-prime-gunblade-crit-sp",
+          "name": "Gunblade Viral Crit",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Bullet Dance",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Fever Strike",
+            "North Wind"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Redeemer Prime bir Gunblade'dir; menzilli atışları melee olarak sayılır, bu yüzden Primed Reach yerine çift element (Toxin + Cold = Viral) kullanılır. Primed Fever Strike ve North Wind Viral'i oluşturup hasar çarpanını büyütür, Blood Rush + Organ Shatter ateşli crit'i tavana taşır. Bullet Dance stance'i geniş saçmalı patlamalar sağlar; Condition Overload proc'larla hasarı katlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Redeemer_Prime"]
+        }
+      ]
+    },
+    {
+      "item": "Sarpa",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "sarpa-gunblade-armorstrip-sp",
+          "name": "Shattering Impact Armor-Strip",
+          "focus": "steelpath",
+          "roles": ["dps", "utility"],
+          "forma": 4,
+          "stance": "High Noon",
+          "mods": [
+            "Shattering Impact",
+            "Primed Pressure Point",
+            "Condition Overload",
+            "Weeping Wounds",
+            "Blood Rush",
+            "Organ Shatter",
+            "Primed Fever Strike",
+            "North Wind"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Sarpa'nın asıl değeri Shattering Impact ile her Impact vuruşunda hedefin zırhını kalıcı olarak 6 azaltmasıdır; Gunblade atışları hızlı tetiklendiği için birkaç saniyede zırhı tamamen söker. Düşük crit'i (0.14) telafi etmek için Toxin + Cold (Viral) ve Condition Overload status hasarına yaslanır, Weeping Wounds proc şansını yükseltir. Zırh sıfırlandıktan sonra tüm takımın hasarı fırlar; bir atışla büyük hedefleri açma aracı olarak kullanın.",
+          "sources": ["https://warframe.fandom.com/wiki/Sarpa"]
+        }
+      ]
+    },
+    {
+      "item": "Quassus",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "quassus-crit-slam-sp",
+          "name": "Crit Slam Nikana",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Wise Razor",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Quassus bir Two-Handed Nikana olup yüksek crit (0.30) ve geniş menziliyle Wise Razor altında hem combo hem slam saldırılarında parlar; slam vuruşları yayılan kesici dalga üretir. Blood Rush combo ile crit'i kırmızıya boyar, Organ Shatter crit hasarını büyütür. Primed Reach menzili devasa kılar, Condition Overload ve Toxin birikmiş status'larla hasarı katlar.",
+          "sources": ["https://warframe.fandom.com/wiki/Quassus"]
+        }
+      ]
+    },
+    {
+      "item": "Kuva Shildeg",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "kuva-shildeg-heavy-hammer-sp",
+          "name": "Heavy Attack Hammer",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 5,
+          "stance": "Crushing Ruin",
+          "mods": [
+            "Primed Pressure Point",
+            "Organ Shatter",
+            "Killing Blow",
+            "Blood Rush",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike",
+            "Weeping Wounds"
+          ],
+          "arcanes": ["Melee Crescendo"],
+          "notesTr": "Kuva Shildeg innate element bonusu ve 0.31 crit'iyle güçlü bir heavy-attack hammer'dır; Killing Blow heavy saldırı hasarını ve windup hızını artırır. Önce Blood Rush + Weeping Wounds ile combo yığıp sonra Tennokai/heavy vuruşuyla devasa tek darbe hasarı patlatın; Organ Shatter crit multiplier'ı büyütür. Melee Crescendo combo biriktikçe güç kazandırır, Crushing Ruin slam ve wide-swing comboları sunar.",
+          "sources": ["https://warframe.fandom.com/wiki/Kuva_Shildeg"]
+        }
+      ]
+    },
+    {
+      "item": "Broken War",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "broken-war-crit-sword-sp",
+          "name": "Crit Sword",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Crimson Dervish",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Duplicate"],
+          "notesTr": "Broken War, 0.35 ile sınıfının en yüksek crit şanslarından birine sahip bir kılıçtır; Blood Rush combo'yla her vuruşu red crit'e çevirir ve Organ Shatter hasarı katlar. Crimson Dervish uzun, agresif combo zincirleriyle crit'i sürekli tutar. Primed Reach kısa kılıç menzilini pratik hale getirir, Condition Overload ve Toxin proc'larla hasarı yükseltir.",
+          "sources": ["https://warframe.fandom.com/wiki/Broken_War"]
+        }
+      ]
+    },
+    {
+      "item": "Cobra & Crane",
+      "type": "melee",
+      "builds": [
+        {
+          "id": "cobra-crane-crit-status-sp",
+          "name": "Crit-Status Sword & Shield",
+          "focus": "steelpath",
+          "roles": ["dps"],
+          "forma": 4,
+          "stance": "Final Harbinger",
+          "mods": [
+            "Primed Pressure Point",
+            "Blood Rush",
+            "Weeping Wounds",
+            "Berserker Fury",
+            "Organ Shatter",
+            "Condition Overload",
+            "Primed Reach",
+            "Primed Fever Strike"
+          ],
+          "arcanes": ["Melee Influence"],
+          "notesTr": "Cobra & Crane yüksek status (0.36) Sword & Shield silahıdır; Weeping Wounds ile çok sayıda proc yığıp Condition Overload'u uç seviyeye çıkarır. Blood Rush + Berserker Fury combo ile crit'i de garantiler, Final Harbinger'ın kalkan comboları geniş alan hasarı ve stagger sağlar. Melee Influence electric proc'larını yayarak kalabalıkları siler; Primed Reach menzili büyütür, Toxin elementi armor'lı etlere karşı güçlüdür.",
+          "sources": ["https://warframe.fandom.com/wiki/Cobra_%26_Crane"]
         }
       ]
     }

@@ -10,7 +10,7 @@ import { watchBaroWishlistArrivals } from "../stores/baro.js";
 import { configureRelicRuntimeCacheFingerprint, warmupPrimeRewardPriceCache } from "./relic.js";
 import { exportRankedHotset, importRankedHotset } from "./wfm/rankedHotset.js";
 import { refreshWfmPresence } from "./wfm/presence.js";
-import { tryLoadSnapshot } from "./wfm/snapshotLoader.js";
+import { tryLoadSnapshot, startClientPriceCachePersistence } from "./wfm/snapshotLoader.js";
 import { marketSession } from "../stores/market.js";
 import { log } from "./log.js";
 // Tells main the game language on import, ahead of the item-DB pull below, so that
@@ -122,6 +122,9 @@ export function initStartup(options: StartupOptions = {}): StartupHandle {
         const stageStart = Date.now();
         await tryLoadSnapshot();
         if (disposed) return;
+        // In direct-WFM mode this starts periodic disk persistence of the
+        // client-fetched price cache (no-op when the backend serves prices).
+        startClientPriceCachePersistence();
         profileStage("snapshot:load", stageStart);
       } catch {
         // tryLoadSnapshot never throws, this is just a safety net

@@ -1,0 +1,21 @@
+{
+	// Static-asset worker that serves the TennoDesk icon mirror from a workers.dev
+	// URL (https://assets.<subdomain>.workers.dev). We serve it through a Worker
+	// instead of Cloudflare Pages because some ISPs (e.g. in Turkey) reset TLS to
+	// *.pages.dev at the SNI layer, which would break icon loading for those users;
+	// *.workers.dev is not affected. Static-asset requests are free and do not
+	// count as Worker invocations.
+	"$schema": "../worker/node_modules/wrangler/config-schema.json",
+	"name": "assets",
+	"compatibility_date": "2026-03-01",
+	"workers_dev": true,
+	"assets": {
+		"directory": "../../.icon-mirror/public",
+		// Icons are immutable content-hashed files; a miss should just 404, never
+		// fall back to an index document.
+		"not_found_handling": "none",
+	},
+	"observability": {
+		"enabled": false,
+	},
+}

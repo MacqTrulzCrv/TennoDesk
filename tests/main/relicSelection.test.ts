@@ -56,7 +56,7 @@ describe("relic selection planner", () => {
     const rewards = Array.from({ length: 7 }, (_, index) => ({
       name: `Test reward ${index}`,
       uniqueName: index === 1 ? null : blueprint,
-      imageUrl: "https://assets.wfhelper.com/test.png",
+      imageUrl: "https://assets.tennodesk.workers.dev/test.png",
       urlName: `test_reward_${index}`,
       chance: shape?.chances?.[index] ?? 100 / 7,
       ducats: 15,
@@ -137,7 +137,7 @@ describe("relic selection planner", () => {
     expect(first.rows[0].rewards[0]).toMatchObject({
       name: "Test reward 0",
       ownedCount: 2,
-      imageUrl: "https://assets.wfhelper.com/test.png",
+      imageUrl: "https://assets.tennodesk.workers.dev/test.png",
     });
     expect(Object.keys(first.rows[0].rewards[0]).sort()).toEqual([
       "chance",

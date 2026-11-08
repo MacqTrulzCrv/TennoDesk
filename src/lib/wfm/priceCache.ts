@@ -1,8 +1,9 @@
 import { isCacheEntryFresh } from "../../../config/shared/numeric.js";
 import { WFM_PRICE_BASIS } from "../../../config/shared/wfmStats.js";
 
-// worker entries can be ~42h old (21h staleness + prewarm walk); matches ORDER_SUMMARY_STALE_TTL_MS
-const PRICE_TTL_MS = 48 * 60 * 60 * 1000;
+// Client-fetched prices (direct from warframe.market) are refreshed on a 12h
+// freshness window: an entry older than this is dropped so hydration re-fetches.
+const PRICE_TTL_MS = 12 * 60 * 60 * 1000;
 const NO_DATA_TTL_MS = 12 * 60 * 60 * 1000;
 
 type CachedPriceStatus = "ok" | "no_data";
@@ -68,6 +69,12 @@ export function importCache(data: Record<string, CachedPriceEntry>): number {
     }
   }
   return imported;
+}
+
+/** Snapshot every in-memory entry so the client price cache can be persisted to
+ *  disk and restored on the next launch (avoids re-fetching from WFM each start). */
+export function exportCache(): Record<string, CachedPriceEntry> {
+  return Object.fromEntries(_prices);
 }
 
 export const __test__ = {

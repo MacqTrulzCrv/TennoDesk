@@ -138,7 +138,13 @@ function factionKey(faction) {
   const mapped = EE_FACTION_KEYS[raw] || raw;
   return FACTIONS.includes(mapped) ? mapped : "unaffiliated";
 }
-const MIRROR_BASE = "https://assets.wfhelper.com";
+// CUTOVER: set WFHELPER_ICON_MIRROR_URL to your R2 URL and re-run this script to
+// re-bake src/data/codexScanRequirements.json with your own icon host. Must match
+// ICON_MIRROR_BASE in config/shared/wfm.ts.
+const MIRROR_BASE = (process.env.WFHELPER_ICON_MIRROR_URL || "https://assets.wfhelper.com").replace(
+  /\/+$/,
+  "",
+);
 
 // Matches services/itemDatabase.ts toIconMirrorUrl: same source URL, same hash.
 function deIconMirror(iconPath) {

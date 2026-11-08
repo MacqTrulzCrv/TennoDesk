@@ -1,6 +1,7 @@
 import type { ArbiSpawnPoint } from "../../../config/shared/arbiTypes.js";
 import { countFromWave } from "../../../config/shared/arbiTypes.js";
 import minimapData from "../../data/arbiMinimaps.json";
+import { ICON_MIRROR_BASE } from "../../../config/shared/wfm.js";
 
 /** Floor names the mirrored arbi.guide catalog ships. A layout naming a floor we
  * have no note for is drawn without one rather than leaking the raw word. */
@@ -36,7 +37,7 @@ interface MinimapLayout {
 const CATALOG = minimapData.catalog as unknown as Record<string, MinimapLayout>;
 const NODES = minimapData.nodes as unknown as Record<string, string[]>;
 
-const IMAGE_BASE = "https://assets.wfhelper.com/arbi-minimaps/";
+const IMAGE_BASE = `${ICON_MIRROR_BASE}/arbi-minimaps/`;
 /** The mirror script only ever writes bare names; refuse anything else. */
 const SAFE_FILE = /^[A-Za-z0-9][A-Za-z0-9+~._-]*\.webp$/;
 

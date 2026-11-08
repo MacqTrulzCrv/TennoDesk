@@ -30,7 +30,7 @@ test.describe("Codex artwork fallback", () => {
     );
     // The icon mirror answers an undeployed path with its own index page, so a
     // card gets HTTP 200 and a body no decoder accepts.
-    await page.route("**/assets.wfhelper.com/**", (route) =>
+    await page.route("**/assets.tennodesk.workers.dev/**", (route) =>
       route.fulfill({
         status: 200,
         contentType: "text/html",
