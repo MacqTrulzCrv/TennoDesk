@@ -11,12 +11,31 @@ eder — hepsi kendi makinende, üçüncü taraf bir overlay katmanı olmadan.
 
 ---
 
+## İndirme (kullanıcılar için)
+
+En güncel kurulumu doğrudan indir:
+
+**⬇️ [TennoDesk-Setup.exe indir](https://github.com/MacqTrulzCrv/TennoDesk/releases/latest/download/TennoDesk-Setup.exe)** · [tüm sürümler](https://github.com/MacqTrulzCrv/TennoDesk/releases)
+
+1. `TennoDesk-Setup.exe`'yi indirip çalıştır.
+2. Windows **SmartScreen** uyarısı çıkabilir ("Windows bilgisayarınızı korudu") —
+   uygulama kod imzalı olmadığı için normaldir. **Ek bilgi → Yine de çalıştır** de.
+3. Kurulum bitince TennoDesk, Başlat menüsünden açılır.
+
+Kurulum konumu: `%LOCALAPPDATA%\Programs\TennoDesk` · veri: `%APPDATA%\TennoDesk`
+
+> Kendin kaynaktan derlemek istersen aşağıdaki
+> [Kaynaktan derleme](#kaynaktan-derleme-ve-kurulum) bölümüne bak.
+
+---
+
 ## Öne çıkan özellikler
 
-- **Build Rehberi** — 92 item / 102 build için küratörlü, Kasım 2026 metasına
-  göre hazırlanmış build kartları (mod/aura/exilus/stance/arcane + polarite
-  ikonları, forma sayısı, archon shard, Türkçe notlar). Envanterinle çaprazlanır:
-  sahip olduğun ✓ / eksik ✗ işaretlenir.
+- **Build Rehberi** — 150 item / 160 build için küratörlü, Kasım 2026 metasına
+  göre hazırlanmış build kartları (62 Warframe + 88 silah: 30 primary / 27
+  secondary / 31 melee; mod/aura/exilus/stance/arcane + polarite ikonları, forma
+  sayısı, archon shard, Türkçe notlar). Envanterinle çaprazlanır: sahip olduğun
+  ✓ / eksik ✗ işaretlenir.
 - **Tam Türkçe arayüz** — uygulamanın tamamı Türkçeleştirildi (resmî oyun
   terimleri dahil). Dil: Ayarlar → Dil → **Türkçe**.
 - **Envanter değerleme** — tüm takas edilebilir eşyaların canlı platin değeri,
@@ -69,7 +88,7 @@ Kurulum (sessiz):
 ```powershell
 # Çalışan örneği kapat, sonra sessiz kur
 Get-Process TennoDesk -ErrorAction SilentlyContinue | Stop-Process -Force
-Start-Process "release\TennoDesk-0.0.0-Setup.exe" -ArgumentList "/S" -Wait
+Start-Process "release\TennoDesk-1.0.0-Setup.exe" -ArgumentList "/S" -Wait
 ```
 
 Kurulum konumu: `%LOCALAPPDATA%\Programs\TennoDesk`
@@ -115,8 +134,10 @@ Her değişiklikten sonra kural: typecheck + testler + derleme **yeşil** olmal�
 - Oturum/WFM token'ı işletim sisteminin güvenli deposunda (safeStorage) şifreli
   tutulur, düz metin olarak diske yazılmaz.
 - Envanter verisi yalnızca senin makinende (`%APPDATA%\TennoDesk`) saklanır.
-- warframe.market fiyatları için Cloudflare arkasındaki resmî API'ye ve ikon
-  aynası için `assets.wfhelper.com`'a bağlanılır (ikonlar Cloudflare arkasında).
+- warframe.market fiyatları doğrudan resmî API'den çekilir; relic/wiki/statik
+  veri ve ikon aynası için kendi bağımsız altyapımıza bağlanılır
+  (`api.tennodesk.workers.dev` + `assets.tennodesk.workers.dev`) — yazarın
+  sunucularına bağımlılık yoktur.
 
 ---
 
