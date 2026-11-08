@@ -213,6 +213,9 @@
         color-mix(in oklab, var(--bg-base) 94%, black) 100%
       );
     padding: 0.6rem;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.04),
+      0 4px 14px -6px rgb(0 0 0 / 0.22);
     cursor: default;
     text-align: left;
     color: var(--text-primary);
@@ -220,6 +223,7 @@
     transition:
       border-color 0.14s ease,
       background 0.14s ease,
+      box-shadow 0.16s ease,
       transform 0.14s ease;
   }
   .relic-compact-card:hover {
@@ -236,6 +240,9 @@
         color-mix(in oklab, var(--bg-base) 92%, black) 100%
       );
     transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 10px 24px -8px rgb(0 0 0 / 0.3);
   }
   .relic-compact-card.plain {
     background: var(--ui-panel-bg);

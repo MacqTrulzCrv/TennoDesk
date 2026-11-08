@@ -499,11 +499,55 @@
     cursor: pointer;
     overflow: hidden;
   }
-  .item-card:hover,
-  .resource-card:hover,
+  /* Cards (inventory + resources) get depth; dense list rows stay flat. */
+  .item-card,
+  .resource-card {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.04),
+      0 4px 14px -6px rgb(0 0 0 / 0.22);
+    transition:
+      border-color 0.14s,
+      box-shadow 0.16s,
+      transform 0.16s;
+  }
+  /* Rarity rail — colour sits on the card itself, so it reads on any theme,
+     surface colour or page background. */
+  .item-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: color-mix(in oklab, var(--text-muted) 50%, transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .item-card.is-prime::before {
+    background: var(--accent);
+    box-shadow: 0 0 10px -1px var(--accent-glow);
+  }
+  .item-card.is-mastered::before {
+    background: var(--success);
+  }
   .order-row:hover {
     border-color: var(--border-strong);
     background: var(--bg-raised);
+  }
+  .resource-card:hover {
+    border-color: var(--border-strong);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 8px 20px -8px rgb(0 0 0 / 0.28);
+  }
+  .item-card:hover {
+    border-color: color-mix(in oklab, var(--accent) 60%, var(--border-strong));
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 10px 24px -8px rgb(0 0 0 / 0.3),
+      0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
   }
 
   .item-body,
@@ -547,7 +591,13 @@
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid var(--border);
-    background: color-mix(in oklab, var(--bg-surface) 65%, black);
+    background:
+      radial-gradient(
+        62% 78% at 50% 42%,
+        color-mix(in oklab, var(--accent) 9%, transparent),
+        transparent 70%
+      ),
+      color-mix(in oklab, var(--bg-surface) 65%, black);
     padding: 0.6rem;
   }
   .item-img {

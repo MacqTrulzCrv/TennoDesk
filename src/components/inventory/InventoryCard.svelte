@@ -111,9 +111,11 @@
 
 <div
   data-inventory-card={item.internalName}
-  class="item-card group relative {mastered ? 'border-success/25' : ''} {item.isPrime
-    ? 'border-accent/30'
-    : ''} {selectionMode && !selectable ? 'opacity-45' : ''} {selected
+  class="item-card group relative {item.isPrime ? 'is-prime' : mastered ? 'is-mastered' : ''} {mastered
+    ? 'border-success/25'
+    : ''} {item.isPrime ? 'border-accent/30' : ''} {selectionMode && !selectable
+    ? 'opacity-45'
+    : ''} {selected
     ? 'outline outline-2 outline-offset-[-2px] outline-[color:var(--accent)]'
     : ''}"
   role="button"
@@ -256,6 +258,7 @@
       ducats={item.ducats}
       ratio={item.ducatonator}
       {showDucats}
+      emphasizePrimary
       className="mt-1"
     />
 

@@ -11,6 +11,9 @@
   export let showDucats = true;
   export let state: MetricState = "no-data";
   export let size: "default" | "compact" = "default";
+  // Inventory cards enlarge the platinum value so the "money" number leads;
+  // other call sites keep every metric the same weight.
+  export let emphasizePrimary = false;
   export let wrap = true;
   export let justify: "start" | "end" = "start";
   export let className = "";
@@ -34,6 +37,11 @@
   }
 
   $: textSizeClass = size === "compact" ? "text-sm" : "text-base";
+  $: platTextSizeClass = emphasizePrimary
+    ? size === "compact"
+      ? "text-base"
+      : "text-lg"
+    : textSizeClass;
   $: iconSizeClass = size === "compact" ? "h-3.5 w-3.5" : "h-4 w-4";
   $: rootGapClass = size === "compact" ? "gap-x-2 gap-y-0.5" : "gap-x-3 gap-y-1";
   $: rootHeightClass = size === "compact" ? "min-h-0" : "min-h-7";
@@ -45,7 +53,7 @@
   class="flex {rootWrapClass} {rootJustifyClass} items-center {rootGapClass} {rootHeightClass} {className}"
 >
   <span
-    class="inline-flex items-center gap-1 font-display font-bold tracking-[0.02em] {textSizeClass} {toneClass(
+    class="inline-flex items-center gap-1 font-display font-bold tracking-[0.02em] {platTextSizeClass} {toneClass(
       platinum,
       'plat',
     )}"
