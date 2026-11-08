@@ -11,6 +11,7 @@
   import TourOverlay from "./components/TourOverlay.svelte";
   import ThemeInspector from "./components/ThemeInspector.svelte";
   import PopoutSectionHost from "./components/PopoutSectionHost.svelte";
+  import CommandPalette from "./components/CommandPalette.svelte";
 
   import { normalizeErrorMessage } from "../config/shared/errors.js";
 
@@ -31,6 +32,7 @@
   import { autoFocusSearch } from "./stores/preferences.js";
   import { activeItem, activeComponent, activeRelic } from "./stores/modals.js";
   import { bulkSellOpen } from "./stores/inventorySelection.js";
+  import { paletteOpen, togglePalette, closePalette } from "./stores/commandPalette.js";
   import { setInventoryStatus } from "./lib/actions.js";
   import { themeSettings } from "./stores/theme.js";
   import { viewAccentVars } from "./lib/theme/derive.js";
@@ -273,6 +275,20 @@
   }
 
   function onKeyDown(e: KeyboardEvent): void {
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      togglePalette();
+      return;
+    }
+    if ($paletteOpen) {
+      // The palette owns the keyboard while open; don't also run the search
+      // shortcut or the modal-closing Escape chain underneath it.
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closePalette();
+      }
+      return;
+    }
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "f") {
       const target = findSearchTarget();
       if (target) {
@@ -424,6 +440,7 @@
       {#if $bulkSellOpen && bulkSellModal}
         <svelte:component this={bulkSellModal} onClose={() => bulkSellOpen.set(false)} />
       {/if}
+      <CommandPalette />
     </ErrorBoundary>
 
     <ToastHost />

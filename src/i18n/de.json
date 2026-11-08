@@ -2706,5 +2706,9 @@
   "market.sellables.prime": "Prime-Teile",
   "market.sellables.count": "{count} Items",
   "inventory.quickSell": "Schnellverkauf",
-  "inventory.quickSellHint": "Eine Verkaufsorder für dieses Item auf warframe.market öffnen"
+  "inventory.quickSellHint": "Eine Verkaufsorder für dieses Item auf warframe.market öffnen",
+  "nav.quickSwitch": "Schnellwechsel",
+  "nav.quickSwitchHint": "Zu einer Ansicht springen oder ein Item suchen…",
+  "nav.goTo": "Öffnen",
+  "common.noResults": "Keine Ergebnisse"
 }

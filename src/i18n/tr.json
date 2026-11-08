@@ -2712,5 +2712,9 @@
   "market.sellables.prime": "Prime parçalar",
   "market.sellables.count": "{count} öğe",
   "inventory.quickSell": "Hızlı sat",
-  "inventory.quickSellHint": "Bu öğe için warframe.market'te satış ilanı aç"
+  "inventory.quickSellHint": "Bu öğe için warframe.market'te satış ilanı aç",
+  "nav.quickSwitch": "Hızlı geç",
+  "nav.quickSwitchHint": "Bir ekrana geç ya da item ara…",
+  "nav.goTo": "Git",
+  "common.noResults": "Sonuç yok"
 }

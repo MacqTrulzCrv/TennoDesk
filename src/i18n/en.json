@@ -2726,5 +2726,9 @@
   "market.sellables.prime": "Prime parts",
   "market.sellables.count": "{count} items",
   "inventory.quickSell": "Quick sell",
-  "inventory.quickSellHint": "Open a sell order for this item on warframe.market"
+  "inventory.quickSellHint": "Open a sell order for this item on warframe.market",
+  "nav.quickSwitch": "Quick switch",
+  "nav.quickSwitchHint": "Jump to a view or search an item…",
+  "nav.goTo": "Go to",
+  "common.noResults": "No results"
 }

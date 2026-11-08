@@ -2706,5 +2706,9 @@
   "market.sellables.prime": "Prime 部件",
   "market.sellables.count": "{count} 件物品",
   "inventory.quickSell": "快速出售",
-  "inventory.quickSellHint": "在 warframe.market 上为该物品创建出售订单"
+  "inventory.quickSellHint": "在 warframe.market 上为该物品创建出售订单",
+  "nav.quickSwitch": "快速切换",
+  "nav.quickSwitchHint": "跳转到视图或搜索物品…",
+  "nav.goTo": "前往",
+  "common.noResults": "无结果"
 }
