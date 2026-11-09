@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fly } from "svelte/transition";
+
   import { toasts, removeToast } from "../stores/toasts.js";
   import { tr } from "../lib/i18n.js";
 
@@ -21,6 +23,7 @@
 >
   {#each $toasts as toast (toast.id)}
     <article
+      transition:fly={{ x: 24, duration: 180 }}
       class="pointer-events-auto rounded-lg border p-3 backdrop-blur-sm {LEVEL_CLASSES[
         toast.level
       ] || ''}"

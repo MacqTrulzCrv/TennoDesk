@@ -625,9 +625,16 @@
 
 <section class="view active">
   <div class="mb-2 flex items-center justify-between gap-3">
-    <h2 class="m-0 font-display text-3xl font-semibold tracking-[0.03em] text-text-primary">
-      {$tr("relics.title", { count: groups.length })}
-    </h2>
+    <div class="flex items-center gap-2.5">
+      <h2 class="m-0 font-display text-3xl font-semibold tracking-[0.03em] text-text-primary">
+        {$tr("relics.plannerName")}
+      </h2>
+      <span
+        class="self-center rounded-full border border-[color:color-mix(in_oklab,var(--accent)_30%,transparent)] bg-accent-glow px-2.5 py-0.5 font-display text-sm font-semibold leading-none text-accent-bright"
+      >
+        {groups.length}
+      </span>
+    </div>
     <div class="ml-auto flex flex-wrap items-center justify-end gap-2">
       <button
         type="button"

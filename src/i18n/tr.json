@@ -2729,5 +2729,6 @@
   "nav.group.world": "Dünya",
   "nav.group.guide": "Rehber",
   "nav.group.system": "Sistem",
-  "nav.group.dev": "Geliştirici"
+  "nav.group.dev": "Geliştirici",
+  "relics.plannerName": "Relic Planlayıcısı"
 }

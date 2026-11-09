@@ -2723,5 +2723,6 @@
   "nav.group.world": "世界",
   "nav.group.guide": "指南",
   "nav.group.system": "系统",
-  "nav.group.dev": "开发者"
+  "nav.group.dev": "开发者",
+  "relics.plannerName": "遗物规划器"
 }

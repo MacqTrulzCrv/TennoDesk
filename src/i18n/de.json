@@ -2723,5 +2723,6 @@
   "nav.group.world": "Welt",
   "nav.group.guide": "Ratgeber",
   "nav.group.system": "System",
-  "nav.group.dev": "Entwickler"
+  "nav.group.dev": "Entwickler",
+  "relics.plannerName": "Reliktplaner"
 }

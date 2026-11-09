@@ -2743,5 +2743,6 @@
   "nav.group.world": "World",
   "nav.group.guide": "Guide",
   "nav.group.system": "System",
-  "nav.group.dev": "Developer"
+  "nav.group.dev": "Developer",
+  "relics.plannerName": "Relic Planner"
 }

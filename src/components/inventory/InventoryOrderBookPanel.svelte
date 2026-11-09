@@ -478,9 +478,24 @@
 
   {#if !item}
     <div
-      class="rounded-lg border border-dashed border-border bg-bg-soft px-2 py-2 text-xs text-text-secondary"
+      class="flex flex-col items-center gap-2.5 rounded-lg border border-dashed border-border bg-bg-soft px-4 py-8 text-center"
     >
-      {$tr("orderbook.selectItemPrompt")}
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-8 w-8 text-accent opacity-55"
+        aria-hidden="true"
+      >
+        <path d="M3 12l9-9h8v8l-9 9-8-8z" />
+        <circle cx="15.5" cy="8.5" r="1.4" />
+      </svg>
+      <p class="max-w-[22ch] text-sm leading-snug text-text-secondary">
+        {$tr("orderbook.selectItemPrompt")}
+      </p>
     </div>
   {:else}
     <div class="grid grid-cols-[52px_minmax(0,1fr)] gap-2 items-center">
