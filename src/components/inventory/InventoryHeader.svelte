@@ -63,11 +63,18 @@
 <!-- Keep the sticky row outside the scrolling heading. -->
 <!-- The layout-edit button rides the title row; on its own row it leaves a band of dead space beside it. -->
 <div class="mb-2 flex flex-wrap items-end justify-between gap-3">
-  <h2
-    class="m-0 font-display text-4xl leading-none font-semibold tracking-[0.03em] text-text-primary"
-  >
-    {$tr("inventory.title", { count: totalCount })}
-  </h2>
+  <div class="flex items-center gap-2.5">
+    <h2
+      class="m-0 font-display text-4xl leading-none font-semibold tracking-[0.03em] text-text-primary"
+    >
+      {$tr("common.inventory")}
+    </h2>
+    <span
+      class="self-center rounded-full border border-[color:color-mix(in_oklab,var(--accent)_30%,transparent)] bg-accent-glow px-2.5 py-0.5 font-display text-base font-semibold leading-none text-accent-bright"
+    >
+      {totalCount}
+    </span>
+  </div>
   <div class="ml-auto flex items-center gap-2">
     <slot name="actions" />
   </div>
