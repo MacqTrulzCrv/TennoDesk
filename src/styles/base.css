@@ -27,17 +27,18 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--text-muted);
-    border-radius: 3px;
+    background: color-mix(in oklab, var(--accent) 20%, var(--text-muted));
+    border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+    background: color-mix(in oklab, var(--accent) 42%, var(--text-secondary));
   }
 
   a {

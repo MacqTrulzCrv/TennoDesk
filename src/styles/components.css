@@ -8,7 +8,11 @@
     min-width: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    background: var(--bg-base);
+    /* A faint halo in the active view's accent sits at the top and stays put as
+       the content scrolls over it, giving each screen a little atmosphere. */
+    background:
+      radial-gradient(78% 34% at 50% -6%, var(--view-accent-glow), transparent 70%),
+      var(--bg-base);
     padding: 0 var(--content-gutter) 1.5rem;
   }
   #app:has(#content.setup-active) {
