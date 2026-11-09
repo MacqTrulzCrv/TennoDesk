@@ -88,7 +88,7 @@ Kurulum (sessiz):
 ```powershell
 # Çalışan örneği kapat, sonra sessiz kur
 Get-Process TennoDesk -ErrorAction SilentlyContinue | Stop-Process -Force
-Start-Process "release\TennoDesk-1.0.0-Setup.exe" -ArgumentList "/S" -Wait
+Start-Process "release\TennoDesk-1.2.0-Setup.exe" -ArgumentList "/S" -Wait
 ```
 
 Kurulum konumu: `%LOCALAPPDATA%\Programs\TennoDesk`
