@@ -1,6 +1,6 @@
 {
   "name": "tennodesk",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Warframe companion: inventory, foundry, relic and riven scanning, market orders.",
   "main": ".electron-build/main.js",
   "desktopName": "tennodesk.desktop",

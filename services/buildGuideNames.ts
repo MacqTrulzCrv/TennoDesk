@@ -2,6 +2,10 @@ import { app } from "electron";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { withScope } from "./logger";
+
+const log = withScope("buildGuideNames");
+
 // Equipment names that have a curated build guide. Read from the same JSON the
 // renderer renders (packaged via package.json build.files) so the reward overlay
 // can flag "has a guide" rewards without the renderer in the loop. Memoised.
@@ -16,7 +20,8 @@ export function buildGuideItemNames(): ReadonlySet<string> {
       .map((entry) => entry.item)
       .filter((name): name is string => typeof name === "string");
     cached = new Set(names);
-  } catch {
+  } catch (err) {
+    log.warn(`[BuildGuide] failed to read buildGuides.json:`, err);
     cached = new Set();
   }
   return cached;

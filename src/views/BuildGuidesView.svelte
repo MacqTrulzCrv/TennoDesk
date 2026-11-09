@@ -100,7 +100,14 @@
     const requested = $buildGuideRequest;
     buildGuideRequest.set(null);
     const match = BUILD_GUIDES.items.find((entry) => entry.item === requested);
-    if (match) openItem(match.type, match.item);
+    // openItem's assignments must land outside this reactive flush; called from
+    // within it (e.g. on mount with a pending request) they do not propagate to
+    // the derived visibleItems/currentItem, leaving the view on an empty tab.
+    // A microtask runs it like a click handler would, so the view updates.
+    if (match) {
+      const target = match;
+      queueMicrotask(() => openItem(target.type, target.item));
+    }
   }
 
   // Guide art resolves per category, so a frame never borrows the image of a

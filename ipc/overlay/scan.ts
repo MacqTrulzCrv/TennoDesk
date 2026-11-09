@@ -239,7 +239,7 @@ function enrichRewardItems(items: unknown[], inventoryData: InventoryData): unkn
   const masteredMap = masteredByKey(inventoryData);
   const guideNames = buildGuideItemNames();
 
-  return items.map((rawItem) => {
+  const enriched = items.map((rawItem) => {
     if (!rawItem || typeof rawItem !== "object") return rawItem;
     const item = rawItem as RewardItem;
     const uniqueName = resolveRewardUniqueName(item);
@@ -295,6 +295,8 @@ function enrichRewardItems(items: unknown[], inventoryData: InventoryData): unkn
         : {}),
     };
   });
+
+  return enriched;
 }
 
 function readItemCount(result: RewardScanResult | null | undefined): number {
