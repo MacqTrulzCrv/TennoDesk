@@ -40,6 +40,7 @@ describe("widget frame overflow footer", () => {
       "BaroWidget.svelte",
       "FissuresWidget.svelte",
       "FoundryReadyWidget.svelte",
+      "NightwaveWidget.svelte",
     ]);
   });
 });

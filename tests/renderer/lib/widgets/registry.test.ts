@@ -105,6 +105,7 @@ describe("dashboard widget registry", () => {
       "widget.fissures",
       "widget.marketAlerts",
       "widget.baro",
+      "widget.nightwave",
       "widget.recentRuns",
     ]);
   });

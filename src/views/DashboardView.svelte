@@ -20,6 +20,7 @@
   import InventoryValueWidget from "../components/widgets/InventoryValueWidget.svelte";
   import LastMissionWidget from "../components/widgets/LastMissionWidget.svelte";
   import MarketAlertsWidget from "../components/widgets/MarketAlertsWidget.svelte";
+  import NightwaveWidget from "../components/widgets/NightwaveWidget.svelte";
   import RecentRunsWidget from "../components/widgets/RecentRunsWidget.svelte";
   import TradeSummaryWidget from "../components/widgets/TradeSummaryWidget.svelte";
   import { tr } from "../lib/i18n.js";
@@ -56,6 +57,8 @@
         <GoalsWidget />
       {:else if sectionId === "dashboard.baro"}
         <BaroWidget nowMs={$nowClock} nowCoarseMs={$coarseClock} />
+      {:else if sectionId === "dashboard.nightwave"}
+        <NightwaveWidget />
       {:else if sectionId === "dashboard.inventoryValue"}
         <InventoryValueWidget />
       {:else if sectionId === "dashboard.tradeSummary"}

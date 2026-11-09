@@ -2756,5 +2756,18 @@
   "nav.group.guide": "Guide",
   "nav.group.system": "System",
   "nav.group.dev": "Developer",
-  "relics.plannerName": "Relic Planner"
+  "relics.plannerName": "Relic Planner",
+  "palette.refreshPrices": "Refresh prices",
+  "palette.bulkSell": "Open bulk sell",
+  "palette.run": "Run",
+  "shortcuts.title": "Shortcuts",
+  "shortcuts.appGroup": "In-app",
+  "shortcuts.overlayGroup": "Overlay (global)",
+  "shortcuts.search": "Focus search",
+  "shortcuts.close": "Close or go back",
+  "shortcuts.overlayReward": "Scan relic rewards",
+  "shortcuts.overlayInteract": "Toggle overlay interaction",
+  "shortcuts.overlayRiven": "Scan riven",
+  "shortcuts.overlayRep": "Trade +rep toast",
+  "shortcuts.overlayPlanner": "Toggle planner overlay"
 }

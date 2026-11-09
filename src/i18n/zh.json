@@ -2736,5 +2736,18 @@
   "nav.group.guide": "指南",
   "nav.group.system": "系统",
   "nav.group.dev": "开发者",
-  "relics.plannerName": "遗物规划器"
+  "relics.plannerName": "遗物规划器",
+  "palette.refreshPrices": "刷新价格",
+  "palette.bulkSell": "打开批量出售",
+  "palette.run": "执行",
+  "shortcuts.title": "快捷键",
+  "shortcuts.appGroup": "应用内",
+  "shortcuts.overlayGroup": "覆盖层（全局）",
+  "shortcuts.search": "聚焦搜索",
+  "shortcuts.close": "关闭或返回",
+  "shortcuts.overlayReward": "扫描遗物奖励",
+  "shortcuts.overlayInteract": "切换覆盖层交互",
+  "shortcuts.overlayRiven": "扫描裂罅",
+  "shortcuts.overlayRep": "交易 +声望 提示",
+  "shortcuts.overlayPlanner": "切换规划器覆盖层"
 }

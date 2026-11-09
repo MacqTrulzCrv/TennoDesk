@@ -8,12 +8,19 @@
   import { tr } from "../lib/i18n.js";
   import { itemLabel } from "../lib/itemLabel.js";
   import { NAV_ICON_URLS } from "../lib/assetUrls.js";
-  import { SIDEBAR_VIEW_ORDER, VIEW_LABEL_KEYS, type SidebarViewName } from "../lib/viewRegistry.js";
+  import {
+    SIDEBAR_VIEW_ORDER,
+    VIEW_LABEL_KEYS,
+    type SidebarViewName,
+  } from "../lib/viewRegistry.js";
+  import { refreshMarketOrders } from "../lib/marketOrdersSync.js";
+  import { bulkSellOpen } from "../stores/inventorySelection.js";
   import type { ParsedItem } from "../types/inventory.js";
 
   type NavCmd = { kind: "nav"; id: string; label: string; view: SidebarViewName; icon: string };
   type ItemCmd = { kind: "item"; id: string; label: string; sub: string; item: ParsedItem };
-  type Cmd = NavCmd | ItemCmd;
+  type ActionCmd = { kind: "action"; id: string; label: string; icon: string; run: () => void };
+  type Cmd = NavCmd | ItemCmd | ActionCmd;
 
   const ITEM_RESULT_LIMIT = 8;
 
@@ -33,11 +40,33 @@
   // Labels depend on the active locale, so resolve them reactively.
   $: localizedNav = navCmds.map((cmd) => ({ ...cmd, label: $tr(VIEW_LABEL_KEYS[cmd.view]) }));
 
+  // Quick commands that do something rather than navigate; labels are reactive.
+  $: actionCmds = [
+    {
+      kind: "action",
+      id: "action:refreshPrices",
+      label: $tr("palette.refreshPrices"),
+      icon: NAV_ICON_URLS.market,
+      run: () => void refreshMarketOrders(),
+    },
+    {
+      kind: "action",
+      id: "action:bulkSell",
+      label: $tr("palette.bulkSell"),
+      icon: NAV_ICON_URLS.market,
+      run: () => bulkSellOpen.set(true),
+    },
+  ] as ActionCmd[];
+
   $: q = query.trim().toLowerCase();
 
   $: navMatches = q
     ? localizedNav.filter((cmd) => cmd.label.toLowerCase().includes(q))
     : localizedNav;
+
+  $: actionMatches = q
+    ? actionCmds.filter((cmd) => cmd.label.toLowerCase().includes(q))
+    : actionCmds;
 
   // Mods/arcanes are split into one row per rank but share an internalName, so
   // the match list must dedupe on it: a repeated id crashes the keyed {#each}.
@@ -62,16 +91,19 @@
           )
       : [];
 
-  $: results = [...navMatches, ...itemMatches] as Cmd[];
+  $: results = [...navMatches, ...actionMatches, ...itemMatches] as Cmd[];
   $: if (selected > results.length - 1) selected = Math.max(0, results.length - 1);
 
-  // Autofocus and reset whenever the palette transitions to open.
+  // Autofocus and reset whenever the palette transitions to open. wasOpen is the
+  // transition guard read by the condition above, so its writes are not useless.
   $: if ($paletteOpen && !wasOpen) {
+    // eslint-disable-next-line no-useless-assignment
     wasOpen = true;
     query = "";
     selected = 0;
     void focusInput();
   } else if (!$paletteOpen && wasOpen) {
+    // eslint-disable-next-line no-useless-assignment
     wasOpen = false;
   }
 
@@ -84,6 +116,8 @@
     if (!cmd) return;
     if (cmd.kind === "nav") {
       currentView.set(cmd.view);
+    } else if (cmd.kind === "action") {
+      cmd.run();
     } else {
       activeItem.set(cmd.item);
     }
@@ -112,7 +146,13 @@
   <div class="cmdk-backdrop" on:click={closePalette}></div>
   <div class="cmdk" role="dialog" aria-modal="true" aria-label={$tr("nav.quickSwitch")}>
     <div class="cmdk-search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        aria-hidden="true"
+      >
         <circle cx="11" cy="11" r="7" />
         <path d="M21 21l-4-4" stroke-linecap="round" />
       </svg>
@@ -132,7 +172,6 @@
         <div class="cmdk-empty">{$tr("common.noResults")}</div>
       {:else}
         {#each results as cmd, i (cmd.id)}
-          <!-- svelte-ignore a11y-mouse-events-have-key-events -->
           <button
             type="button"
             class="cmdk-row"
@@ -141,7 +180,7 @@
             on:click={() => run(cmd)}
           >
             <span class="cmdk-ic">
-              {#if cmd.kind === "nav"}
+              {#if cmd.kind === "nav" || cmd.kind === "action"}
                 <img src={cmd.icon} alt="" />
               {:else if cmd.item.imageUrl}
                 <img src={cmd.item.imageUrl} alt="" />
@@ -153,7 +192,13 @@
                 <span class="cmdk-sub">{cmd.sub}</span>
               {/if}
             </span>
-            <span class="cmdk-tag">{cmd.kind === "nav" ? $tr("nav.goTo") : $tr("common.item")}</span>
+            <span class="cmdk-tag"
+              >{cmd.kind === "nav"
+                ? $tr("nav.goTo")
+                : cmd.kind === "action"
+                  ? $tr("palette.run")
+                  : $tr("common.item")}</span
+            >
           </button>
         {/each}
       {/if}

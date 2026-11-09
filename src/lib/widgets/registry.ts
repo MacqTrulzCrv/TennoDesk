@@ -65,6 +65,14 @@ export const DASHBOARD_WIDGETS: readonly WidgetDescriptor[] = [
     canPopout: true,
   },
   {
+    id: "widget.nightwave",
+    labelKey: "dailies.groupNightwave",
+    defaultSpan: 1,
+    allowedSpans: SPAN_ORDER,
+    settings: { limit: "number" },
+    canPopout: true,
+  },
+  {
     id: "widget.inventoryValue",
     labelKey: "inventory.value.title",
     defaultSpan: 1,
@@ -102,6 +110,7 @@ export const WIDGET_HOME_VIEWS: Readonly<Record<string, SidebarViewName>> = {
   "widget.marketAlerts": "market",
   "widget.goals": "mastery",
   "widget.baro": "world",
+  "widget.nightwave": "world",
   "widget.inventoryValue": "inventory",
   "widget.tradeSummary": "analytics",
   "widget.lastMission": "missions",
@@ -110,7 +119,10 @@ export const WIDGET_HOME_VIEWS: Readonly<Record<string, SidebarViewName>> = {
 
 // Joins a dashboard layout saved before it existed as hidden, so that layout
 // stays as the user left it; a dashboard without a saved layout shows it.
-const HIDDEN_IN_SAVED_LAYOUTS: ReadonlySet<string> = new Set(["widget.lastMission"]);
+const HIDDEN_IN_SAVED_LAYOUTS: ReadonlySet<string> = new Set([
+  "widget.lastMission",
+  "widget.nightwave",
+]);
 
 export const WIDGET_SETTING_LABEL_KEYS: Readonly<Record<string, MessageKey>> = {
   limit: "dashboard.rowLimit",

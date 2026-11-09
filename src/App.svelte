@@ -12,6 +12,7 @@
   import ThemeInspector from "./components/ThemeInspector.svelte";
   import PopoutSectionHost from "./components/PopoutSectionHost.svelte";
   import CommandPalette from "./components/CommandPalette.svelte";
+  import ShortcutSheet from "./components/ShortcutSheet.svelte";
 
   import { normalizeErrorMessage } from "../config/shared/errors.js";
 
@@ -33,6 +34,11 @@
   import { activeItem, activeComponent, activeRelic } from "./stores/modals.js";
   import { bulkSellOpen } from "./stores/inventorySelection.js";
   import { paletteOpen, togglePalette, closePalette } from "./stores/commandPalette.js";
+  import {
+    shortcutSheetOpen,
+    toggleShortcutSheet,
+    closeShortcutSheet,
+  } from "./stores/shortcutSheet.js";
   import { setInventoryStatus } from "./lib/actions.js";
   import { themeSettings } from "./stores/theme.js";
   import { viewAccentVars } from "./lib/theme/derive.js";
@@ -274,6 +280,15 @@
     }
   }
 
+  function isEditableTarget(target: EventTarget | null): boolean {
+    const el = target as HTMLElement | null;
+    if (!el) return false;
+    const tag = el.tagName;
+    return (
+      tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || el.isContentEditable === true
+    );
+  }
+
   function onKeyDown(e: KeyboardEvent): void {
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "k") {
       e.preventDefault();
@@ -287,6 +302,19 @@
         e.preventDefault();
         closePalette();
       }
+      return;
+    }
+    if ($shortcutSheetOpen) {
+      if (e.key === "Escape" || e.key === "?") {
+        e.preventDefault();
+        closeShortcutSheet();
+      }
+      return;
+    }
+    // "?" opens the shortcut cheat-sheet, unless the user is typing it into a field.
+    if (e.key === "?" && !isEditableTarget(e.target)) {
+      e.preventDefault();
+      toggleShortcutSheet();
       return;
     }
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "f") {
@@ -441,6 +469,7 @@
         <svelte:component this={bulkSellModal} onClose={() => bulkSellOpen.set(false)} />
       {/if}
       <CommandPalette />
+      <ShortcutSheet />
     </ErrorBoundary>
 
     <ToastHost />

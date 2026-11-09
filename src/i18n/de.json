@@ -2736,5 +2736,18 @@
   "nav.group.guide": "Ratgeber",
   "nav.group.system": "System",
   "nav.group.dev": "Entwickler",
-  "relics.plannerName": "Reliktplaner"
+  "relics.plannerName": "Reliktplaner",
+  "palette.refreshPrices": "Preise aktualisieren",
+  "palette.bulkSell": "Massenverkauf öffnen",
+  "palette.run": "Ausführen",
+  "shortcuts.title": "Tastenkürzel",
+  "shortcuts.appGroup": "In der App",
+  "shortcuts.overlayGroup": "Overlay (global)",
+  "shortcuts.search": "Suche fokussieren",
+  "shortcuts.close": "Schließen oder zurück",
+  "shortcuts.overlayReward": "Relikt-Belohnungen scannen",
+  "shortcuts.overlayInteract": "Overlay-Interaktion umschalten",
+  "shortcuts.overlayRiven": "Riven scannen",
+  "shortcuts.overlayRep": "Handel +Rep Hinweis",
+  "shortcuts.overlayPlanner": "Planer-Overlay umschalten"
 }

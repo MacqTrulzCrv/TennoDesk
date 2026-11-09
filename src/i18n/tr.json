@@ -2742,5 +2742,18 @@
   "nav.group.guide": "Rehber",
   "nav.group.system": "Sistem",
   "nav.group.dev": "Geliştirici",
-  "relics.plannerName": "Relic Planlayıcısı"
+  "relics.plannerName": "Relic Planlayıcısı",
+  "palette.refreshPrices": "Fiyatları yenile",
+  "palette.bulkSell": "Toplu satışı aç",
+  "palette.run": "Çalıştır",
+  "shortcuts.title": "Kısayollar",
+  "shortcuts.appGroup": "Uygulama",
+  "shortcuts.overlayGroup": "Overlay (genel)",
+  "shortcuts.search": "Aramaya odaklan",
+  "shortcuts.close": "Kapat veya geri git",
+  "shortcuts.overlayReward": "Relic ödüllerini tara",
+  "shortcuts.overlayInteract": "Overlay etkileşimini aç/kapat",
+  "shortcuts.overlayRiven": "Riven tara",
+  "shortcuts.overlayRep": "Ticaret +rep bildirimi",
+  "shortcuts.overlayPlanner": "Planner overlay aç/kapat"
 }
