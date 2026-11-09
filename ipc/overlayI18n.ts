@@ -61,6 +61,7 @@ const OVERLAY_MESSAGE_KEYS = [
   "overlay.reward.bestLabel",
   "overlay.reward.captureUnavailable",
   "overlay.reward.detecting",
+  "overlay.reward.guide",
   "overlay.reward.inFoundry",
   "overlay.reward.noPricedRewards",
   "overlay.reward.ocrFailed",

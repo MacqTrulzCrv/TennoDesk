@@ -11,8 +11,7 @@
     /* A faint halo in the active view's accent sits at the top and stays put as
        the content scrolls over it, giving each screen a little atmosphere. */
     background:
-      radial-gradient(78% 34% at 50% -6%, var(--view-accent-glow), transparent 70%),
-      var(--bg-base);
+      radial-gradient(78% 34% at 50% -6%, var(--view-accent-glow), transparent 70%), var(--bg-base);
     padding: 0 var(--content-gutter) 1.5rem;
   }
   #app:has(#content.setup-active) {
@@ -534,6 +533,33 @@
   }
   .item-card.is-mastered::before {
     background: var(--success);
+  }
+  /* Value emphasis — lead the eye to the valuable stock. The rail encodes the
+     platinum tier for ordinary rows (prime/mastered keep their own rail), and
+     an inset ring/halo reads as "worth money" even through overflow:hidden. */
+  .item-card.value-high:not(.is-prime):not(.is-mastered)::before {
+    background: var(--accent-bright);
+    box-shadow: 0 0 8px -2px var(--accent-glow);
+  }
+  .item-card.value-mid:not(.is-prime):not(.is-mastered)::before {
+    background: color-mix(in oklab, var(--accent) 55%, var(--text-muted));
+  }
+  .item-card.value-high::after,
+  .item-card.value-mid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .item-card.value-high::after {
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--accent) 36%, transparent),
+      inset 0 0 22px -10px var(--accent-glow);
+  }
+  .item-card.value-mid::after {
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 15%, transparent);
   }
   .order-row:hover {
     border-color: var(--border-strong);

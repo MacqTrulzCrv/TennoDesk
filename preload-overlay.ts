@@ -5,6 +5,7 @@ import { onIpc } from "./ipc/preloadListeners";
 import { installOverlayContentVisibility } from "./ipc/overlayContentVisibility";
 import {
   OVERLAY_CLOSE,
+  OVERLAY_OPEN_BUILD_GUIDE,
   OVERLAY_GET_PRICE,
   OVERLAY_GET_THEME_VARS,
   OVERLAY_GET_MESSAGES,
@@ -30,6 +31,7 @@ installOverlayLayoutBridge();
 
 contextBridge.exposeInMainWorld("overlay", {
   close: () => ipcRenderer.send(OVERLAY_CLOSE),
+  openBuildGuide: (name: string) => ipcRenderer.send(OVERLAY_OPEN_BUILD_GUIDE, name),
   getPrice: (slug: string) => ipcRenderer.invoke(OVERLAY_GET_PRICE, slug),
   getThemeVars: () => ipcRenderer.invoke(OVERLAY_GET_THEME_VARS),
   getMessages: () => ipcRenderer.invoke(OVERLAY_GET_MESSAGES),

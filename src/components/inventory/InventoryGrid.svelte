@@ -15,6 +15,9 @@
   /** Selected/eligible keys are Sets so a thousand-card page stays O(1) per card. */
   export let selectedKeys: ReadonlySet<string> | null = null;
   export let eligibleKeys: ReadonlySet<string> | null = null;
+  /** When the empty result is caused by filters/search, offer a way out. */
+  export let hasActiveFilters = false;
+  export let onClearFilters: (() => void) | null = null;
 
   const dispatch = createEventDispatcher<{
     select: InventoryViewItem;
@@ -61,7 +64,17 @@
         <circle cx="11" cy="11" r="7" />
         <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
-      <p>{$tr("inventory.noItemsFound")}</p>
+      <p>{hasActiveFilters ? $tr("inventory.emptyFiltered") : $tr("inventory.noItemsFound")}</p>
+      {#if hasActiveFilters && onClearFilters}
+        <button
+          type="button"
+          class="mt-1 rounded border border-border px-3 py-1 font-display text-sm text-text-secondary transition-colors hover:border-accent-dim hover:text-accent"
+          data-inventory-clear-filters
+          on:click={onClearFilters}
+        >
+          {$tr("common.clearFilters")}
+        </button>
+      {/if}
     </div>
   {:else}
     {#each items as item (item.internalName)}

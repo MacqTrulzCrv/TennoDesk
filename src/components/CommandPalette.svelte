@@ -39,10 +39,17 @@
     ? localizedNav.filter((cmd) => cmd.label.toLowerCase().includes(q))
     : localizedNav;
 
+  // Mods/arcanes are split into one row per rank but share an internalName, so
+  // the match list must dedupe on it: a repeated id crashes the keyed {#each}.
   $: itemMatches =
     q.length >= 2
-      ? $parsedItems
-          .filter((item) => itemLabel(item).toLowerCase().includes(q))
+      ? Array.from(
+          new Map(
+            $parsedItems
+              .filter((item) => itemLabel(item).toLowerCase().includes(q))
+              .map((item) => [item.internalName, item]),
+          ).values(),
+        )
           .slice(0, ITEM_RESULT_LIMIT)
           .map(
             (item): ItemCmd => ({

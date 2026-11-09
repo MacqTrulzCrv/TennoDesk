@@ -104,11 +104,12 @@ function formatCount(value) {
 }
 
 function appendMetaChip(container, text, tone) {
-  if (!text) return;
+  if (!text) return null;
   const chip = document.createElement("span");
   chip.className = `slot-meta-chip ${tone || ""}`.trim();
   chip.textContent = text;
   container.appendChild(chip);
+  return chip;
 }
 
 function appendCurrencyValue(container, className, iconSrc, value, label) {
@@ -292,6 +293,25 @@ function renderSlot(index) {
   rarityEl.className = `slot-rarity ${rarityClass(item.rarity)}`;
 
   renderSlotValues(priceEl, price, item.ducats);
+
+  // Flag rewards whose base gear has a curated build guide; the chip jumps there
+  // (only while the overlay is interactive, like every other overlay control).
+  if (item.hasBuildGuide) {
+    const guideChip = appendMetaChip(metaEl, t("overlay.reward.guide"), "guide clickable");
+    if (guideChip && item.guideItemName && window.overlay?.openBuildGuide) {
+      guideChip.setAttribute("role", "button");
+      guideChip.setAttribute("tabindex", "0");
+      guideChip.title = item.guideItemName;
+      const open = () => window.overlay.openBuildGuide(item.guideItemName);
+      guideChip.addEventListener("click", open);
+      guideChip.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          open();
+        }
+      });
+    }
+  }
 
   const partRequired = Number(item.partRequiredCount);
   if (Number.isFinite(partRequired) && partRequired > 0) {

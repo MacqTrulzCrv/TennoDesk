@@ -1,4 +1,10 @@
 {
-  "generated": "2026-09-05T15:27:03.766Z",
-  "counts": {}
+  "generated": "2026-11-09T14:31:12.575Z",
+  "counts": {
+    "src/components/CommandPalette.svelte::inline-color-fn::rgb(": 1,
+    "src/components/inventory/InventoryOrderBookPanel.svelte::black-white-alpha::bg-white/5": 1,
+    "src/components/relics/RelicCompactCard.svelte::inline-color-fn::rgb(": 4,
+    "src/components/Sidebar.svelte::black-white-alpha::bg-white/5": 1,
+    "src/styles/components.css::inline-color-fn::rgb(": 6
+  }
 }

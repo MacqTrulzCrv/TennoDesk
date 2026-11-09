@@ -38,7 +38,17 @@ const CHINESE_NAMES_IN_ENGLISH = new Set([
 ]);
 
 // Same text today, but each names a distinct UI role and must stay free to diverge.
-const ALLOWED_TWINS = new Set(["setup.step.finish", "market.orderSold", "market.orderBought"]);
+const ALLOWED_TWINS = new Set([
+  "setup.step.finish",
+  "market.orderSold",
+  "market.orderBought",
+  // Sidebar group labels intentionally match the plain nouns they group.
+  "nav.group.inventory",
+  "nav.group.market",
+  "nav.group.world",
+  // The planner's undo reuses the common verb.
+  "mastery.planner.undo",
+]);
 
 function sourceFiles(dir: string, out: string[] = []): string[] {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

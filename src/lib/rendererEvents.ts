@@ -10,6 +10,7 @@ import { statusText } from "../stores/app.js";
 import { pendingArbiRunId, subscribeArbiRunSaved } from "../stores/arbiRuns.js";
 import { subscribePtRunSaved } from "../stores/ptRuns.js";
 import { currentView } from "../stores/app.js";
+import { buildGuideRequest } from "../stores/modals.js";
 import { inventoryData, inventoryModifiedAt, parsedItems } from "../stores/data.js";
 import { masteryData } from "../stores/mastery.js";
 import { applyClosedWfmListing } from "../stores/market.js";
@@ -109,6 +110,12 @@ export function initRendererEvents(): () => void {
     on("arbi-open-run", (runId) => {
       pendingArbiRunId.set(runId);
       currentView.set("arbi");
+    }),
+
+    // Reward overlay "Guide" chip: open the Build Guide on that item.
+    on("open-build-guide", (name) => {
+      buildGuideRequest.set(name);
+      currentView.set("builds");
     }),
 
     // DE overlay refresh and game language changes rebuild what main serves.

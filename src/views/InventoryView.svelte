@@ -105,7 +105,7 @@
   import { getInventoryHydrationController } from "../stores/inventoryHydration.js";
   import { ARCANE_STAND_IN_ART } from "../data/arcaneStandInArt.js";
   import { devMode, degradedIcons } from "../stores/devMode.js";
-  import { sharedFilters, updateSharedFilters } from "../stores/filters.js";
+  import { sharedFilters, updateSharedFilters, resetSharedFilters } from "../stores/filters.js";
   import { inventoryViewMode } from "../stores/inventoryViewMode.js";
   import { inventoryValueAllTradables, inventoryValueMinPlatinum } from "../stores/preferences.js";
   import { activeItem, activeRelic } from "../stores/modals.js";
@@ -716,6 +716,12 @@
     return active;
   }
   $: activeAdvancedCount = countActiveAdvancedFilters($inventoryFilters);
+  // Drives the empty-state: offer "clear filters" only when a filter/search is
+  // actually narrowing the list (otherwise the tab is simply empty).
+  $: filtersActive = $inventoryFilters.search.trim() !== "" || activeAdvancedCount > 0;
+  function clearInventoryFilters(): void {
+    resetSharedFilters("inventory");
+  }
   $: tabSortOptions = SORT_OPTIONS_BY_TAB[filter] ?? PRICED_SORT_OPTIONS;
   // A column header only sorts by a key this tab can compute; anything else
   // would silently fall back to a name sort, exactly like the sort dropdown.
@@ -835,6 +841,7 @@
                 options={everythingSourceOptions}
                 enabled={enabledEverythingSources}
                 onToggle={toggleEverythingSource}
+                variant="segment"
               />
             {/if}
             {#if filter === "full_sets"}
@@ -875,6 +882,8 @@
                 totalCount={visibleItems.length}
                 {showDucats}
                 {detailKeys}
+                hasActiveFilters={filtersActive}
+                onClearFilters={clearInventoryFilters}
                 sortBy={$inventoryFilters.sortBy}
                 sortDirection={$inventoryFilters.sortDirection}
                 sortableKeys={tabSortKeys}
@@ -894,6 +903,8 @@
                 totalCount={visibleItems.length}
                 {showDucats}
                 {detailKeys}
+                hasActiveFilters={filtersActive}
+                onClearFilters={clearInventoryFilters}
                 selectionMode={$inventorySelectionMode}
                 selectedKeys={$inventorySelection}
                 eligibleKeys={eligibleSelectionSet}

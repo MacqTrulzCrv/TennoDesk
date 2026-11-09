@@ -275,6 +275,7 @@ export interface PreloadAPI {
     callback: (shown: IpcEventMap["riven-similar-auctions"]) => void,
   ) => () => void;
   onArbiOpenRun: (callback: (runId: IpcEventMap["arbi-open-run"]) => void) => () => void;
+  onOpenBuildGuide: (callback: (name: IpcEventMap["open-build-guide"]) => void) => () => void;
   getPtRuns: () => Promise<IpcInvokeMap["getPtRuns"]["return"]>;
   refreshPtRuns: () => Promise<IpcInvokeMap["refreshPtRuns"]["return"]>;
   setPtRunTags: (

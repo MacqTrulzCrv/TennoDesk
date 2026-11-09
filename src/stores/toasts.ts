@@ -46,7 +46,8 @@ export function addToast(input: ToastInput): number {
     durationMs: Math.max(500, input.durationMs ?? DEFAULT_TOAST_DURATION_MS),
     sticky: Boolean(input.sticky),
     createdAt: Date.now(),
-    action: input.action,
+    // Spread only when present: exactOptionalPropertyTypes rejects action: undefined.
+    ...(input.action ? { action: input.action } : {}),
   };
 
   toasts.update((current) => [toast, ...current].slice(0, MAX_TOASTS));

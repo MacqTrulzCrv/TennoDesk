@@ -939,6 +939,7 @@ export interface IpcEventMap {
   "world-state-fetch-error": string;
   "arbi-run-saved": ArbiRunRecord;
   "arbi-open-run": string;
+  "open-build-guide": string;
   "pt-run-saved": PtRunRecord;
   "mission-rewards-updated": MissionRewardsPayload;
   "warframe-ui-scale-updated": number | null;

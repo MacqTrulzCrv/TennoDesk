@@ -46,6 +46,8 @@
     selectedKeys?: ReadonlySet<string> | null;
     eligibleKeys?: ReadonlySet<string> | null;
     onToggleSelect?: (item: InventoryViewItem, shiftKey: boolean) => void;
+    hasActiveFilters?: boolean;
+    onClearFilters?: (() => void) | null;
   }
 
   let {
@@ -66,6 +68,8 @@
     selectedKeys = null,
     eligibleKeys = null,
     onToggleSelect = () => {},
+    hasActiveFilters = false,
+    onClearFilters = null,
   }: Props = $props();
 
   const columns = $derived(
@@ -190,7 +194,17 @@
         <circle cx="11" cy="11" r="7" />
         <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
-      <p>{$t("inventory.noItemsFound")}</p>
+      <p>{hasActiveFilters ? $t("inventory.emptyFiltered") : $t("inventory.noItemsFound")}</p>
+      {#if hasActiveFilters && onClearFilters}
+        <button
+          type="button"
+          class="mt-1 rounded border border-border px-3 py-1 font-display text-sm text-text-secondary transition-colors hover:border-accent-dim hover:text-accent"
+          data-inventory-clear-filters
+          onclick={onClearFilters}
+        >
+          {$t("common.clearFilters")}
+        </button>
+      {/if}
     </div>
   {:else}
     <!-- Chromium paints a collapsed table's borders on the table, so a sticky header's bottom rule scrolls away from it. -->

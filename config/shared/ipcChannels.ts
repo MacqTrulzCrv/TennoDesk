@@ -199,6 +199,8 @@ export const ARBI_SHOW_LOG_IN_FOLDER = "arbi:show-log-in-folder";
 export const ARBI_RUN_SAVED = "arbi-run-saved";
 export const WARFRAME_UI_SCALE_UPDATED = "warframe-ui-scale-updated";
 export const ARBI_OPEN_RUN = "arbi-open-run";
+export const OVERLAY_OPEN_BUILD_GUIDE = "overlay-open-build-guide";
+export const OPEN_BUILD_GUIDE = "open-build-guide";
 
 export const ARBI_SUMMARY_DATA = "arbi-summary-data";
 export const ARBI_SUMMARY_READY = "arbi-summary-ready";

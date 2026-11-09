@@ -22,6 +22,8 @@ export interface HydrationTask {
 
 export interface InventoryHydrationController {
   metricsByKey: Readable<Record<string, ItemMetrics>>;
+  /** Keys whose price/metrics are still queued or in flight (for skeleton loaders). */
+  pendingKeys: Readable<ReadonlySet<string>>;
   enqueue: (items: InventoryBaseItem[], lookup: WfmItemsLookup, needs: MetricNeeds) => void;
   /** Pause processing but keep cached metrics. */
   pause: () => void;

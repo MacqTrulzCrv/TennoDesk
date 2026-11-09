@@ -81,7 +81,10 @@
     "dojo:build": "node scripts/dojo-research/build-dojo-research.mjs",
     "syndicates:build": "node scripts/syndicates/build-syndicate-ranks.mjs",
     "pets:build": "node scripts/pets/build-pet-traits.mjs",
-    "builds:validate": "node scripts/validate-build-guides.mjs"
+    "builds:validate": "node scripts/validate-build-guides.mjs",
+    "release:latest-yml": "node scripts/release/make-latest-yml.mjs",
+    "release:check": "node scripts/release/make-latest-yml.mjs --check",
+    "release:publish": "node scripts/release/publish-release.mjs"
   },
   "keywords": [
     "warframe",
@@ -161,6 +164,7 @@
       "assets/**/*",
       "src/data/itemNames/**/*",
       "src/data/dojoResearch.json",
+      "src/data/buildGuides.json",
       "package.json",
       "node_modules/**/*",
       "!node_modules/**/{test,tests,__tests__,example,examples,docs,doc}/**",

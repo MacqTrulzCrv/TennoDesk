@@ -25,12 +25,6 @@
     return value !== null && value !== undefined && value !== "";
   }
 
-  // `state` arrives as a parameter so the template call tracks it.
-  function valueLabel(value: MetricValue, metricState: MetricState): string {
-    if (hasValue(value)) return String(value);
-    return metricState === "loading" ? "..." : "-";
-  }
-
   function toneClass(value: MetricValue, tone: "plat" | "ducat"): string {
     if (!hasValue(value)) return "text-text-muted";
     return tone === "plat" ? "text-accent-bright" : "text-accent";
@@ -60,7 +54,10 @@
     title={$tr("common.platinum")}
   >
     <img src={PLAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0" />
-    {valueLabel(platinum, state)}
+    {#if hasValue(platinum)}{platinum}{:else if state === "loading"}<span
+        class="metric-skeleton"
+        title={$tr("common.loading")}
+      ></span>{:else}-{/if}
   </span>
 
   {#if showDucats}
@@ -72,7 +69,10 @@
       title={$tr("common.ducats")}
     >
       <img src={DUCAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0" />
-      {valueLabel(ducats, state)}
+      {#if hasValue(ducats)}{ducats}{:else if state === "loading"}<span
+          class="metric-skeleton"
+          title={$tr("common.loading")}
+        ></span>{:else}-{/if}
     </span>
 
     <span
@@ -85,7 +85,43 @@
       <img src={DUCAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0" />
       <span aria-hidden="true" class="text-text-muted text-[0.8em]">/</span>
       <img src={PLAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0 mr-1" />
-      {valueLabel(ratio, state)}
+      {#if hasValue(ratio)}{ratio}{:else if state === "loading"}<span
+          class="metric-skeleton"
+          title={$tr("common.loading")}
+        ></span>{:else}-{/if}
     </span>
   {/if}
 </div>
+
+<style>
+  /* Shimmer placeholder shown while a price is still being fetched, so an
+     unresolved value reads as "loading" rather than "no listing exists". */
+  .metric-skeleton {
+    display: inline-block;
+    width: 2.4ch;
+    height: 0.82em;
+    border-radius: 3px;
+    vertical-align: middle;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--text-primary) 6%, transparent) 25%,
+      color-mix(in oklab, var(--text-primary) 16%, transparent) 37%,
+      color-mix(in oklab, var(--text-primary) 6%, transparent) 63%
+    );
+    background-size: 400% 100%;
+    animation: metric-skeleton-shimmer 1.3s ease-in-out infinite;
+  }
+  @keyframes metric-skeleton-shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: -100% 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .metric-skeleton {
+      animation: none;
+    }
+  }
+</style>

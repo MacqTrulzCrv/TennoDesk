@@ -43,6 +43,21 @@ export function isPrimeRow(entry: InventoryValueEntry): boolean {
   return entry.partType === "prime" || entry.isPrime === true;
 }
 
+/** Platinum tiers for card value emphasis. Thresholds mirror the strip presets. */
+export type ValueTier = "none" | "low" | "mid" | "high";
+
+/**
+ * Buckets a per-unit platinum median into a value tier so a card can lead with
+ * the valuable stock at a glance. null / 0 → "none" (no listing / worthless).
+ */
+export function valueTier(platinum: number | null | undefined): ValueTier {
+  const median = toFiniteNumber(platinum);
+  if (median == null || median <= 0) return "none";
+  if (median >= 15) return "high";
+  if (median >= 5) return "mid";
+  return "low";
+}
+
 function isSellable(entry: InventoryValueEntry): boolean {
   if (entry.tradable === false) return false;
   if (AGGREGATE_GROUPS.has(entry.inventoryGroup ?? "")) return false;

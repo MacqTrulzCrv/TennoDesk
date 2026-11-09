@@ -104,6 +104,8 @@ const eventApiMap: Record<
     window.api.onArbiRunSaved(cb as (run: IpcEventMap["arbi-run-saved"]) => void),
   "arbi-open-run": (cb) =>
     window.api.onArbiOpenRun(cb as (runId: IpcEventMap["arbi-open-run"]) => void),
+  "open-build-guide": (cb) =>
+    window.api.onOpenBuildGuide(cb as (name: IpcEventMap["open-build-guide"]) => void),
   "pt-run-saved": (cb) => window.api.onPtRunSaved(cb as (run: IpcEventMap["pt-run-saved"]) => void),
   "mission-rewards-updated": (cb) =>
     window.api.onMissionRewardsUpdated(

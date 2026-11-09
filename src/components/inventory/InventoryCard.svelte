@@ -23,6 +23,8 @@
   import { openQuickSell } from "../../lib/inventory/quickSell.js";
   import type { InventoryViewItem } from "../../lib/inventoryMarket.js";
   import { isRankedGroup } from "../../../config/shared/numeric.js";
+  import { getInventoryHydrationController } from "../../stores/inventoryHydration.js";
+  import { valueTier } from "../../lib/inventory/valueTotals.js";
 
   export let item: InventoryViewItem;
   export let showDucats = true;
@@ -51,6 +53,25 @@
         ...reservedVerdict.reservations.map((entry) => $tr(entry.reasonKey, entry.params)),
       ].join("\n")
     : "";
+
+  // While an item's price is still queued/in flight, show a skeleton instead of
+  // a bare "-" (which otherwise reads as "no market listing exists").
+  const pendingPriceKeys = getInventoryHydrationController().pendingKeys;
+  let metricState: "loading" | "has-value" | "no-data";
+  $: metricState = $pendingPriceKeys.has(item.internalName)
+    ? "loading"
+    : item.platinum != null
+      ? "has-value"
+      : "no-data";
+
+  // Lead the eye with the valuable stock: high/mid platinum rows get a gold
+  // rail + inset halo (see .value-high/.value-mid in components.css).
+  $: valueTierClass =
+    valueTier(item.platinum) === "high"
+      ? "value-high"
+      : valueTier(item.platinum) === "mid"
+        ? "value-mid"
+        : "";
 
   $: marks = itemMarksFor(item);
 
@@ -111,11 +132,13 @@
 
 <div
   data-inventory-card={item.internalName}
-  class="item-card group relative {item.isPrime ? 'is-prime' : mastered ? 'is-mastered' : ''} {mastered
-    ? 'border-success/25'
-    : ''} {item.isPrime ? 'border-accent/30' : ''} {selectionMode && !selectable
-    ? 'opacity-45'
-    : ''} {selected
+  class="item-card group relative {valueTierClass} {item.isPrime
+    ? 'is-prime'
+    : mastered
+      ? 'is-mastered'
+      : ''} {mastered ? 'border-success/25' : ''} {item.isPrime
+    ? 'border-accent/30'
+    : ''} {selectionMode && !selectable ? 'opacity-45' : ''} {selected
     ? 'outline outline-2 outline-offset-[-2px] outline-[color:var(--accent)]'
     : ''}"
   role="button"
@@ -257,6 +280,7 @@
       platinum={item.platinum}
       ducats={item.ducats}
       ratio={item.ducatonator}
+      state={metricState}
       {showDucats}
       emphasizePrimary
       className="mt-1"

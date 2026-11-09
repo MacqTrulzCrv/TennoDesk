@@ -3,7 +3,8 @@
   import { openQuickBuyByName } from "../lib/inventory/quickSell.js";
   import { itemDb, parsedItems } from "../stores/data.js";
   import { currentView } from "../stores/app.js";
-  import { wikiSearchRequest } from "../stores/modals.js";
+  import { pinnedBuilds, togglePinnedBuild } from "../stores/pinnedBuilds.js";
+  import { wikiSearchRequest, buildGuideRequest } from "../stores/modals.js";
   import { dropRarityColour } from "../lib/dropDisplay.js";
   import { POLARITY_ICON_URLS } from "../lib/assetUrls.js";
   import ItemImage from "../components/ItemImage.svelte";
@@ -93,6 +94,14 @@
     selectedName = visibleItems[0]?.item ?? "";
   }
   $: currentItem = visibleItems.find((entry) => entry.item === selectedName) ?? null;
+
+  // The reward overlay (and anything else) can hand off an item to open here.
+  $: if ($buildGuideRequest) {
+    const requested = $buildGuideRequest;
+    buildGuideRequest.set(null);
+    const match = BUILD_GUIDES.items.find((entry) => entry.item === requested);
+    if (match) openItem(match.type, match.item);
+  }
 
   // Guide art resolves per category, so a frame never borrows the image of a
   // same-named gem or decoration; newer items can appear under the singular
@@ -374,6 +383,19 @@
                   data-builds-card={build.id}
                 >
                   <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <button
+                      type="button"
+                      class="shrink-0 cursor-pointer self-center border-0 bg-transparent p-0 text-base leading-none {$pinnedBuilds.includes(
+                        build.id,
+                      )
+                        ? 'text-accent'
+                        : 'text-text-muted hover:text-accent'}"
+                      data-builds-pin={build.id}
+                      aria-pressed={$pinnedBuilds.includes(build.id)}
+                      title={$tr($pinnedBuilds.includes(build.id) ? "builds.unpin" : "builds.pin")}
+                      on:click={() => togglePinnedBuild(build.id)}
+                      >{$pinnedBuilds.includes(build.id) ? "★" : "☆"}</button
+                    >
                     <h4 class="m-0 font-display text-base font-semibold text-text-primary">
                       {build.name}
                     </h4>

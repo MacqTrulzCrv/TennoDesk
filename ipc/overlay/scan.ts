@@ -11,6 +11,7 @@ import { stripQuantityPrefix } from "../../config/shared/quantityPrefix";
 import { normalizeWfmSlug } from "../../config/shared/wfm";
 import { REFERENCE_WARFRAME_UI_SCALE } from "../../config/runtime/overlaySettings";
 import { resolveWarframeUiScale } from "../../services/eeLogPath";
+import { buildGuideItemNames } from "../../services/buildGuideNames";
 import * as itemDatabase from "../../services/itemDatabase";
 import { computeMasteryProgress } from "../../services/masteryHelper";
 import { getWindowsOcrHealth } from "../../services/ocrServer";
@@ -236,6 +237,7 @@ function enrichRewardItems(items: unknown[], inventoryData: InventoryData): unkn
   const ownedCounts = buildOwnedCounts(inventoryData);
   const pending = buildPendingBlueprints(inventoryData);
   const masteredMap = masteredByKey(inventoryData);
+  const guideNames = buildGuideItemNames();
 
   return items.map((rawItem) => {
     if (!rawItem || typeof rawItem !== "object") return rawItem;
@@ -245,6 +247,8 @@ function enrichRewardItems(items: unknown[], inventoryData: InventoryData): unkn
     const parentUniqueName = entry?.componentOf || null;
     const parent = parentUniqueName ? itemDatabase.lookupItem(parentUniqueName) : null;
     const parentName = parent?.name || null;
+    // The guide covers base equipment, so a part reward flags its parent frame/weapon.
+    const guideItemName = parentName && guideNames.has(parentName) ? parentName : null;
     const partRequiredCount = componentRequiredCount(parent, uniqueName);
     const partOwnedCount = ownedComponentCount(uniqueName, ownedCounts);
     const progress = setProgress(parent, ownedCounts, pending, uniqueName);
@@ -274,6 +278,7 @@ function enrichRewardItems(items: unknown[], inventoryData: InventoryData): unkn
       ...(vaulted === undefined ? {} : { vaulted }),
       ...(mastered === undefined ? {} : { mastered }),
       ...(isInFoundry(uniqueName, pending) ? { building: true } : {}),
+      ...(guideItemName ? { hasBuildGuide: true, guideItemName } : {}),
       ...(progress
         ? {
             setOwnedCount: progress.owned,

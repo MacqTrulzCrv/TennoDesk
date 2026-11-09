@@ -66,3 +66,7 @@ export const activeEnemy = writable<ActiveEnemyState | null>(null);
  *  own drop list, so it seeds a search and navigates instead. The mode travels
  *  with the query because each caller knows what it is handing over. */
 export const wikiSearchRequest = writable<{ query: string; mode: DropSearchMode } | null>(null);
+
+/** Hand-off for "open this item's build guide": the reward overlay sends an
+ *  equipment name through main, which the Build Guide view consumes and clears. */
+export const buildGuideRequest = writable<string | null>(null);

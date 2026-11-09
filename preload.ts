@@ -133,6 +133,7 @@ import {
   ARBI_SHOW_LOG_IN_FOLDER,
   ARBI_RUN_SAVED,
   ARBI_OPEN_RUN,
+  OPEN_BUILD_GUIDE,
   PT_GET_RUNS,
   PT_REFRESH_RUNS,
   PT_SET_TAGS,
@@ -390,6 +391,7 @@ try {
       RIVEN_SIMILAR_AUCTIONS,
     ),
     onArbiOpenRun: ipcDataBridge<IpcEventMap["arbi-open-run"]>(ipcRenderer, ARBI_OPEN_RUN),
+    onOpenBuildGuide: ipcDataBridge<IpcEventMap["open-build-guide"]>(ipcRenderer, OPEN_BUILD_GUIDE),
 
     getPtRuns: inv<"getPtRuns">(PT_GET_RUNS),
     refreshPtRuns: inv<"refreshPtRuns">(PT_REFRESH_RUNS),

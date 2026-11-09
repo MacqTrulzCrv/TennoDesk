@@ -27,6 +27,7 @@ export const NAV_ICON_URLS = {
   stats: new URL("../../assets/icons/Stats.png", import.meta.url).href,
   wiki: new URL("../../assets/icons/Wiki.svg", import.meta.url).href,
   builds: new URL("../../assets/icons/Builds.svg", import.meta.url).href,
+  shopping: new URL("../../assets/icons/ShoppingList.svg", import.meta.url).href,
   arbi: new URL("../../assets/icons/ArbiAnalyze.png", import.meta.url).href,
   missions: new URL("../../assets/icons/Missions.svg", import.meta.url).href,
 } as const;

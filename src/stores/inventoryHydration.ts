@@ -42,6 +42,23 @@ export function createInventoryHydrationController(): InventoryHydrationControll
 
   const pendingMetricKeys = new Set<string>();
   const queuedMetricKeys = new Set<string>();
+
+  // Exposes "this item's price is still in flight" so cards can show a skeleton
+  // instead of a bare "-" (which otherwise reads as "no listing exists").
+  // Published on a throttle because pending/queued churn hard during a full load.
+  const pendingKeysStore = writable<ReadonlySet<string>>(new Set<string>());
+  let pendingPublishTimer: ReturnType<typeof setTimeout> | null = null;
+  const publishPendingKeys = (): void => {
+    pendingPublishTimer = null;
+    const union = new Set<string>(pendingMetricKeys);
+    for (const key of queuedMetricKeys) union.add(key);
+    pendingKeysStore.set(union);
+  };
+  const schedulePendingPublish = (): void => {
+    if (pendingPublishTimer) return;
+    pendingPublishTimer = setTimeout(publishPendingKeys, METRIC_FLUSH_MS);
+  };
+
   let hydrationQueue: HydrationTask[] = [];
   let hydrationRunning = false;
   let isMounted = true;
@@ -111,9 +128,11 @@ export function createInventoryHydrationController(): InventoryHydrationControll
 
     markPending(key) {
       pendingMetricKeys.add(key);
+      schedulePendingPublish();
     },
     clearPending(key) {
       pendingMetricKeys.delete(key);
+      schedulePendingPublish();
     },
   };
 
@@ -257,6 +276,7 @@ export function createInventoryHydrationController(): InventoryHydrationControll
     }
 
     if (appended) {
+      schedulePendingPublish();
       void runHydrationPump();
     }
   }
@@ -264,6 +284,9 @@ export function createInventoryHydrationController(): InventoryHydrationControll
   return {
     metricsByKey: {
       subscribe: metricsByKeyStore.subscribe,
+    },
+    pendingKeys: {
+      subscribe: pendingKeysStore.subscribe,
     },
     enqueue: queueTasks,
     pause() {

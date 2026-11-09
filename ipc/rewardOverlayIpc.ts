@@ -43,6 +43,8 @@ import {
 } from "../config/runtime/overlaySettings";
 import {
   OVERLAY_CLOSE,
+  OVERLAY_OPEN_BUILD_GUIDE,
+  OPEN_BUILD_GUIDE,
   OVERLAY_GET_PRICE,
   OVERLAY_INTERACTION_MODE,
   OVERLAY_GET_DRAG_HINT,
@@ -317,6 +319,22 @@ export function register(pushOverlayThemeVars: () => void): void {
     }
     if (isRewardPairShown()) resetOverlayInteraction("close-button");
   });
+
+  // Reward overlay "Guide" chip: surface the main window on that item's build guide.
+  onAuthorized(
+    OVERLAY_OPEN_BUILD_GUIDE,
+    assertOverlayRendererSender,
+    (_event, rawName: unknown) => {
+      const name = typeof rawName === "string" ? rawName : "";
+      if (!name) return;
+      const main = ctx.mainWindow;
+      if (!main || main.isDestroyed()) return;
+      if (main.isMinimized()) main.restore();
+      main.show();
+      main.focus();
+      main.webContents.send(OPEN_BUILD_GUIDE, name);
+    },
+  );
 
   handleAuthorized(OVERLAY_GET_DRAG_HINT, assertOverlayRendererSender, async () => {
     // Native Wayland delivers no global hotkeys, so only the Settings switch unlocks overlays.

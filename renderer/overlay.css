@@ -580,6 +580,16 @@ body {
   border-color: color-mix(in oklab, #4ade80 40%, transparent);
   color: #4ade80;
 }
+.slot-meta-chip.guide {
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  color: var(--accent-bright);
+}
+.slot-meta-chip.clickable {
+  cursor: pointer;
+}
+.slot-meta-chip.clickable:hover {
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+}
 
 .slot-meta-chip.unmastered {
   border-color: color-mix(in oklab, #38bdf8 40%, transparent);
