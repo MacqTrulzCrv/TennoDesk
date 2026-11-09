@@ -105,15 +105,17 @@ export const SIDEBAR_GROUPS: readonly SidebarGroup[] = [
   { key: "market", labelKey: "nav.group.market", views: ["market", "analytics", "rivens"] },
   { key: "world", labelKey: "nav.group.world", views: ["world", "syndicates"] },
   { key: "guide", labelKey: "nav.group.guide", views: ["wiki", "builds"] },
+  { key: "system", labelKey: "nav.group.system", views: ["settings"] },
 ];
 
 const VIEW_TO_GROUP: Record<string, string> = Object.fromEntries(
   SIDEBAR_GROUPS.flatMap((group) => group.views.map((view) => [view, group.key])),
 );
 
-/** Group key a sidebar view belongs to; the last group catches anything unlisted. */
+/** Group key a sidebar view belongs to; unlisted views land in the guide group
+    (a content section), never next to settings. */
 export function sidebarGroupOf(view: SidebarViewName): string {
-  return VIEW_TO_GROUP[view] ?? SIDEBAR_GROUPS[SIDEBAR_GROUPS.length - 1].key;
+  return VIEW_TO_GROUP[view] ?? "guide";
 }
 
 export function isToggleableView(view: SidebarViewName): view is ToggleableView {

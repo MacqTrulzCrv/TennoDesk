@@ -2721,5 +2721,7 @@
   "nav.group.analysis": "Analyse",
   "nav.group.market": "Markt",
   "nav.group.world": "Welt",
-  "nav.group.guide": "Ratgeber"
+  "nav.group.guide": "Ratgeber",
+  "nav.group.system": "System",
+  "nav.group.dev": "Entwickler"
 }

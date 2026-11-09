@@ -2721,5 +2721,7 @@
   "nav.group.analysis": "分析",
   "nav.group.market": "市场",
   "nav.group.world": "世界",
-  "nav.group.guide": "指南"
+  "nav.group.guide": "指南",
+  "nav.group.system": "系统",
+  "nav.group.dev": "开发者"
 }

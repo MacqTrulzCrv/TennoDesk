@@ -2727,5 +2727,7 @@
   "nav.group.analysis": "Analiz",
   "nav.group.market": "Piyasa",
   "nav.group.world": "Dünya",
-  "nav.group.guide": "Rehber"
+  "nav.group.guide": "Rehber",
+  "nav.group.system": "Sistem",
+  "nav.group.dev": "Geliştirici"
 }

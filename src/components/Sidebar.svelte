@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { currentView } from "../stores/app.js";
+  import { openPalette } from "../stores/commandPalette.js";
   import { invoke, send } from "../lib/ipc.js";
   import { tr } from "../lib/i18n.js";
   import { NAV_ICON_URLS } from "../lib/assetUrls.js";
@@ -43,15 +44,12 @@
 
   $: visibleNavItems = navItems.filter((item) => !$hiddenTabs.has(item.view));
 
-  // Settings pins to the bottom on its own; every other visible view is bucketed
-  // into its section, keeping the user's relative order inside each section.
-  $: settingsItem = visibleNavItems.find((item) => item.view === "settings") ?? null;
+  // Every visible view is bucketed into its section (settings included, in the
+  // "system" group), keeping the user's relative order inside each section.
   $: groupedNav = SIDEBAR_GROUPS.map((group) => ({
     key: group.key,
     labelKey: group.labelKey,
-    items: visibleNavItems.filter(
-      (item) => item.view !== "settings" && sidebarGroupOf(item.view) === group.key,
-    ),
+    items: visibleNavItems.filter((item) => sidebarGroupOf(item.view) === group.key),
   })).filter((group) => group.items.length > 0);
 
   let dragWidth: number | null = null;
@@ -174,6 +172,34 @@
       : 'min-h-0 flex-1 overflow-y-auto overflow-x-hidden'}"
   >
     <button
+      type="button"
+      class="sb-switch relative mb-1 flex w-full cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-[color-mix(in_oklab,var(--bg-raised)_55%,transparent)] px-3 py-2 text-text-secondary transition-colors duration-150 hover:border-border-strong hover:text-text-primary"
+      title={$tr("nav.quickSwitch")}
+      aria-label={$tr("nav.quickSwitch")}
+      data-sidebar-quickswitch
+      on:click={openPalette}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-4 w-4 shrink-0 text-text-muted"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4-4" />
+      </svg>
+      <span class="sb-switch-label flex-1 text-left font-display text-sm"
+        >{$tr("nav.quickSwitch")}</span
+      >
+      <kbd
+        class="sb-switch-kbd shrink-0 rounded border border-border bg-white/5 px-1.5 py-0.5 font-display text-[10px] font-semibold text-text-muted"
+        >Ctrl K</kbd
+      >
+    </button>
+    <button
       class="nav-btn nav-btn-collapse relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 bg-transparent px-3.5 py-2.5 font-display text-base font-medium tracking-wide text-text-muted transition-colors duration-150 hover:bg-bg-hover hover:text-text-primary"
       title={$sidebarCollapsed ? $tr("nav.expandSidebar") : $tr("nav.collapseSidebar")}
       aria-label={$sidebarCollapsed ? $tr("nav.expandSidebar") : $tr("nav.collapseSidebar")}
@@ -214,29 +240,10 @@
         </button>
       {/each}
     {/each}
-  </div>
-
-  <div class="mt-auto flex shrink-0 flex-col gap-0.5 border-t border-border/50 pt-2.5">
-    {#if settingsItem}
-      <button
-        data-view={settingsItem.view}
-        class="nav-btn relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 px-3.5 py-2.5 font-display text-base font-medium tracking-wide transition-colors duration-150 {$currentView ===
-        settingsItem.view
-          ? "bg-[var(--view-accent-glow)] text-[var(--view-accent)] before:content-[''] before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-1 before:rounded-r before:bg-[var(--view-accent)] max-[800px]:before:hidden"
-          : 'bg-transparent text-text-secondary hover:bg-bg-hover hover:text-text-primary'}"
-        aria-current={$currentView === settingsItem.view ? "page" : undefined}
-        on:click={() => currentView.set(settingsItem.view)}
-      >
-        <img
-          src={settingsItem.icon}
-          alt=""
-          class="h-6 w-6 shrink-0 object-contain brightness-[0.85]"
-        />
-        <span>{$sidebarLabels[settingsItem.view] ?? $tr(settingsItem.labelKey)}</span>
-      </button>
-    {/if}
     {#if showDevTools}
-      <div class="mt-1.5 flex flex-col gap-0.5 border-t border-border/40 pt-1.5">
+      {#if !collapsed}
+        <div class="nav-group-label">{$tr("nav.group.dev")}</div>
+      {/if}
         <button
           class="nav-btn relative flex w-full cursor-pointer items-center gap-3 rounded-md border-0 bg-transparent px-3.5 py-2.5 font-display text-base font-medium tracking-wide text-text-muted transition-colors duration-150 hover:bg-bg-hover hover:text-text-secondary"
           title={$tr("nav.previewSetupWizard")}
@@ -326,7 +333,6 @@
           </svg>
           <span>{$tr("nav.loadJson")}</span>
         </button>
-      </div>
     {/if}
   </div>
 </nav>
@@ -415,6 +421,16 @@
   .sidebar-collapsed .nav-group-label {
     display: none;
   }
+  .sidebar-collapsed .sb-switch-label,
+  .sidebar-collapsed .sb-switch-kbd {
+    display: none;
+  }
+  .sidebar-collapsed .sb-switch {
+    justify-content: center;
+    gap: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 
   /* --- visual polish --- */
   #sidebar {
@@ -442,6 +458,16 @@
   @media (max-width: 800px) {
     .nav-group-label {
       display: none;
+    }
+    .sb-switch-label,
+    .sb-switch-kbd {
+      display: none;
+    }
+    .sb-switch {
+      justify-content: center;
+      gap: 0;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
     .nav-btn :global(span) {
       display: none;
