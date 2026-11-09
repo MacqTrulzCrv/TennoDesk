@@ -145,7 +145,11 @@
   "build": {
     "appId": "com.tennodesk.app",
     "productName": "TennoDesk",
-    "publish": null,
+    "publish": {
+      "provider": "github",
+      "owner": "MacqTrulzCrv",
+      "repo": "TennoDesk"
+    },
     "directories": {
       "output": "release"
     },
