@@ -94,14 +94,15 @@ Start-Process "release\TennoDesk-1.2.0-Setup.exe" -ArgumentList "/S" -Wait
 Kurulum konumu: `%LOCALAPPDATA%\Programs\TennoDesk`
 Kullanıcı verisi: `%APPDATA%\TennoDesk`
 
-> **Otomatik güncelleyici kapalıdır** (`"publish": null` → `app-update.yml`
-> üretilmez). İmzasız resmî bir binary senin derlemeni ezmez.
+> **Otomatik güncelleme açıktır:** uygulama açılışta GitHub'daki en son sürümü
+> denetler, yeni sürüm varsa indirir (`build.publish` → GitHub; `app-update.yml`
+> + `latest.yml` üretilir). Doğrudan indirme linki her sürümde aynı kalır.
 
 ---
 
 ## Güncelleme akışı
 
-TennoDesk kendini güncellemez. Yeni bir sürüm derlemek için:
+Son kullanıcılar **otomatik güncellemeyle** yeni sürümü alır. Local'de yeni bir sürüm derlemek için:
 
 ```bash
 git pull                 # (upstream yamaları çekilecekse — local yamalara dikkat)
