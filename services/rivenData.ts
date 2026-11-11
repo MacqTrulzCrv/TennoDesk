@@ -486,33 +486,72 @@ export function localizeRivenOcrText(text: string): string {
     .join("\n");
 }
 
-/** Replace the trailing stat-label run of one OCR line with its English name.
- *  The label sits after the value and any stray punctuation, so match the final
- *  run of letters, fold it, and look it up (exact, then within a small edit
- *  budget to absorb residual OCR slips). Non-stat lines are left untouched. */
-function localizeRivenOcrLine(line: string): string {
-  const match = /([\p{L}][\p{L} ]*)\s*$/u.exec(line);
-  if (!match) return line;
-  const key = normalizeStatOcrText(match[1]);
-  if (!key) return line;
-  const english = _localeOcrToEnglish.get(key) ?? fuzzyOcrStatLookup(key);
-  return english ? line.slice(0, match.index) + english : line;
-}
+// The OCR look-alikes folded to one letter: Turkish accents plus the dotless-i,
+// which PaddleOCR reads as i, l or 1 from one scan to the next.
+const OCR_CHAR_FOLD: Record<string, string> = {
+  ç: "c",
+  ş: "s",
+  ğ: "g",
+  ü: "u",
+  ö: "o",
+  ı: "i",
+  l: "i",
+  "1": "i",
+  "|": "i",
+};
 
-/** Nearest known stat label within ~20% edit distance, or null. */
-function fuzzyOcrStatLookup(key: string): string | null {
-  const budget = Math.max(1, Math.floor(key.length * 0.2));
-  let best: string | null = null;
-  let bestDistance = budget + 1;
-  for (const [candidate, english] of _localeOcrToEnglish) {
-    if (Math.abs(candidate.length - key.length) > budget) continue;
-    const distance = levenshteinDistance(key, candidate);
-    if (distance < bestDistance) {
-      bestDistance = distance;
-      best = english;
+let _sortedOcrPhrases: Array<[string, string]> = [];
+let _sortedOcrPhrasesFor: string | null = null;
+
+/** normalizeStatOcrText that also records, for each folded character, its index
+ *  in the original line, so a matched phrase maps back to a span to replace. */
+function normalizeStatOcrTextWithMap(line: string): { norm: string; map: number[] } {
+  const out: string[] = [];
+  const map: number[] = [];
+  let pendingSpace = false;
+  for (let i = 0; i < line.length; i += 1) {
+    const lower = line[i] === "İ" || line[i] === "I" ? "i" : line[i].toLowerCase();
+    const folded = OCR_CHAR_FOLD[lower] ?? lower;
+    if (/^[a-z0-9]+$/.test(folded)) {
+      if (pendingSpace && out.length) {
+        out.push(" ");
+        map.push(i);
+      }
+      pendingSpace = false;
+      for (const ch of folded) {
+        out.push(ch);
+        map.push(i);
+      }
+    } else if (out.length) {
+      pendingSpace = true;
     }
   }
-  return best;
+  return { norm: out.join(""), map };
+}
+
+/** Replace a known localized stat label anywhere in one OCR line with its English
+ *  name. Matching the label as a whole-word run (not just the trailing word) lets
+ *  it win over qualifiers and multi-word faction labels, e.g. "Kritik Sans (Agir
+ *  Saldirilar icin x2)" or "Corpus'a Hasar verir". Non-stat lines pass through. */
+function localizeRivenOcrLine(line: string): string {
+  const { norm, map } = normalizeStatOcrTextWithMap(line);
+  if (!norm) return line;
+  if (_sortedOcrPhrasesFor !== _localeDisplayBuiltFor) {
+    _sortedOcrPhrasesFor = _localeDisplayBuiltFor;
+    // Longest first so a multi-word label wins over a bare trailing word.
+    _sortedOcrPhrases = [..._localeOcrToEnglish.entries()].sort((a, b) => b[0].length - a[0].length);
+  }
+  for (const [key, english] of _sortedOcrPhrases) {
+    let idx = norm.indexOf(key);
+    while (idx >= 0) {
+      const end = idx + key.length;
+      if ((idx === 0 || norm[idx - 1] === " ") && (end === norm.length || norm[end] === " ")) {
+        return line.slice(0, map[idx]) + english + line.slice(map[end - 1] + 1);
+      }
+      idx = norm.indexOf(key, idx + 1);
+    }
+  }
+  return line;
 }
 
 /** Finds an upgrade entry by tag within a riven type. */

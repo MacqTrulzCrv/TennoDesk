@@ -77,6 +77,17 @@ describe("riven stat localization", () => {
     expect(english).toContain("Fire Rate");
   });
 
+  it("reads a stat trailed by a qualifier and a multi-word faction label", () => {
+    setGameLocale("tr");
+    // Real OCR: "Kritik Şans (Ağır Saldırılar için x2)" and "Corpus'a Hasar verir".
+    const ocr = "%+172,8 Kritik Sans (Agir Saldirilar icin x2)\n%+90,1 Corpus'a Hasar verir";
+    const english = localizeRivenOcrText(ocr).toLowerCase();
+    expect(english).toContain("critical chance");
+    expect(english).toContain("damage to corpus");
+    // The value and qualifier are preserved for the English parser.
+    expect(localizeRivenOcrText(ocr)).toContain("(Agir Saldirilar icin x2)");
+  });
+
   it("leaves English OCR text untouched", () => {
     setGameLocale("en");
     const ocr = "+132.3% Multishot\n+187.1% Critical Chance";
