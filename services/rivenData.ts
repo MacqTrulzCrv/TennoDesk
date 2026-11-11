@@ -371,10 +371,12 @@ export function resolveRivenType(weaponName: string): string | null {
 }
 
 /** Returns the upgrade entries for a riven mod type. */
-function getRivenTypeEntries(rivenTypeKey: string): UpgradeEntry[] {
+export function getRivenTypeEntries(rivenTypeKey: string): UpgradeEntry[] {
   ensureBuilt();
   return _rivenModByKey.get(rivenTypeKey)?.entries || [];
 }
+
+export type { UpgradeEntry };
 
 /** Maps an OCR stat label to its upgrade tag, or null when unknown. */
 export function statNameToTag(statName: string): string | null {

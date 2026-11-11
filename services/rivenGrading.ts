@@ -8,6 +8,7 @@ import {
   SPECIFIC_FIT_ATTEN,
   BASE_DRAIN,
   NON_PERCENTAGE_TAGS,
+  isMultiplierTag,
 } from "./rivenConstants";
 import { getGoodRolls, type GoodRollData } from "./rivenBestAttributes";
 import { clamp01 } from "./rewardScannerUtils";
@@ -96,6 +97,113 @@ export function unparseBuff(
 
   // value is now lerp(0.9, 1.1, rollFloat) -> invert
   return (value - 0.9) / 0.2;
+}
+
+export type RivenStatUnit = "percent" | "meters" | "multiplier";
+
+/** The displayed value a stat shows at its weakest (roll 0%) and strongest (roll
+ *  100%) roll. For a multiplier curse this descends, so these are the roll-0 and
+ *  roll-1 endpoints, not sorted min/max. */
+export interface RivenStatEndpoints {
+  atMin: number;
+  atMax: number;
+}
+
+export interface RivenStatRange {
+  tag: string;
+  displayName: string;
+  unit: RivenStatUnit;
+  buff: RivenStatEndpoints | null;
+  curse: RivenStatEndpoints | null;
+}
+
+export interface RivenStatRanges {
+  weapon: string;
+  disposition: number;
+  melee: boolean;
+  numBuffs: number;
+  numCurses: number;
+  lvl: number;
+  stats: RivenStatRange[];
+}
+
+/** Forward of RivenParser.js: the unsigned roll magnitude for the given fit. */
+function rivenRawMagnitude(
+  baseValue: number,
+  disposition: number,
+  attenA: number,
+  attenB: number,
+  roll: number,
+  lvl: number,
+): number {
+  const attenuation = SPECIFIC_FIT_ATTEN * disposition * BASE_DRAIN;
+  return Math.abs(baseValue) * (lvl + 1) * attenA * attenB * attenuation * lerp(0.9, 1.1, roll);
+}
+
+function statUnit(tag: string): RivenStatUnit {
+  if (isMultiplierTag(tag)) return "multiplier";
+  if (NON_PERCENTAGE_TAGS.has(tag)) return "meters";
+  return "percent";
+}
+
+/** Displayed buff value: a multiplier reads x(1+v), metres raw, the rest a percent. */
+function displayBuff(raw: number, unit: RivenStatUnit): number {
+  if (unit === "multiplier") return 1 + raw;
+  if (unit === "meters") return raw;
+  return raw * 100;
+}
+/** Displayed curse value: a multiplier reads x(1-v), the rest a negative. */
+function displayCurse(raw: number, unit: RivenStatUnit): number {
+  if (unit === "multiplier") return 1 - raw;
+  if (unit === "meters") return -raw;
+  return -raw * 100;
+}
+
+/** Every stat a weapon's riven can roll, with each side's value range at rank `lvl`
+ *  for a roll of `numBuffs` buffs and `numCurses` curses. Mirrors browse.wf/rivencalc.
+ *  Null when the weapon has no disposition or riven type. */
+export function getRivenStatRanges(
+  weaponName: string,
+  numBuffs = 3,
+  numCurses = 1,
+  lvl: number = MAX_RIVEN_MOD_RANK,
+): RivenStatRanges | null {
+  const disposition = rivenData.getWeaponDisposition(weaponName);
+  const rivenTypeKey = rivenData.resolveRivenType(weaponName);
+  if (disposition == null || !rivenTypeKey) return null;
+
+  const melee = rivenData.isMeleeWeapon(weaponName);
+  const entries = rivenData.getRivenTypeEntries(rivenTypeKey);
+  const last = NUM_BUFFS_ATTEN.length - 1;
+  const nb = Math.max(1, Math.min(numBuffs, last));
+  const nc = Math.max(0, Math.min(numCurses, last));
+
+  const buffsAtten = NUM_BUFFS_ATTEN[nb];
+  const buffCurseAtten = Math.pow(1.25, nc);
+  // Curse formula swaps the tables: buffs indexed by curse count, curses by buff count.
+  const curseAttenA = NUM_BUFFS_ATTEN[nc];
+  const curseAttenB = NUM_BUFFS_CURSE_ATTEN[nb];
+
+  const stats: RivenStatRange[] = [];
+  for (const entry of entries) {
+    const unit = statUnit(entry.tag);
+    let buff: RivenStatEndpoints | null = null;
+    let curse: RivenStatEndpoints | null = null;
+    if (entry.canBeBuff) {
+      const r0 = rivenRawMagnitude(entry.baseValue, disposition, buffsAtten, buffCurseAtten, 0, lvl);
+      const r1 = rivenRawMagnitude(entry.baseValue, disposition, buffsAtten, buffCurseAtten, 1, lvl);
+      buff = { atMin: displayBuff(r0, unit), atMax: displayBuff(r1, unit) };
+    }
+    // A curse only exists on the card when the roll carries one.
+    if (entry.canBeCurse && nc >= 1) {
+      const r0 = rivenRawMagnitude(entry.baseValue, disposition, curseAttenA, curseAttenB, 0, lvl);
+      const r1 = rivenRawMagnitude(entry.baseValue, disposition, curseAttenA, curseAttenB, 1, lvl);
+      curse = { atMin: displayCurse(r0, unit), atMax: displayCurse(r1, unit) };
+    }
+    if (!buff && !curse) continue;
+    stats.push({ tag: entry.tag, displayName: rivenData.getStatDisplayName(entry.tag, melee), unit, buff, curse });
+  }
+  return { weapon: weaponName, disposition, melee, numBuffs: nb, numCurses: nc, lvl, stats };
 }
 
 /** Inverts RivenParser.js's curse formula after OCR has removed the displayed sign.
