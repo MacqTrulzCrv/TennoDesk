@@ -3,6 +3,7 @@ import { getGameLocale } from "./gameLocale";
 import { withScope } from "./logger";
 import { levenshteinDistance } from "./rewardScannerUtils";
 import { TAG_TO_WFM_URL_NAME } from "../config/shared/wfmRivenVocabulary";
+import { statTagToDisplayName } from "../config/shared/rivenStatDisplayNames";
 import { VARIANT_PREFIXES, VARIANT_SUFFIXES } from "../config/shared/weaponVariants";
 
 const log = withScope("rivenData");
@@ -389,6 +390,17 @@ export function statNameToTag(statName: string): string | null {
 // names stay the WFM search and OCR match keys. The melee fire-rate stat is
 // surfaced as "Attack Speed", which the game localizes under its own key.
 const ATTACK_SPEED_LOC_KEY = "/Lotus/Language/Upgrades/AttackSpeedBuffDesc";
+
+// The whole stat pool is read from the game-data package, but a few of its locale
+// strings are stale or never translated (e.g. tr still carries the English "Zoom"
+// while the live client shows "Yakınlaştırma"). Map the label the game actually
+// prints to its canonical tag so the OCR text still resolves. Keyed by game locale.
+const MANUAL_LOCALE_STAT_ALIASES: Record<string, Record<string, string>> = {
+  tr: {
+    // dict.tr carries "%|val| Zoom"; the client renders "Yakınlaştırma".
+    Yakınlaştırma: "WeaponZoomFovMod",
+  },
+};
 let _tagToLocaleDisplay = new Map<string, string>();
 let _localeStatNameToTag = new Map<string, string>();
 let _localeOcrToEnglish = new Map<string, string>();
@@ -421,6 +433,7 @@ function ensureLocaleStatDisplay(): void {
   _localeStatNameToTag = new Map();
   _localeOcrToEnglish = new Map();
   _localeMeleeAttackSpeed = null;
+  _gappedOcrPhrases = [];
   if (locale === "en") return;
   const dict = readPepDict(locale);
   if (!dict) return;
@@ -437,21 +450,50 @@ function ensureLocaleStatDisplay(): void {
       _localeOcrToEnglish.set(key, TAG_TO_DISPLAY[tag] || _tagToDisplayName.get(tag) || name);
     }
   };
+  const gappedSeen = new Set<string>();
+  const recordGapped = (raw: string, tag: string, dn: string) => {
+    // The value placeholder splits the label only when words precede it.
+    const ph = /%?\s*\|[^|]*\|[%s]?\s*/.exec(raw);
+    if (!ph || ph.index === 0) return;
+    const head = normalizeStatOcrText(cleanLocTag(raw.slice(0, ph.index)));
+    const tail = normalizeStatOcrText(cleanLocTag(raw.slice(ph.index + ph[0].length)));
+    if (!head || !tail) return;
+    const gkey = `${head}|${tail}`;
+    if (gappedSeen.has(gkey)) return;
+    gappedSeen.add(gkey);
+    // Melee faction tags share the base label; fall back to it for canonical casing
+    // ("Damage to Corpus") the English parser expects, then the title-cased map.
+    const baseTag = tag.replace("WeaponMeleeFaction", "WeaponFaction");
+    const resolved = statTagToDisplayName(baseTag);
+    const english = resolved !== baseTag ? resolved : TAG_TO_DISPLAY[tag] || dn;
+    _gappedOcrPhrases.push({ head, tailNorm: tail, tailWords: tail.split(" "), english });
+  };
   for (const [key, mod] of Object.entries(upgrades)) {
     if (!Array.isArray(mod.upgradeEntries) || !key.includes("Randomized")) continue;
     for (const ue of mod.upgradeEntries) {
       if (!ue.tag) continue;
       const locTag = ue.upgradeValues?.[0]?.locTag;
-      const dn = cleanLocTag(locTag ? dict[locTag] || "" : "");
+      const raw = locTag ? dict[locTag] || "" : "";
+      const dn = cleanLocTag(raw);
       if (!dn) continue;
       if (!_tagToLocaleDisplay.has(ue.tag)) _tagToLocaleDisplay.set(ue.tag, dn);
       addMatch(dn, ue.tag);
+      recordGapped(raw, ue.tag, dn);
     }
   }
   _localeMeleeAttackSpeed = cleanLocTag(dict[ATTACK_SPEED_LOC_KEY] || "") || null;
   // The melee card surfaces fire rate as attack speed, so the scanner must map
   // its localized label to the same tag.
   if (_localeMeleeAttackSpeed) addMatch(_localeMeleeAttackSpeed, "WeaponFireRateMod");
+  // Overlay the hand-kept labels where the data package's locale string is wrong;
+  // the game's real label also wins the display shown to a player in that language.
+  const aliases = MANUAL_LOCALE_STAT_ALIASES[locale];
+  if (aliases) {
+    for (const [label, tag] of Object.entries(aliases)) {
+      _tagToLocaleDisplay.set(tag, label);
+      addMatch(label, tag);
+    }
+  }
 }
 
 /** Uses Attack Speed for WeaponFireRateMod on melee cards. */
@@ -477,11 +519,75 @@ export function getLocalizedStatDisplay(tag: string, melee = false): string | nu
  *  names so the English stat parser can read a localized client's card. PaddleOCR
  *  drops the accents, so "Coklu Atis" matches the folded "coklu atis" key. A no-op
  *  in English. */
+/** The index of `word` as a whole-word run in `norm` at or after `from`, or -1. */
+function wordRunIndex(norm: string, word: string, from: number): number {
+  if (!word) return -1;
+  let idx = norm.indexOf(word, from);
+  while (idx >= 0) {
+    const end = idx + word.length;
+    if ((idx === 0 || norm[idx - 1] === " ") && (end === norm.length || norm[end] === " ")) {
+      return idx;
+    }
+    idx = norm.indexOf(word, idx + 1);
+  }
+  return -1;
+}
+
+/** Rewrite a faction-style curse whose value splits its label ("Corpus'a x0,56
+ *  Hasar verir", the "verir" often wrapped to the next OCR line) into the English
+ *  "<value> Damage to Corpus" the parser reads. Returns the rewritten line and how
+ *  many following lines it consumed, or null when no gapped label fits. */
+function rewriteGappedLine(lines: string[], i: number): { text: string; consumed: number } | null {
+  const line = lines[i];
+  const { norm, map } = normalizeStatOcrTextWithMap(line);
+  if (!norm) return null;
+  for (const { head, tailNorm, tailWords, english } of _gappedOcrPhrases) {
+    const hIdx = wordRunIndex(norm, head, 0);
+    if (hIdx < 0) continue;
+    const headEnd = hIdx + head.length;
+    const t0 = wordRunIndex(norm, tailWords[0], headEnd);
+    if (t0 <= headEnd) continue;
+    const rest = norm.slice(t0);
+    let consumed = 0;
+    let matched = rest === tailNorm || rest.startsWith(`${tailNorm} `);
+    if (!matched && tailNorm.startsWith(`${rest} `)) {
+      // The tail wrapped onto the next OCR line ("...Hasar" + "verir").
+      const remaining = tailNorm.slice(rest.length + 1);
+      const next = i + 1 < lines.length ? normalizeStatOcrTextWithMap(lines[i + 1]).norm : "";
+      if (next === remaining || next.startsWith(`${remaining} `)) {
+        matched = true;
+        consumed = 1;
+      }
+    }
+    if (!matched) continue;
+    const value = line.slice(map[headEnd - 1] + 1, map[t0]).trim().replace(/,/g, ".");
+    const prefix = line.slice(0, map[hIdx]);
+    return { text: `${prefix}${value ? `${value} ` : ""}${english}`, consumed };
+  }
+  return null;
+}
+
+/** Reassemble gapped faction-style labels before the per-line localizer runs. */
+function applyGappedLabels(lines: string[]): string[] {
+  if (_gappedOcrPhrases.length === 0) return lines;
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    const rewritten = rewriteGappedLine(lines, i);
+    if (rewritten) {
+      out.push(rewritten.text);
+      i += rewritten.consumed;
+    } else {
+      out.push(lines[i]);
+    }
+  }
+  return out;
+}
+
 export function localizeRivenOcrText(text: string): string {
   ensureLocaleStatDisplay();
   if (_localeDisplayBuiltFor === "en" || _localeOcrToEnglish.size === 0) return text;
   ensureSortedOcrPhrases();
-  return mergeWrappedStatLines(text.split(/\r?\n/))
+  return mergeWrappedStatLines(applyGappedLabels(text.split(/\r?\n/)))
     .map(localizeRivenOcrLine)
     .join("\n");
 }
@@ -563,6 +669,16 @@ const OCR_CHAR_FOLD: Record<string, string> = {
 
 let _sortedOcrPhrases: Array<[string, string]> = [];
 let _sortedOcrPhrasesFor: string | null = null;
+
+// Labels whose value placeholder sits between words ("Corpus'a |val| Hasar verir"),
+// so the scanned value splits the label and the parser can't see it as one phrase.
+// We keep the words before/after the value to reassemble them from OCR text.
+let _gappedOcrPhrases: Array<{
+  head: string;
+  tailNorm: string;
+  tailWords: string[];
+  english: string;
+}> = [];
 
 /** normalizeStatOcrText that also records, for each folded character, its index
  *  in the original line, so a matched phrase maps back to a span to replace. */

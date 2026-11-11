@@ -53,6 +53,41 @@ describe("riven stat localization", () => {
     expect(statNameToTag("Critical Chance")).toBe("WeaponCritChanceMod");
   });
 
+  it("reassembles a faction curse whose value splits it and 'verir' wraps", () => {
+    setGameLocale("tr");
+    // The exact two OCR boxes a Turkish Astilla Prime card produced.
+    const english = localizeRivenOcrText("Corpus'a x0,56 Hasar\nverir");
+    expect(english).toContain("Damage to Corpus");
+    const faction = parseRivenStats(english).find((s) => /Damage to Corpus/i.test(s.name));
+    expect(faction).toBeTruthy();
+    expect(faction?.positive).toBe(false); // x0.56 < 1 is a curse
+  });
+
+  it("reassembles a single-line faction curse and other factions", () => {
+    setGameLocale("tr");
+    expect(localizeRivenOcrText("Grineer'a x0,74 Hasar verir")).toContain("Damage to Grineer");
+    expect(localizeRivenOcrText("İnfested'e x1,32 Hasar\nverir")).toContain("Damage to Infested");
+  });
+
+  it("does not mistake a plain Damage buff for a faction curse", () => {
+    setGameLocale("tr");
+    // Plain "Hasar" (Damage) with no faction head stays Damage, not a faction stat.
+    const english = localizeRivenOcrText("%+193,1 Hasar");
+    expect(english).toContain("Damage");
+    expect(english).not.toContain("Damage to");
+  });
+
+  it("resolves Zoom from the client's label the data package left untranslated", () => {
+    setGameLocale("tr");
+    // dict.tr still says "Zoom"; the live client shows "Yakınlaştırma".
+    expect(getStatDisplayName("WeaponZoomFovMod")).toBe("Yakınlaştırma");
+    expect(statNameToTag("Yakinlastirma")).toBe("WeaponZoomFovMod");
+    // A negative Zoom curse, exactly as PaddleOCR read it off a Dera Vandal card.
+    const english = localizeRivenOcrText("%-59 Yakinlastirma");
+    expect(english).toContain("Zoom");
+    expect(parseRivenStats(english).map((s) => s.name.toLowerCase())).toContain("zoom");
+  });
+
   it("translates a real Turkish riven OCR scan into parseable English stats", () => {
     setGameLocale("tr");
     // The exact text PaddleOCR produced for a Furis Critacan riven card.
