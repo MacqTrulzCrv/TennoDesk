@@ -1,6 +1,7 @@
 import type { NativeImage } from "electron";
 
 import { withScope } from "../../services/logger";
+import { localizeRivenOcrText } from "../../services/rivenData";
 import { areOcrDebugDumpsEnabled } from "../../services/rewardScanDebug";
 import type { CaptureResult } from "../../services/screenCapture";
 import {
@@ -215,7 +216,7 @@ export async function recognizeRivenCardStats(
 
       const parseStart = Date.now();
       const diagnostics: RivenParseDiagnostics = { droppedLines: [] };
-      const stats = parseRivenStats(ocrResult.text, diagnostics);
+      const stats = parseRivenStats(localizeRivenOcrText(ocrResult.text), diagnostics);
       parseMs += Date.now() - parseStart;
 
       // Loud drops: a signed line that parsed to nothing is the signal that

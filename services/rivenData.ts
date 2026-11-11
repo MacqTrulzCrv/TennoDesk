@@ -378,7 +378,11 @@ function getRivenTypeEntries(rivenTypeKey: string): UpgradeEntry[] {
 /** Maps an OCR stat label to its upgrade tag, or null when unknown. */
 export function statNameToTag(statName: string): string | null {
   const lc = statName.toLowerCase().trim();
-  return STAT_NAME_TO_TAG[lc] || null;
+  const canonical = STAT_NAME_TO_TAG[lc];
+  if (canonical) return canonical;
+  // A localized client's OCR text ("Coklu Atis") matches the game-language label.
+  ensureLocaleStatDisplay();
+  return _localeStatNameToTag.get(normalizeStatOcrText(statName)) || null;
 }
 
 // Stat names are shown in the player's game language while the canonical English
@@ -386,8 +390,26 @@ export function statNameToTag(statName: string): string | null {
 // surfaced as "Attack Speed", which the game localizes under its own key.
 const ATTACK_SPEED_LOC_KEY = "/Lotus/Language/Upgrades/AttackSpeedBuffDesc";
 let _tagToLocaleDisplay = new Map<string, string>();
+let _localeStatNameToTag = new Map<string, string>();
+let _localeOcrToEnglish = new Map<string, string>();
 let _localeMeleeAttackSpeed: string | null = null;
 let _localeDisplayBuiltFor: string | null = null;
+let _ocrReplacements: Array<[RegExp, string]> = [];
+let _ocrReplacementsFor: string | null = null;
+
+/** Fold a stat label to a diacritic-insensitive key. The OCR model drops Turkish
+ *  accents ("Çoklu Atış" reads as "Coklu Atis"), so the dictionary labels and the
+ *  scanned text must normalize the same way before they can match. */
+function normalizeStatOcrText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[ıİ]/g, "i")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 /** Build a tag -> localized stat display map for the active game language. A
  *  no-op in English (the canonical maps already hold it). Lazy and cached per
@@ -397,6 +419,8 @@ function ensureLocaleStatDisplay(): void {
   if (_localeDisplayBuiltFor === locale) return;
   _localeDisplayBuiltFor = locale;
   _tagToLocaleDisplay = new Map();
+  _localeStatNameToTag = new Map();
+  _localeOcrToEnglish = new Map();
   _localeMeleeAttackSpeed = null;
   if (locale === "en") return;
   const dict = readPepDict(locale);
@@ -405,15 +429,30 @@ function ensureLocaleStatDisplay(): void {
     string,
     { upgradeEntries?: Array<{ tag?: string; upgradeValues?: Array<{ locTag?: string }> }> }
   >;
+  const addMatch = (name: string, tag: string) => {
+    const key = normalizeStatOcrText(name);
+    if (!key) return;
+    if (!_localeStatNameToTag.has(key)) _localeStatNameToTag.set(key, tag);
+    // The English label the OCR parser's known-stat vocabulary expects.
+    if (!_localeOcrToEnglish.has(key)) {
+      _localeOcrToEnglish.set(key, TAG_TO_DISPLAY[tag] || _tagToDisplayName.get(tag) || name);
+    }
+  };
   for (const [key, mod] of Object.entries(upgrades)) {
     if (!Array.isArray(mod.upgradeEntries) || !key.includes("Randomized")) continue;
     for (const ue of mod.upgradeEntries) {
+      if (!ue.tag) continue;
       const locTag = ue.upgradeValues?.[0]?.locTag;
       const dn = cleanLocTag(locTag ? dict[locTag] || "" : "");
-      if (dn && ue.tag && !_tagToLocaleDisplay.has(ue.tag)) _tagToLocaleDisplay.set(ue.tag, dn);
+      if (!dn) continue;
+      if (!_tagToLocaleDisplay.has(ue.tag)) _tagToLocaleDisplay.set(ue.tag, dn);
+      addMatch(dn, ue.tag);
     }
   }
   _localeMeleeAttackSpeed = cleanLocTag(dict[ATTACK_SPEED_LOC_KEY] || "") || null;
+  // The melee card surfaces fire rate as attack speed, so the scanner must map
+  // its localized label to the same tag.
+  if (_localeMeleeAttackSpeed) addMatch(_localeMeleeAttackSpeed, "WeaponFireRateMod");
 }
 
 /** Uses Attack Speed for WeaponFireRateMod on melee cards. */
@@ -433,6 +472,28 @@ export function getLocalizedStatDisplay(tag: string, melee = false): string | nu
   if (_localeDisplayBuiltFor === "en") return null;
   if (melee && tag === "WeaponFireRateMod") return _localeMeleeAttackSpeed;
   return _tagToLocaleDisplay.get(tag) || null;
+}
+
+/** Rewrite localized riven stat labels in raw OCR text to their canonical English
+ *  names so the English stat parser can read a localized client's card. PaddleOCR
+ *  drops the accents, so "Coklu Atis" matches the folded "coklu atis" key. A no-op
+ *  in English. */
+export function localizeRivenOcrText(text: string): string {
+  ensureLocaleStatDisplay();
+  if (_localeDisplayBuiltFor === "en" || _localeOcrToEnglish.size === 0) return text;
+  if (_ocrReplacementsFor !== _localeDisplayBuiltFor) {
+    _ocrReplacementsFor = _localeDisplayBuiltFor;
+    // Longest first so a multi-word label wins over a bare trailing word.
+    _ocrReplacements = [..._localeOcrToEnglish.entries()]
+      .sort((a, b) => b[0].length - a[0].length)
+      .map(([key, english]) => [
+        new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
+        english,
+      ]);
+  }
+  let out = text;
+  for (const [pattern, english] of _ocrReplacements) out = out.replace(pattern, english);
+  return out;
 }
 
 /** Finds an upgrade entry by tag within a riven type. */
