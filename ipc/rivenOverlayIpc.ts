@@ -57,12 +57,18 @@ import {
   RIVEN_RESCAN_REQUEST,
   RIVEN_RESCAN,
   RIVEN_WEAPON_MISSING,
+  RIVEN_STAT_RANGES,
+  RIVEN_RANGES_CLOSE,
+  RIVEN_RANGES_SET_CONFIG,
 } from "../config/shared/ipcChannels";
+import { getGameLocale } from "../services/gameLocale";
 
 const log = withScope("rivenOverlayIpc");
 
 const APP_ROOT = app.getAppPath();
 const RIVEN_WINDOW_FILE = path.join(APP_ROOT, "renderer", "riven-overlay.html");
+const RIVEN_RANGES_FILE = path.join(APP_ROOT, "renderer", "riven-ranges-overlay.html");
+const RIVEN_CENTER_CANVAS = { width: 520, height: 648 };
 
 let _rivenInteractive = false;
 let persistOverlaySettings: (() => void) | null = null;
@@ -144,6 +150,31 @@ const rivenRightWindowsController = createOverlayWindowsController({
   onWindowBoundsChanged: rememberOverlayWindowBounds,
 });
 
+// The center "stat ranges" panel: a sibling riven window with its own renderer,
+// opened beside the scanner and toggled on its own hotkey.
+const rivenCenterWindowsController = createOverlayWindowsController({
+  ...rivenWindowBaseOptions,
+  overlayWindowFile: RIVEN_RANGES_FILE,
+  windowWidth: RIVEN_CENTER_CANVAS.width,
+  windowHeight: RIVEN_CENTER_CANVAS.height,
+  minWindowWidth: RIVEN_CENTER_CANVAS.width,
+  minWindowHeight: RIVEN_CENTER_CANVAS.height,
+  getOverlayWindow: () => ctx.rivenOverlayCenterWindow,
+  setOverlayWindow: (window) => {
+    ctx.rivenOverlayCenterWindow = window;
+  },
+  getOverlayInteractiveMode: () => _rivenInteractive,
+  setOverlayInteractiveModeState: (enabled) => {
+    _rivenInteractive = !!enabled;
+  },
+  windowLabel: "riven ranges center window",
+  windowTitle: "WFHelper Riven Stat Ranges",
+  fileSearch: "panel=ranges",
+  placement: "center",
+  windowStateKey: "rivenCenter",
+  onWindowBoundsChanged: rememberOverlayWindowBounds,
+});
+
 function recordRivenEvent(channel: string, args: unknown[]): void {
   rivenLastEvents.delete(channel);
   rivenLastEvents.set(channel, args);
@@ -156,7 +187,21 @@ function sendToRivenWindows(channel: string, ...args: unknown[]): void {
   forEachRivenWindow((win) => win.webContents.send(channel, ...args));
 }
 
+function sendToCenterWindow(channel: string, ...args: unknown[]): void {
+  const win = ctx.rivenOverlayCenterWindow;
+  if (win && !win.isDestroyed()) win.webContents.send(channel, ...args);
+}
+
 export function markRivenRendererReady(senderId: number): boolean {
+  const center = ctx.rivenOverlayCenterWindow;
+  if (center && !center.isDestroyed() && center.webContents.id === senderId) {
+    rivenCenterWindowsController.markRendererReady(senderId);
+    if (ctx.overlayThemeVars && Object.keys(ctx.overlayThemeVars).length > 0) {
+      center.webContents.send(OVERLAY_THEME_VARS, { ...ctx.overlayThemeVars });
+    }
+    sendRivenRanges();
+    return true;
+  }
   const entry = rivenWindowEntries().find(
     ({ win }) => win !== null && !win.isDestroyed() && win.webContents.id === senderId,
   );
@@ -173,6 +218,9 @@ export function markRivenRendererReady(senderId: number): boolean {
 }
 
 const rivenControllers = [rivenLeftWindowsController, rivenRightWindowsController];
+// The scanner panels plus the center ranges panel, for shared visibility, z-order
+// and unfocus-hide. Scanner-only broadcast stays on rivenWindowEntries() below.
+const allRivenControllers = [...rivenControllers, rivenCenterWindowsController];
 
 function rivenWindowEntries() {
   return [
@@ -181,26 +229,33 @@ function rivenWindowEntries() {
   ];
 }
 
+function allRivenWindowEntries() {
+  return [
+    ...rivenWindowEntries(),
+    { win: ctx.rivenOverlayCenterWindow, controller: rivenCenterWindowsController },
+  ];
+}
+
 function getRivenWindows(): (InstanceType<typeof BrowserWindow> | null)[] {
   return rivenWindowEntries().map(({ win }) => win);
 }
 
 export function isAnyRivenWindowVisible(): boolean {
-  return rivenControllers.some((controller) => controller.isOverlayWindowVisible());
+  return allRivenControllers.some((controller) => controller.isOverlayWindowVisible());
 }
 
 function isRivenShown(): boolean {
-  return rivenControllers.some(
+  return allRivenControllers.some(
     (controller) => controller.isOverlayWindowVisible() || controller.isHiddenByUnfocus(),
   );
 }
 
 export function restoreRivenAfterUnfocus(): void {
-  for (const controller of rivenControllers) controller.restoreAfterUnfocus();
+  for (const controller of allRivenControllers) controller.restoreAfterUnfocus();
 }
 
 function hideRivenWindows(): void {
-  for (const controller of rivenControllers) controller.hideOverlayWindow();
+  for (const controller of allRivenControllers) controller.hideOverlayWindow();
 }
 
 function forEachRivenWindow(fn: (win: InstanceType<typeof BrowserWindow>) => void): void {
@@ -226,12 +281,12 @@ function probeRivenZOrder(keepRaised: boolean): void {
 }
 
 function syncRivenWindowZOrder(warframeFocused: boolean, foreground: boolean | null = null): void {
-  syncUnfocusHide("riven panels", rivenControllers, warframeFocused, foreground);
+  syncUnfocusHide("riven panels", allRivenControllers, warframeFocused, foreground);
   if (!isAnyRivenWindowVisible()) return;
   const keepRaised =
     process.platform === "win32" ? canRaiseOverlayWindows() : warframeFocused || _rivenInteractive;
   probeRivenZOrder(keepRaised);
-  for (const { win, controller } of rivenWindowEntries()) {
+  for (const { win, controller } of allRivenWindowEntries()) {
     syncOverlayWindowZOrder(controller, win, keepRaised);
   }
 }
@@ -243,7 +298,9 @@ function setRivenInteractiveMode(
   _rivenInteractive = next;
   rivenLeftWindowsController.setOverlayInteractiveMode(_rivenInteractive, options);
   rivenRightWindowsController.setOverlayInteractiveMode(_rivenInteractive, options);
+  rivenCenterWindowsController.setOverlayInteractiveMode(_rivenInteractive, options);
   sendToRivenWindows(OVERLAY_INTERACTION_MODE, { interactive: _rivenInteractive });
+  sendToCenterWindow(OVERLAY_INTERACTION_MODE, { interactive: _rivenInteractive });
 }
 
 function rivenStartsInteractive(): boolean {
@@ -361,8 +418,65 @@ let _rivenWeaponSource: RivenWeaponSource = "";
 let _rivenWeaponLabelExact = false;
 let _rivenSessionToken = 0;
 
+// The buff/curse configuration the center ranges panel is showing (3 buff / 1 curse
+// is the most common roll shape). The panel can switch it live.
+const _rangesConfig = { numBuffs: 3, numCurses: 1 };
+
 function isRivenOverlayEnabled(): boolean {
   return isRivenOverlaySettingEnabled(ctx.overlaySettings);
+}
+
+function isRivenRangesOverlayEnabled(): boolean {
+  return ctx.overlaySettings.rivenRangesOverlayEnabled !== false;
+}
+
+/** Push the detected weapon's stat ranges to the center panel for the active config. */
+function sendRivenRanges(): void {
+  if (!_rivenWeaponName || _rivenWeaponName === "Riven") return;
+  const ranges = rivenGrading.getRivenStatRanges(
+    _rivenWeaponName,
+    _rangesConfig.numBuffs,
+    _rangesConfig.numCurses,
+  );
+  if (!ranges) return;
+  sendToCenterWindow(RIVEN_STAT_RANGES, { ...ranges, locale: getGameLocale() });
+}
+
+// The ranges panel sits over the screen-center card the scanner OCRs, so exclude
+// it from screen capture (WDA_EXCLUDEFROMCAPTURE): the user still sees it, the
+// scanner sees the card behind it. Without this the panel pollutes every scan.
+function protectCenterFromCapture(): void {
+  const win = ctx.rivenOverlayCenterWindow;
+  if (win && !win.isDestroyed()) {
+    try {
+      win.setContentProtection(true);
+    } catch (err) {
+      log.warn("[RivenRanges] setContentProtection failed:", String(err));
+    }
+  }
+}
+
+/** Show the center ranges panel (creating it if needed) and feed it the weapon. */
+function openRivenRangesWindow(): void {
+  if (!isRivenRangesOverlayEnabled()) return;
+  const existing = ctx.rivenOverlayCenterWindow;
+  if (existing && !existing.isDestroyed()) {
+    rivenCenterWindowsController.positionOverlayWindow(rivenCenterWindowsController.getAnchorMeta());
+    applyOverlayZOrder(existing, true);
+    rivenCenterWindowsController.showOverlayWindowInactive();
+    rivenCenterWindowsController.setOverlayInteractiveMode(_rivenInteractive);
+    protectCenterFromCapture();
+    sendRivenRanges();
+    return;
+  }
+  rivenCenterWindowsController.createOverlayWindow({ show: true });
+  rivenCenterWindowsController.setOverlayInteractiveMode(_rivenInteractive);
+  protectCenterFromCapture();
+  // Theme and ranges are (re)sent once the renderer signals ready.
+}
+
+function hideRivenRangesWindow(): void {
+  rivenCenterWindowsController.hideOverlayWindow();
 }
 
 function tryGradeStats(stats: rivenScan.RivenStat[]): rivenGrading.RivenGradeResult | null {
@@ -457,6 +571,7 @@ function applyDetectedWeapon(
   _rivenWeaponLabelExact = labelExact;
   sendToRivenWindows(RIVEN_WEAPON_UPDATE, detected);
   sendWeaponEnrichment();
+  sendRivenRanges();
   if (_rivenInitialStats.length > 0) sendGradedInitialStats();
 }
 
@@ -744,7 +859,9 @@ export function onRivenOverlayToggle(source = "hotkey"): void {
     log.info("[OverlayRoute] riven toggle ignored - the riven overlay is off");
     return;
   }
-  if (isAnyRivenWindowVisible()) {
+  // The scanner's own visibility, independent of the center ranges panel.
+  const scannerVisible = rivenControllers.some((c) => c.isOverlayWindowVisible());
+  if (scannerVisible) {
     log.info(`[OverlayRoute] trigger=riven-toggle-close source=${source}`);
     onRivenSessionClose();
     return;
@@ -752,6 +869,23 @@ export function onRivenOverlayToggle(source = "hotkey"): void {
   log.info(`[OverlayRoute] trigger=riven-toggle-open source=${source}`);
   resumeRivenSession();
   onRivenSessionOpen();
+}
+
+/** Hotkey: open or close just the center stat-ranges panel, apart from the scanner. */
+export function onRivenRangesToggle(source = "hotkey"): void {
+  if (!isRivenRangesOverlayEnabled()) {
+    log.info("[OverlayRoute] riven ranges toggle ignored - the panel is off");
+    return;
+  }
+  if (rivenCenterWindowsController.isOverlayWindowVisible()) {
+    log.info(`[OverlayRoute] trigger=riven-ranges-close source=${source}`);
+    hideRivenRangesWindow();
+    resetRivenInteractionWhenIdle();
+    return;
+  }
+  log.info(`[OverlayRoute] trigger=riven-ranges-open source=${source}`);
+  resumeRivenSession();
+  openRivenRangesWindow();
 }
 
 export function onRivenSessionOpen(): void {
@@ -772,6 +906,7 @@ export function onRivenSessionOpen(): void {
     const vars = { ...ctx.overlayThemeVars };
     forEachRivenWindow((win) => win.webContents.send(OVERLAY_THEME_VARS, vars));
   }
+  openRivenRangesWindow();
   triggerInitialScan();
 }
 
@@ -801,6 +936,7 @@ export function onRivenRollPending(weapon: string, kuvaPerRoll: number): void {
       sendGradedInitialStats();
       sendWeaponEnrichment();
     }
+    sendRivenRanges();
   }
 }
 
@@ -902,6 +1038,21 @@ export function register(): void {
     if (!isAnyRivenWindowVisible()) return;
     log.info("[OverlayRoute] trigger=riven-manual-rescan");
     rescanVisibleRivenCard();
+  });
+
+  onAuthorized(RIVEN_RANGES_CLOSE, assertRivenOverlayRendererSender, () => {
+    log.info("[OverlayRoute] trigger=riven-ranges-close source=panel");
+    hideRivenRangesWindow();
+    resetRivenInteractionWhenIdle();
+  });
+
+  onAuthorized(RIVEN_RANGES_SET_CONFIG, assertRivenOverlayRendererSender, (_event, payload) => {
+    const p = (payload ?? {}) as { numBuffs?: unknown; numCurses?: unknown };
+    const nb = Number(p.numBuffs);
+    const nc = Number(p.numCurses);
+    if (nb === 2 || nb === 3) _rangesConfig.numBuffs = nb;
+    if (nc === 0 || nc === 1) _rangesConfig.numCurses = nc;
+    sendRivenRanges();
   });
 
   onAuthorized(

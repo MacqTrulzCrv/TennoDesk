@@ -35,7 +35,9 @@
 
   const overlayPlacementSteps: Array<{
     key: "reward" | "planner" | "riven" | "arbiSummary" | "tradeNotification";
-    dummies: OverlayWindowKey[];
+    // Only editor-capable kinds are placed here; the center ranges panel has no
+    // field editor and is positioned in-game, so it never appears as a dummy.
+    dummies: OverlayLayoutKind[];
     titleKey: MessageKey;
     textKey: MessageKey;
   }> = [
@@ -76,6 +78,7 @@
     planner: "setup.dummy.plannerLabel",
     rivenLeft: "setup.dummy.rivenLeftLabel",
     rivenRight: "setup.dummy.rivenRightLabel",
+    rivenCenter: "settings.rivenRangesOverlay",
     arbiSummary: "common.arbitrationSummary",
     tradeNotification: "settings.tradeDetectedOverlay",
   };
@@ -121,8 +124,11 @@
       const pos = {} as Record<OverlayWindowKey, PlacementRect>;
       const scales = {} as Record<OverlayWindowKey, number>;
       for (const key of OVERLAY_WINDOW_KEYS) {
-        pos[key] = clampToArea(layout.overlays[key]);
-        scales[key] = layout.overlays[key].scale;
+        // The center ranges panel is placed in-game, not in this wizard step.
+        const entry = layout.overlays[key];
+        if (!entry) continue;
+        pos[key] = clampToArea(entry);
+        scales[key] = entry.scale;
       }
       placementPos = pos;
       placementScales = scales;

@@ -306,6 +306,10 @@
   "settings.rivenToggleHotkeyEnabled": "Enable riven overlay toggle",
   "settings.rivenToggleHotkeyHint": "Opens the riven scanner overlay by hand, or closes it when it is already up.",
   "settings.rivenToggleHotkey": "Riven overlay toggle",
+  "settings.rivenRangesHotkeyEnabled": "Enable stat-ranges panel toggle",
+  "settings.rivenRangesHotkeyHint": "Opens or closes the center stat-ranges panel next to the riven scanner.",
+  "settings.rivenRangesHotkey": "Stat ranges panel toggle",
+  "settings.rivenRangesOverlay": "Riven stat ranges panel",
   "settings.plannerToggleHotkeyEnabled": "Enable relic list toggle",
   "settings.plannerToggleHotkeyHint": "Shows or hides the relic recommendation list on demand.",
   "settings.plannerToggleHotkey": "Relic list toggle",
@@ -2772,6 +2776,7 @@
   "shortcuts.overlayInteract": "Toggle overlay interaction",
   "shortcuts.overlayRiven": "Scan riven",
   "shortcuts.overlayRivenToggle": "Toggle riven overlay",
+  "shortcuts.overlayRanges": "Toggle stat ranges",
   "shortcuts.overlayRep": "Trade +rep toast",
   "shortcuts.overlayPlanner": "Toggle planner overlay"
 }

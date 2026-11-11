@@ -302,6 +302,7 @@ const settingsController = createOverlaySettingsController({
   onToggleOverlayInteractionMode: toggleOverlayInteractionMode,
   onRivenRescanTrigger: rivenOverlayIpc.onRivenManualRescan,
   onRivenToggleTrigger: rivenOverlayIpc.onRivenOverlayToggle,
+  onRivenRangesTrigger: rivenOverlayIpc.onRivenRangesToggle,
   onPlannerToggleTrigger,
   configureWarframeLifecycle,
 });

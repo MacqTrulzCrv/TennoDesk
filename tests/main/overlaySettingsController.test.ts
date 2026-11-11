@@ -13,6 +13,7 @@ function buildController() {
     overlayInteractionHotkeyRegistered: null,
     rivenRescanHotkeyRegistered: null,
     rivenToggleHotkeyRegistered: null,
+    rivenRangesHotkeyRegistered: null,
   };
 
   const registerCallbacks = new Map<string, () => void>();
@@ -47,6 +48,7 @@ function buildController() {
     onToggleOverlayInteractionMode: vi.fn(),
     onRivenRescanTrigger: vi.fn(),
     onRivenToggleTrigger: vi.fn(),
+    onRivenRangesTrigger: vi.fn(),
     onPlannerToggleTrigger: vi.fn(),
     configureWarframeLifecycle: vi.fn(async (_enabled: boolean) => {}),
   };

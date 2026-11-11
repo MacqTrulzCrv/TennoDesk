@@ -347,6 +347,10 @@
   "settings.rivenToggleHotkeyEnabled": "Riven overlay aç/kapa tuşunu etkinleştir",
   "settings.rivenToggleHotkeyHint": "Riven tarayıcı overlay'ini elle açar, zaten açıksa kapatır.",
   "settings.rivenToggleHotkey": "Riven overlay aç/kapa",
+  "settings.rivenRangesHotkeyEnabled": "Stat aralıkları paneli aç/kapa tuşunu etkinleştir",
+  "settings.rivenRangesHotkeyHint": "Riven tarayıcının yanındaki ortadaki stat-aralıkları panelini açar/kapatır.",
+  "settings.rivenRangesHotkey": "Stat aralıkları paneli aç/kapa",
+  "settings.rivenRangesOverlay": "Riven stat aralıkları paneli",
   "settings.plannerToggleHotkeyEnabled": "Relic listesi kısayolunu etkinleştir",
   "settings.plannerToggleHotkeyHint": "Relic öneri listesini istediğinde gösterir ya da gizler.",
   "settings.plannerToggleHotkey": "Relic listesi aç/kapat",
@@ -2758,6 +2762,7 @@
   "shortcuts.overlayInteract": "Overlay etkileşimini aç/kapat",
   "shortcuts.overlayRiven": "Riven tara",
   "shortcuts.overlayRivenToggle": "Riven overlay aç/kapa",
+  "shortcuts.overlayRanges": "Stat aralıkları aç/kapa",
   "shortcuts.overlayRep": "Ticaret +rep bildirimi",
   "shortcuts.overlayPlanner": "Planner overlay aç/kapat"
 }

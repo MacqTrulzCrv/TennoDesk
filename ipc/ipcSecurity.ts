@@ -14,6 +14,7 @@ const log = withScope("ipcSecurity");
 const MAIN_RENDERER_SUFFIX = normalizePathForCompare("renderer/dist/index.html");
 const OVERLAY_RENDERER_SUFFIX = normalizePathForCompare("renderer/overlay.html");
 const RIVEN_OVERLAY_RENDERER_SUFFIX = normalizePathForCompare("renderer/riven-overlay.html");
+const RIVEN_RANGES_RENDERER_SUFFIX = normalizePathForCompare("renderer/riven-ranges-overlay.html");
 const TRADE_NOTIFICATION_RENDERER_SUFFIX = normalizePathForCompare(
   "renderer/trade-notification.html",
 );
@@ -148,6 +149,7 @@ function overlayWindowCandidates(): BrowserWindowCandidate[] {
     { win: ctx.plannerOverlayWindow, suffix: OVERLAY_RENDERER_SUFFIX },
     { win: ctx.rivenOverlayLeftWindow, suffix: RIVEN_OVERLAY_RENDERER_SUFFIX },
     { win: ctx.rivenOverlayRightWindow, suffix: RIVEN_OVERLAY_RENDERER_SUFFIX },
+    { win: ctx.rivenOverlayCenterWindow, suffix: RIVEN_RANGES_RENDERER_SUFFIX },
     { win: ctx.arbiSummaryWindow, suffix: ARBI_SUMMARY_RENDERER_SUFFIX },
   ];
 }
@@ -199,6 +201,7 @@ function assertRivenOverlayRendererSender(event: IpcEventLike, _channel: string)
     [
       { win: ctx.rivenOverlayLeftWindow, suffix: RIVEN_OVERLAY_RENDERER_SUFFIX },
       { win: ctx.rivenOverlayRightWindow, suffix: RIVEN_OVERLAY_RENDERER_SUFFIX },
+      { win: ctx.rivenOverlayCenterWindow, suffix: RIVEN_RANGES_RENDERER_SUFFIX },
     ],
     { throwLastError: true },
   );

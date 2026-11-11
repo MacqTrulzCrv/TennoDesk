@@ -23,6 +23,9 @@ import {
   RIVEN_RESCAN_REQUEST,
   RIVEN_RESCAN,
   RIVEN_WEAPON_MISSING,
+  RIVEN_STAT_RANGES,
+  RIVEN_RANGES_CLOSE,
+  RIVEN_RANGES_SET_CONFIG,
   OVERLAY_GET_THEME_VARS,
   OVERLAY_GET_MESSAGES,
   OVERLAY_MESSAGES,
@@ -44,6 +47,11 @@ contextBridge.exposeInMainWorld("rivenOverlay", {
   openAuction: (auctionId: string) => ipcRenderer.send(RIVEN_OPEN_AUCTION, auctionId),
   setSimilarAuctions: (shown: boolean) => ipcRenderer.invoke(RIVEN_SET_SIMILAR_AUCTIONS, shown),
   requestRescan: () => ipcRenderer.send(RIVEN_RESCAN_REQUEST),
+  closeRanges: () => ipcRenderer.send(RIVEN_RANGES_CLOSE),
+  setRangesConfig: (numBuffs: number, numCurses: number) =>
+    ipcRenderer.send(RIVEN_RANGES_SET_CONFIG, { numBuffs, numCurses }),
+  onStatRanges: (cb: (payload: unknown) => void) =>
+    onRivenIpc(RIVEN_STAT_RANGES, (_event: unknown, payload: unknown) => cb(payload)),
   moveBy: (dx: number, dy: number) => ipcRenderer.send(OVERLAY_DRAG_MOVE, { dx, dy }),
   ready: () => ipcRenderer.send(OVERLAY_READY),
   getDragHint: () => ipcRenderer.invoke(OVERLAY_GET_DRAG_HINT),

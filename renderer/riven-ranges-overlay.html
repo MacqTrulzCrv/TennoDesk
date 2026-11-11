@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';"
+    />
+    <title>Riven Stat Ranges</title>
+    <link rel="stylesheet" href="fonts/fonts.css" />
+    <link rel="stylesheet" href="riven-ranges-overlay.css" />
+    <link rel="stylesheet" href="overlay-layout.css" />
+  </head>
+  <body>
+    <div id="panel">
+      <div id="header">
+        <div id="header-left">
+          <div id="panel-label">Stat Ranges</div>
+          <div id="weapon-name">&mdash;</div>
+        </div>
+        <div id="header-right">
+          <span id="dispo"></span>
+          <button id="btn-close" title="Close">&times;</button>
+        </div>
+      </div>
+
+      <div id="config-bar">
+        <div class="cfg-group">
+          <span class="cfg-label" id="lbl-buffs">Buff</span>
+          <span class="seg" id="seg-buffs">
+            <button type="button" data-buffs="2">2</button>
+            <button type="button" data-buffs="3">3</button>
+          </span>
+        </div>
+        <div class="cfg-group">
+          <span class="cfg-label" id="lbl-curses">Curse</span>
+          <span class="seg" id="seg-curses">
+            <button type="button" data-curses="0">0</button>
+            <button type="button" data-curses="1">1</button>
+          </span>
+        </div>
+      </div>
+
+      <div id="col-head">
+        <span id="col-stat">Stat</span>
+        <span id="col-buff" class="r">Positive</span>
+        <span id="col-curse" class="r">Curse</span>
+      </div>
+
+      <div id="empty-state">Scan a riven to see this weapon's stat ranges.</div>
+      <div id="ranges"></div>
+
+      <div id="interaction-hint" class="is-hidden"></div>
+    </div>
+    <script src="overlay-drag.js"></script>
+    <script src="overlay-theme.js"></script>
+    <script type="module" src="riven-ranges-overlay.js"></script>
+  </body>
+</html>

@@ -13,6 +13,7 @@ interface MainProcessContext {
   plannerOverlayWindow: BrowserWindow | null;
   rivenOverlayLeftWindow: BrowserWindow | null;
   rivenOverlayRightWindow: BrowserWindow | null;
+  rivenOverlayCenterWindow: BrowserWindow | null;
   tradeNotificationWindow: BrowserWindow | null;
   arbiSummaryWindow: BrowserWindow | null;
   currentInventoryPath: string | null;
@@ -24,6 +25,7 @@ interface MainProcessContext {
   overlayInteractionHotkeyRegistered: string | null;
   rivenRescanHotkeyRegistered: string | null;
   rivenToggleHotkeyRegistered: string | null;
+  rivenRangesHotkeyRegistered: string | null;
   plannerToggleHotkeyRegistered: string | null;
   overlayInteractiveMode: boolean;
   overlayDismissedUntilMs: number;
@@ -38,6 +40,7 @@ type PresenceKey =
   | "plannerOverlayWindow"
   | "rivenOverlayLeftWindow"
   | "rivenOverlayRightWindow"
+  | "rivenOverlayCenterWindow"
   | "tradeNotificationWindow"
   | "arbiSummaryWindow"
   | "currentInventoryPath"
@@ -47,6 +50,7 @@ type QuotedKey =
   | "overlayInteractionHotkeyRegistered"
   | "rivenRescanHotkeyRegistered"
   | "rivenToggleHotkeyRegistered"
+  | "rivenRangesHotkeyRegistered"
   | "plannerToggleHotkeyRegistered";
 
 const log = withScope("ctx");
@@ -56,6 +60,7 @@ const presenceKeys: ReadonlySet<ContextKey> = new Set<PresenceKey>([
   "plannerOverlayWindow",
   "rivenOverlayLeftWindow",
   "rivenOverlayRightWindow",
+  "rivenOverlayCenterWindow",
   "tradeNotificationWindow",
   "arbiSummaryWindow",
   "currentInventoryPath",
@@ -66,6 +71,7 @@ const quotedKeys: ReadonlySet<ContextKey> = new Set<QuotedKey>([
   "overlayInteractionHotkeyRegistered",
   "rivenRescanHotkeyRegistered",
   "rivenToggleHotkeyRegistered",
+  "rivenRangesHotkeyRegistered",
   "plannerToggleHotkeyRegistered",
 ]);
 
@@ -75,6 +81,7 @@ const state: MainProcessContext = {
   plannerOverlayWindow: null,
   rivenOverlayLeftWindow: null,
   rivenOverlayRightWindow: null,
+  rivenOverlayCenterWindow: null,
   tradeNotificationWindow: null,
   arbiSummaryWindow: null,
   currentInventoryPath: null,
@@ -86,6 +93,7 @@ const state: MainProcessContext = {
   overlayInteractionHotkeyRegistered: null,
   rivenRescanHotkeyRegistered: null,
   rivenToggleHotkeyRegistered: null,
+  rivenRangesHotkeyRegistered: null,
   plannerToggleHotkeyRegistered: null,
   overlayInteractiveMode: false,
   overlayDismissedUntilMs: 0,

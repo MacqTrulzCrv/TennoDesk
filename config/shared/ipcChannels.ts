@@ -184,6 +184,11 @@ export const RIVEN_SIMILAR_AUCTIONS = "riven-similar-auctions";
 export const RIVEN_RESCAN_REQUEST = "riven-rescan-request";
 export const RIVEN_RESCAN = "riven-rescan";
 export const RIVEN_WEAPON_MISSING = "riven-weapon-missing";
+// Center "stat ranges" overlay: main pushes the detected weapon's min-max table;
+// the panel asks to close itself or change the buff/curse configuration.
+export const RIVEN_STAT_RANGES = "riven-stat-ranges";
+export const RIVEN_RANGES_CLOSE = "riven-ranges-close";
+export const RIVEN_RANGES_SET_CONFIG = "riven-ranges-set-config";
 
 export const TRADE_NOTIFICATION_SHOW = "trade-notification-show";
 export const TRADE_NOTIFICATION_DISMISS = "trade-notification-dismiss";

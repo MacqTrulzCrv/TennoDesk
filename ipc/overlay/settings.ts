@@ -34,6 +34,7 @@ type OverlayCtx = {
   overlayInteractionHotkeyRegistered: string | null;
   rivenRescanHotkeyRegistered: string | null;
   rivenToggleHotkeyRegistered: string | null;
+  rivenRangesHotkeyRegistered: string | null;
   plannerToggleHotkeyRegistered: string | null;
   overlayInteractiveMode: boolean;
 };
@@ -56,6 +57,7 @@ type OverlaySettingsControllerOptions = {
   onToggleOverlayInteractionMode: (source?: string) => void;
   onRivenRescanTrigger: (source?: string) => void;
   onRivenToggleTrigger: (source?: string) => void;
+  onRivenRangesTrigger: (source?: string) => void;
   onPlannerToggleTrigger: (source?: string) => void;
   configureWarframeLifecycle: (enabled: boolean) => Promise<void>;
 };
@@ -111,6 +113,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     onToggleOverlayInteractionMode,
     onRivenRescanTrigger,
     onRivenToggleTrigger,
+    onRivenRangesTrigger,
     onPlannerToggleTrigger,
   } = options;
 
@@ -235,6 +238,11 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
         candidate.rivenToggleHotkey ?? defaults.rivenToggleHotkey,
         String(defaults.rivenToggleHotkey),
       ),
+      rivenRangesHotkeyEnabled: booleanSetting("rivenRangesHotkeyEnabled"),
+      rivenRangesHotkey: normalizeHotkey(
+        candidate.rivenRangesHotkey ?? defaults.rivenRangesHotkey,
+        String(defaults.rivenRangesHotkey),
+      ),
       plannerToggleHotkeyEnabled: booleanSetting("plannerToggleHotkeyEnabled"),
       plannerToggleHotkey: normalizeHotkey(
         candidate.plannerToggleHotkey ?? defaults.plannerToggleHotkey,
@@ -289,6 +297,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
       relicRecommendationOverlayEnabled: booleanSetting("relicRecommendationOverlayEnabled"),
       tradeNotificationOverlayEnabled,
       rivenOverlayEnabled: booleanSetting("rivenOverlayEnabled"),
+      rivenRangesOverlayEnabled: booleanSetting("rivenRangesOverlayEnabled"),
       arbiSummaryOverlayEnabled: booleanSetting("arbiSummaryOverlayEnabled"),
       arbiTrackingEnabled: booleanSetting("arbiTrackingEnabled"),
       missionTrackingEnabled: booleanSetting("missionTrackingEnabled"),
@@ -391,6 +400,16 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     ctx.rivenToggleHotkeyRegistered = null;
   }
 
+  function unregisterRivenRangesHotkey(): void {
+    if (!ctx.rivenRangesHotkeyRegistered) return;
+    try {
+      globalShortcut.unregister(ctx.rivenRangesHotkeyRegistered);
+    } catch (err) {
+      log.warn("[RivenRangesHotkey] unregister failed:", normalizeErrorMessage(err));
+    }
+    ctx.rivenRangesHotkeyRegistered = null;
+  }
+
   function unregisterPlannerToggleHotkey(): void {
     if (!ctx.plannerToggleHotkeyRegistered) return;
     try {
@@ -406,6 +425,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     unregisterOverlayInteractionHotkey();
     unregisterRivenRescanHotkey();
     unregisterRivenToggleHotkey();
+    unregisterRivenRangesHotkey();
     unregisterPlannerToggleHotkey();
   }
 
@@ -519,6 +539,32 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     }
   }
 
+  function registerRivenRangesHotkey(): boolean {
+    unregisterRivenRangesHotkey();
+
+    if (!ctx.overlaySettings.rivenRangesHotkeyEnabled) {
+      log.info("[RivenRangesHotkey] disabled");
+      return false;
+    }
+
+    const accelerator = String(ctx.overlaySettings.rivenRangesHotkey || "");
+    if (!accelerator) return false;
+
+    try {
+      const ok = globalShortcut.register(accelerator, () => onRivenRangesTrigger("hotkey"));
+      if (!ok) {
+        log.warn("[RivenRangesHotkey] register failed:", accelerator);
+        return false;
+      }
+      ctx.rivenRangesHotkeyRegistered = accelerator;
+      log.info("[RivenRangesHotkey] registered:", accelerator);
+      return true;
+    } catch (err) {
+      log.warn("[RivenRangesHotkey] invalid shortcut:", accelerator, normalizeErrorMessage(err));
+      return false;
+    }
+  }
+
   function registerPlannerToggleHotkey(): boolean {
     unregisterPlannerToggleHotkey();
 
@@ -557,8 +603,11 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     const interactionOk = registerOverlayInteractionHotkey();
     const rescanOk = registerRivenRescanHotkey();
     const rivenToggleOk = registerRivenToggleHotkey();
+    const rivenRangesOk = registerRivenRangesHotkey();
     const plannerOk = registerPlannerToggleHotkey();
-    return triggerOk || interactionOk || rescanOk || rivenToggleOk || plannerOk;
+    return (
+      triggerOk || interactionOk || rescanOk || rivenToggleOk || rivenRangesOk || plannerOk
+    );
   }
 
   function setHotkeysActive(active: boolean): void {

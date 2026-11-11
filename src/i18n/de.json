@@ -471,6 +471,10 @@
   "settings.rivenToggleHotkeyEnabled": "Riven-Overlay-Umschalter aktivieren",
   "settings.rivenToggleHotkeyHint": "Öffnet das Riven-Scanner-Overlay von Hand oder schließt es, wenn es bereits offen ist.",
   "settings.rivenToggleHotkey": "Riven-Overlay umschalten",
+  "settings.rivenRangesHotkeyEnabled": "Statbereich-Panel-Umschalter aktivieren",
+  "settings.rivenRangesHotkeyHint": "Öffnet oder schließt das mittlere Statbereich-Panel neben dem Riven-Scanner.",
+  "settings.rivenRangesHotkey": "Statbereich-Panel umschalten",
+  "settings.rivenRangesOverlay": "Riven-Statbereich-Panel",
   "settings.plannerToggleHotkeyEnabled": "Relikt-Listen-Umschalter aktivieren",
   "settings.plannerToggleHotkeyHint": "Zeigt oder versteckt die Relikt-Empfehlungsliste bei Bedarf.",
   "settings.plannerToggleHotkey": "Relikt-Listen-Umschalter",
@@ -2752,6 +2756,7 @@
   "shortcuts.overlayInteract": "Overlay-Interaktion umschalten",
   "shortcuts.overlayRiven": "Riven scannen",
   "shortcuts.overlayRivenToggle": "Riven-Overlay umschalten",
+  "shortcuts.overlayRanges": "Statbereiche umschalten",
   "shortcuts.overlayRep": "Handel +Rep Hinweis",
   "shortcuts.overlayPlanner": "Planer-Overlay umschalten"
 }

@@ -24,6 +24,7 @@ export const OVERLAY_WINDOW_KEYS = [
   "planner",
   "rivenLeft",
   "rivenRight",
+  "rivenCenter",
   "arbiSummary",
   "tradeNotification",
 ] as const;
@@ -56,6 +57,8 @@ export interface OverlaySettings {
   rivenRescanHotkey: string;
   rivenToggleHotkeyEnabled: boolean;
   rivenToggleHotkey: string;
+  rivenRangesHotkeyEnabled: boolean;
+  rivenRangesHotkey: string;
   plannerToggleHotkeyEnabled: boolean;
   plannerToggleHotkey: string;
   worldNotificationsEnabled: boolean;
@@ -94,6 +97,8 @@ export interface OverlaySettings {
   relicRecommendationOverlayEnabled: boolean;
   tradeNotificationOverlayEnabled: boolean;
   rivenOverlayEnabled: boolean;
+  /** The center "stat ranges" panel that opens beside the riven scanner. */
+  rivenRangesOverlayEnabled: boolean;
   arbiSummaryOverlayEnabled: boolean;
   arbiTrackingEnabled: boolean;
   /** Read the game's resident inventory after each mission; a missing key is off. */
@@ -149,6 +154,9 @@ export const OVERLAY_SETTINGS_DEFAULTS = Object.freeze({
   // F5 opens or closes the riven scanner overlay by hand, apart from the game screen.
   rivenToggleHotkeyEnabled: true,
   rivenToggleHotkey: "F5",
+  // F4 opens or closes the center stat-ranges panel next to the riven scanner.
+  rivenRangesHotkeyEnabled: true,
+  rivenRangesHotkey: "F4",
   // F9 belongs to the trade +rep toast, so the planner toggle sits one key over.
   plannerToggleHotkeyEnabled: true,
   plannerToggleHotkey: "F10",
@@ -186,6 +194,7 @@ export const OVERLAY_SETTINGS_DEFAULTS = Object.freeze({
   relicRecommendationOverlayEnabled: true,
   tradeNotificationOverlayEnabled: true,
   rivenOverlayEnabled: true,
+  rivenRangesOverlayEnabled: true,
   arbiSummaryOverlayEnabled: true,
   arbiTrackingEnabled: true,
   missionTrackingEnabled: false,

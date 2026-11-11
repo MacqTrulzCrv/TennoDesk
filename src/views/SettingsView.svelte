@@ -327,6 +327,9 @@
     "rivenRescanHotkey",
     "rivenToggleHotkeyEnabled",
     "rivenToggleHotkey",
+    "rivenRangesHotkeyEnabled",
+    "rivenRangesHotkey",
+    "rivenRangesOverlayEnabled",
     "plannerToggleHotkeyEnabled",
     "plannerToggleHotkey",
     "linuxOverlaysInteractive",
@@ -358,6 +361,11 @@
       dataSetting: "tradeNotificationOverlay",
     },
     { key: "rivenOverlayEnabled", labelKey: "settings.rivenOverlay", dataSetting: "rivenOverlay" },
+    {
+      key: "rivenRangesOverlayEnabled",
+      labelKey: "settings.rivenRangesOverlay",
+      dataSetting: "rivenRangesOverlay",
+    },
     {
       key: "rivenSimilarAuctionsShown",
       labelKey: "settings.rivenSimilarAuctions",
@@ -418,6 +426,16 @@
       hintKey: "settings.rivenToggleHotkeyHint",
       enabledAttrs: { dataSetting: "riven-toggle-hotkey-enabled" },
       attrs: { dataSetting: "riven-toggle-hotkey" },
+    },
+    {
+      enabledKey: "rivenRangesHotkeyEnabled",
+      field: "rivenRangesHotkey",
+      enabledLabelKey: "settings.rivenRangesHotkeyEnabled",
+      labelKey: "settings.rivenRangesHotkey",
+      placeholderKey: "settings.interactionHotkeyPlaceholder",
+      hintKey: "settings.rivenRangesHotkeyHint",
+      enabledAttrs: { dataSetting: "riven-ranges-hotkey-enabled" },
+      attrs: { dataSetting: "riven-ranges-hotkey" },
     },
     {
       enabledKey: "plannerToggleHotkeyEnabled",
@@ -692,6 +710,7 @@
     | "interactionHotkey"
     | "rivenRescanHotkey"
     | "rivenToggleHotkey"
+    | "rivenRangesHotkey"
     | "tradeRepHotkey"
     | "plannerToggleHotkey";
 

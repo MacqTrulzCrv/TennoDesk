@@ -312,6 +312,10 @@
   "settings.rivenToggleHotkeyEnabled": "启用裂罅覆盖层开关",
   "settings.rivenToggleHotkeyHint": "手动打开裂罅扫描覆盖层，若已打开则将其关闭。",
   "settings.rivenToggleHotkey": "裂罅覆盖层开关",
+  "settings.rivenRangesHotkeyEnabled": "启用属性范围面板开关",
+  "settings.rivenRangesHotkeyHint": "打开或关闭裂罅扫描器旁边的中间属性范围面板。",
+  "settings.rivenRangesHotkey": "属性范围面板开关",
+  "settings.rivenRangesOverlay": "裂罅属性范围面板",
   "settings.plannerToggleHotkeyEnabled": "启用遗物列表开关",
   "settings.plannerToggleHotkeyHint": "按需显示或隐藏遗物推荐列表。",
   "settings.plannerToggleHotkey": "遗物列表开关",
@@ -2752,6 +2756,7 @@
   "shortcuts.overlayInteract": "切换覆盖层交互",
   "shortcuts.overlayRiven": "扫描裂罅",
   "shortcuts.overlayRivenToggle": "切换裂罅覆盖层",
+  "shortcuts.overlayRanges": "切换属性范围",
   "shortcuts.overlayRep": "交易 +声望 提示",
   "shortcuts.overlayPlanner": "切换规划器覆盖层"
 }
