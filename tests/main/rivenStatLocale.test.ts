@@ -97,6 +97,17 @@ describe("riven stat localization", () => {
     );
   });
 
+  it("stitches a stat label that wrapped onto its own line", () => {
+    setGameLocale("tr");
+    // Arca Titron OCR: "Fazladan Kombo Sayım Şansı" wrapped across two lines.
+    const ocr = "%+52,9 Fazladan Kombo\nSayim Sansl\n%+73,3 Statu Sansl";
+    const byName = new Map(
+      parseRivenStats(localizeRivenOcrText(ocr)).map((s) => [s.name.toLowerCase(), s.value]),
+    );
+    expect(byName.get("additional combo count chance")).toBeCloseTo(52.9, 0);
+    expect(byName.get("status chance")).toBeCloseTo(73.3, 0);
+  });
+
   it("leaves English OCR text untouched", () => {
     setGameLocale("en");
     const ocr = "+132.3% Multishot\n+187.1% Critical Chance";

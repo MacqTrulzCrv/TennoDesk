@@ -480,10 +480,71 @@ export function getLocalizedStatDisplay(tag: string, melee = false): string | nu
 export function localizeRivenOcrText(text: string): string {
   ensureLocaleStatDisplay();
   if (_localeDisplayBuiltFor === "en" || _localeOcrToEnglish.size === 0) return text;
-  return text
-    .split(/\r?\n/)
+  ensureSortedOcrPhrases();
+  return mergeWrappedStatLines(text.split(/\r?\n/))
     .map(localizeRivenOcrLine)
     .join("\n");
+}
+
+function ensureSortedOcrPhrases(): void {
+  if (_sortedOcrPhrasesFor === _localeDisplayBuiltFor) return;
+  _sortedOcrPhrasesFor = _localeDisplayBuiltFor;
+  // Longest first so a multi-word label wins over a bare trailing word.
+  _sortedOcrPhrases = [..._localeOcrToEnglish.entries()].sort((a, b) => b[0].length - a[0].length);
+}
+
+/** The normalized trailing letter run of a line - its candidate stat label. */
+function statTailNorm(line: string): string {
+  const match = /([\p{L}][\p{L} ]*)\s*$/u.exec(line);
+  return match ? normalizeStatOcrText(match[1]) : "";
+}
+
+/** True when a complete known stat label appears as a whole-word run in the line. */
+function hasCompleteStatKey(line: string): boolean {
+  const norm = normalizeStatOcrText(line);
+  for (const [key] of _sortedOcrPhrases) {
+    const idx = norm.indexOf(key);
+    if (
+      idx >= 0 &&
+      (idx === 0 || norm[idx - 1] === " ") &&
+      (idx + key.length === norm.length || norm[idx + key.length] === " ")
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/** True when the tail is a strict prefix of a longer known label (label wrapped). */
+function isIncompleteKeyPrefix(tail: string): boolean {
+  if (!tail) return false;
+  const prefix = `${tail} `;
+  for (const key of _localeOcrToEnglish.keys()) {
+    if (key.length > tail.length && key.startsWith(prefix)) return true;
+  }
+  return false;
+}
+
+/** The OCR wraps a long label onto its own line ("Fazladan Kombo" + "Sayim Sansl"),
+ *  so stitch a line to the next while its tail is only a prefix of a known label. */
+function mergeWrappedStatLines(lines: string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    let line = lines[i];
+    let guard = 0;
+    while (
+      i + 1 < lines.length &&
+      guard < 2 &&
+      !hasCompleteStatKey(line) &&
+      isIncompleteKeyPrefix(statTailNorm(line))
+    ) {
+      line = `${line} ${lines[i + 1].trim()}`;
+      i += 1;
+      guard += 1;
+    }
+    out.push(line);
+  }
+  return out;
 }
 
 // The OCR look-alikes folded to one letter: Turkish accents plus the dotless-i,
@@ -536,11 +597,7 @@ function normalizeStatOcrTextWithMap(line: string): { norm: string; map: number[
 function localizeRivenOcrLine(line: string): string {
   const { norm, map } = normalizeStatOcrTextWithMap(line);
   if (!norm) return line;
-  if (_sortedOcrPhrasesFor !== _localeDisplayBuiltFor) {
-    _sortedOcrPhrasesFor = _localeDisplayBuiltFor;
-    // Longest first so a multi-word label wins over a bare trailing word.
-    _sortedOcrPhrases = [..._localeOcrToEnglish.entries()].sort((a, b) => b[0].length - a[0].length);
-  }
+  ensureSortedOcrPhrases();
   for (const [key, english] of _sortedOcrPhrases) {
     let idx = norm.indexOf(key);
     while (idx >= 0) {
