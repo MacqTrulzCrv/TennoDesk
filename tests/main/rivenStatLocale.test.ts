@@ -77,15 +77,24 @@ describe("riven stat localization", () => {
     expect(english).toContain("Fire Rate");
   });
 
-  it("reads a stat trailed by a qualifier and a multi-word faction label", () => {
+  it("reads a stat whose display-only qualifier wraps onto its own line", () => {
     setGameLocale("tr");
-    // Real OCR: "Kritik Şans (Ağır Saldırılar için x2)" and "Corpus'a Hasar verir".
-    const ocr = "%+172,8 Kritik Sans (Agir Saldirilar icin x2)\n%+90,1 Corpus'a Hasar verir";
-    const english = localizeRivenOcrText(ocr).toLowerCase();
-    expect(english).toContain("critical chance");
-    expect(english).toContain("damage to corpus");
-    // The value and qualifier are preserved for the English parser.
-    expect(localizeRivenOcrText(ocr)).toContain("(Agir Saldirilar icin x2)");
+    // Real Balla OCR: the "(Ağır Saldırılar için x2)" qualifier wrapped, and its
+    // stray "x2" used to be read as the next stat's value (79.8 -> 2).
+    const ocr =
+      "%+112,1 Darbe\n%+172,8 Kritik Sans (Agir\nSaldirilar icin x2)\n%+79,8 Kritik Hasar";
+    const stats = parseRivenStats(localizeRivenOcrText(ocr));
+    const byName = new Map(stats.map((s) => [s.name.toLowerCase(), s.value]));
+    expect(byName.get("impact")).toBeCloseTo(112.1, 0);
+    expect(byName.get("critical chance")).toBeCloseTo(172.8, 0);
+    expect(byName.get("critical damage")).toBeCloseTo(79.8, 0);
+  });
+
+  it("reads a multi-word faction label", () => {
+    setGameLocale("tr");
+    expect(localizeRivenOcrText("x1,9 Corpus'a Hasar verir").toLowerCase()).toContain(
+      "damage to corpus",
+    );
   });
 
   it("leaves English OCR text untouched", () => {

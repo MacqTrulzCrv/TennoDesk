@@ -546,11 +546,19 @@ function localizeRivenOcrLine(line: string): string {
     while (idx >= 0) {
       const end = idx + key.length;
       if ((idx === 0 || norm[idx - 1] === " ") && (end === norm.length || norm[end] === " ")) {
-        return line.slice(0, map[idx]) + english + line.slice(map[end - 1] + 1);
+        // Drop a display-only qualifier that trails the stat name on this line
+        // ("Kritik Sans (Agir...)"): its "x2" would be read as the next value.
+        let suffix = line.slice(map[end - 1] + 1);
+        const paren = suffix.indexOf("(");
+        if (paren >= 0) suffix = suffix.slice(0, paren);
+        return line.slice(0, map[idx]) + english + suffix;
       }
       idx = norm.indexOf(key, idx + 1);
     }
   }
+  // No stat here: drop a wrapped "...için x2)" qualifier continuation line whose
+  // stray "x2" the English parser would otherwise attach to the next stat.
+  if (/\bicin\b/.test(norm)) return "";
   return line;
 }
 
