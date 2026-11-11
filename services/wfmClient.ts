@@ -9,6 +9,7 @@ import {
 } from "./wfmScheduler";
 import { WfmApiError } from "./wfmTypes";
 import { normalizeErrorMessage } from "../config/shared/errors";
+import { APP_PRODUCT_NAME } from "../config/shared/appMeta";
 
 const log = withScope("wfmClient");
 
@@ -97,6 +98,22 @@ function _extractCsrfMeta(html: string): string | null {
 function _browserUa(): string {
   const os = process.platform === "win32" ? "Windows NT 10.0; Win64; x64" : "X11; Linux x86_64";
   return `Mozilla/5.0 (${os}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome ?? "136.0.0.0"} Safari/537.36`;
+}
+
+// A plain application identifier, NOT a browser string. warframe.market sits
+// behind Cloudflare, which serves empty results to a browser-like UA (Mozilla/…
+// Chrome/… Safari) that lacks the real browser's clearance - the app's Electron
+// default UA is exactly that shape. An honest API-client UA is passed straight
+// through. The browser UA is reserved for the interactive clearance window,
+// where it travels with the cf_clearance cookie it was earned under.
+function _appUa(): string {
+  try {
+    const { app } = require("electron") as typeof import("electron");
+    const version = app?.getVersion?.() ?? "";
+    return version ? `${APP_PRODUCT_NAME}/${version}` : APP_PRODUCT_NAME;
+  } catch {
+    return APP_PRODUCT_NAME;
+  }
 }
 
 type CsrfAttemptResult = "ok" | "challenge" | "no-token";
@@ -388,9 +405,11 @@ async function _request(
   }
   // Prevent retries from retaining stale auth.
   headers = { ...headers };
-  // Ride the earned clearance: the cookie only passes with the UA it was
-  // earned under, so both travel together on every request.
-  if (_clearanceUa) headers["User-Agent"] = _clearanceUa;
+  // Cloudflare serves empty results to Electron's default (browser-shaped) UA, so
+  // present an honest API-client UA by default. The earned clearance UA wins: its
+  // cf_clearance cookie only passes with the browser UA it was earned under, so
+  // the two travel together on every request.
+  headers["User-Agent"] = _clearanceUa ?? _appUa();
   if (_clearanceCookie) {
     headers["Cookie"] = headers["Cookie"]
       ? `${headers["Cookie"]}; ${_clearanceCookie}`

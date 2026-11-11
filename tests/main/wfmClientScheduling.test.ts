@@ -87,6 +87,19 @@ describe("wfm client scheduling", () => {
     __schedulerTest__.reset();
   });
 
+  it("presents a plain app User-Agent, not a browser-shaped one", async () => {
+    // Cloudflare empties results for a browser-shaped UA without clearance (the
+    // Electron default is browser-shaped), so default requests must look like an
+    // honest API client: no Mozilla/Chrome/Safari/Electron tokens.
+    state.scripted.push({ status: 200, body: '{"payload":{"auctions":[]}}' });
+
+    await request("GET", "/auctions/search?type=riven&weapon_url_name=boltor");
+
+    const ua = state.requests[0]?.headers["User-Agent"] ?? "";
+    expect(ua).toMatch(/TennoDesk/);
+    expect(ua).not.toMatch(/Mozilla|Chrome|Safari|Electron/i);
+  });
+
   it("retries a GET through a 503 and returns the normal payload", async () => {
     state.scripted.push(
       { status: 503, body: "upstream down" },

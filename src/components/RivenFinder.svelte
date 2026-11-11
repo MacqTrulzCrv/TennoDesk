@@ -147,14 +147,29 @@
     return scored;
   });
 
-  onMount(async () => {
-    const [names, stats] = await Promise.all([
-      invoke("getRivenWeaponNames"),
-      invoke("getRivenStatOptions"),
-    ]);
-    weaponNames = names;
-    statOptions = stats;
-  });
+  // Load independently so one failing call can't blank the other, and retry while
+  // a list comes back empty: on a cold start the tab can mount before the main
+  // process has built its riven data, and onMount only runs once per mount.
+  async function loadFinderData(): Promise<void> {
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      const [names, stats] = await Promise.all([
+        invoke("getRivenWeaponNames").catch((err) => {
+          console.warn("[RivenFinder] weapon names load failed:", err);
+          return [] as string[];
+        }),
+        invoke("getRivenStatOptions").catch((err) => {
+          console.warn("[RivenFinder] stat options load failed:", err);
+          return [] as RivenStatOption[];
+        }),
+      ]);
+      if (names.length > 0) weaponNames = names;
+      if (stats.length > 0) statOptions = stats;
+      if (weaponNames.length > 0 && statOptions.length > 0) return;
+      await new Promise((resolve) => setTimeout(resolve, 400));
+    }
+  }
+
+  onMount(loadFinderData);
 
   async function selectWeapon(name: string) {
     const token = ++attributeRequest;
