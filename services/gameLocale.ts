@@ -105,3 +105,103 @@ export function getGameLocale(): string {
 export function isLocalizingNames(): boolean {
   return activeLocale !== DEFAULT_GAME_LOCALE && Object.keys(activeNames).length > 0;
 }
+
+// --- Reverse resolution: localized item name -> canonical English ------------
+// EE.log hands us localized free text (e.g. a trade dialog in Turkish), but every
+// by-name join inside main is English. The en.json table shares the same
+// `/Lotus/Language/...` keys as each locale table, so the inverse is exact: a
+// localized value maps back to its key, then forward to English.
+
+// The DE pattern that wraps a component's name into its blueprint, e.g.
+// en "|ITEM| Blueprint", tr "|ITEM| Kalıp". Used to peel a localized blueprint
+// suffix before resolving the base part.
+const BLUEPRINT_AND_ITEM_KEY = "/Lotus/Language/Items/BlueprintAndItem";
+const BLUEPRINT_PLACEHOLDER = "|ITEM|";
+
+let englishNames: NameMap | null = null;
+let reverseIndex: Map<string, string> | null = null;
+let reverseBuiltFor: GameLocale | null = null;
+let activeBlueprintSuffix: string | null = null;
+
+/** en.json keyed by lang key; loaded on demand (loadNames keeps English EMPTY by
+ *  design, so reverse resolution reads the file itself). */
+function getEnglishNames(): NameMap {
+  if (englishNames) return englishNames;
+  for (const file of candidateFiles("en")) {
+    try {
+      if (!fs.existsSync(file)) continue;
+      englishNames = JSON.parse(fs.readFileSync(file, "utf-8")) as NameMap;
+      return englishNames;
+    } catch (err) {
+      log.warn(`en (reverse): failed to read ${file}: ${normalizeErrorMessage(err)}`);
+    }
+  }
+  englishNames = EMPTY;
+  return englishNames;
+}
+
+/** Captures the text wrapped by a "|ITEM| X" pattern so a localized blueprint
+ *  name can be peeled back to its base part. Null when the pattern is unusable. */
+function blueprintSuffix(pattern: string | undefined): string | null {
+  if (!pattern) return null;
+  const idx = pattern.indexOf(BLUEPRINT_PLACEHOLDER);
+  if (idx < 0) return null;
+  const suffix = pattern.slice(idx + BLUEPRINT_PLACEHOLDER.length).trim();
+  return suffix || null;
+}
+
+function ensureReverseIndex(): void {
+  if (reverseBuiltFor === activeLocale && reverseIndex) return;
+  const index = new Map<string, string>();
+  // First key wins on collisions so the result is deterministic across runs.
+  for (const [key, value] of Object.entries(activeNames)) {
+    const lc = value.trim().toLowerCase();
+    if (lc && !index.has(lc)) index.set(lc, key);
+  }
+  reverseIndex = index;
+  activeBlueprintSuffix = blueprintSuffix(activeNames[BLUEPRINT_AND_ITEM_KEY]);
+  reverseBuiltFor = activeLocale;
+}
+
+/** Direct localized value -> English, no blueprint peeling. */
+function directEnglish(localizedLc: string): string | null {
+  ensureReverseIndex();
+  const key = reverseIndex?.get(localizedLc);
+  if (!key) return null;
+  const en = getEnglishNames()[key];
+  return en ? en.trim() : null;
+}
+
+/**
+ * Canonical English name for a localized item name, or null when it is already
+ * English / cannot be resolved (caller keeps the original). A no-op in English.
+ */
+export function localizedToEnglishItemName(name: string | null | undefined): string | null {
+  if (!name || activeLocale === DEFAULT_GAME_LOCALE) return null;
+  const lc = name.trim().toLowerCase();
+  if (!lc) return null;
+
+  const direct = directEnglish(lc);
+  if (direct) return direct;
+
+  // "Gauss Prime Sistemleri Kalıp" -> peel "Kalıp" -> resolve base -> "... Blueprint".
+  // lookupTradedCatalogItem strips a trailing " Blueprint", so the suffix is safe
+  // for both the main blueprint and part blueprints.
+  if (activeBlueprintSuffix) {
+    const suffix = ` ${activeBlueprintSuffix}`.toLowerCase();
+    if (lc.endsWith(suffix)) {
+      const baseLc = lc.slice(0, -suffix.length).trim();
+      const enBase = directEnglish(baseLc);
+      if (enBase) return `${enBase} Blueprint`;
+    }
+  }
+  return null;
+}
+
+/** Test seam: drop cached reverse tables so a fresh locale rebuilds them. */
+export function __resetReverseCacheForTest(): void {
+  englishNames = null;
+  reverseIndex = null;
+  reverseBuiltFor = null;
+  activeBlueprintSuffix = null;
+}

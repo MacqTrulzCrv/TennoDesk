@@ -165,6 +165,10 @@ export interface PreloadAPI {
     callback: (status: IpcEventMap["inventory-status-updated"]) => void,
   ) => () => void;
   onItemDbUpdated: (callback: (data: IpcEventMap["item-db-updated"]) => void) => () => void;
+  onGameLanguageDetected: (
+    callback: (code: IpcEventMap["game-language-detected"]) => void,
+  ) => () => void;
+  getDetectedGameLanguage: () => Promise<string | null>;
   onRelicDbUpdated: (callback: (data: IpcEventMap["relic-db-updated"]) => void) => () => void;
   onAppUpdateStatus: (callback: (state: IpcEventMap["app-update-status"]) => void) => () => void;
   onWfmNotification: (

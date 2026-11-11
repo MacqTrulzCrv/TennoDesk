@@ -1363,7 +1363,7 @@
   "settings.exportInventoryHint": "Saves your inventory as indented JSON that is easy to read.",
   "settings.languageRow": "Display language",
   "settings.gameLanguageRow": "Item names",
-  "settings.gameLanguageAuto": "Follow display language",
+  "settings.gameLanguageAuto": "Automatic (detect game language)",
   "settings.linuxDisplayAuto": "Automatic",
   "settings.linuxDisplayAutoHint": "XWayland, falling back if no window appears",
   "settings.linuxDisplayDesc": "TennoDesk normally uses XWayland so overlays can appear above Warframe. Try Native Wayland if the app window is invisible.",

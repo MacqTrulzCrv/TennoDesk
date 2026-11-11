@@ -14,6 +14,8 @@ import {
   DB_GET_ITEM_DATABASE,
   ITEM_DB_UPDATED,
   GAME_LOCALE_UPDATED,
+  GAME_LANGUAGE_DETECTED,
+  GET_DETECTED_GAME_LANGUAGE,
   DB_GET_WORLD_STATE,
   DB_GET_RELIC_DATABASE,
   DB_GET_RELIC_DATA_INFO,
@@ -256,6 +258,11 @@ try {
       INVENTORY_STATUS_UPDATED,
     ),
     onItemDbUpdated: ipcDataBridge<IpcEventMap["item-db-updated"]>(ipcRenderer, ITEM_DB_UPDATED),
+    onGameLanguageDetected: ipcDataBridge<IpcEventMap["game-language-detected"]>(
+      ipcRenderer,
+      GAME_LANGUAGE_DETECTED,
+    ),
+    getDetectedGameLanguage: () => ipcRenderer.invoke(GET_DETECTED_GAME_LANGUAGE),
     onRelicDbUpdated: ipcDataBridge<IpcEventMap["relic-db-updated"]>(ipcRenderer, RELIC_DB_UPDATED),
     onAppUpdateStatus: ipcDataBridge<IpcEventMap["app-update-status"]>(
       ipcRenderer,

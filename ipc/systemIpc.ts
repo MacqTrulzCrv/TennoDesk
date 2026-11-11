@@ -21,6 +21,8 @@ import { app, BrowserWindow, dialog, shell } from "electron";
 import {
   DB_GET_ITEM_DATABASE,
   GAME_LOCALE_UPDATED,
+  GAME_LANGUAGE_DETECTED,
+  GET_DETECTED_GAME_LANGUAGE,
   ITEM_DB_UPDATED,
   DB_GET_WFM_ITEMS,
   DB_GET_MASTERY,
@@ -70,6 +72,18 @@ async function ensureDropData(): Promise<void> {
   }
 }
 
+// The game's real language, parsed from EE.log by the monitor. Null until seen.
+let _detectedGameLanguage: string | null = null;
+
+/** Record the game's detected language and push it to renderers so "auto" can
+ *  follow the client instead of the app UI. */
+export function setDetectedGameLanguage(code: string): void {
+  if (!code || code === _detectedGameLanguage) return;
+  _detectedGameLanguage = code;
+  log.info(`[GameLocale] detected game language=${code}`);
+  broadcastToRenderers(GAME_LANGUAGE_DETECTED, code);
+}
+
 function register(): void {
   stopProfileAccountListener ??= codexProfile.onProfileAccountChanged(() =>
     broadcastToRenderers(PROFILE_ACCOUNT_CHANGED),
@@ -95,6 +109,13 @@ function register(): void {
     }
     ctx.mainWindow?.webContents.send(ITEM_DB_UPDATED);
   });
+
+  // A renderer that mounts after the EE.log language was detected asks for it here.
+  handleAuthorized(
+    GET_DETECTED_GAME_LANGUAGE,
+    assertMainRendererSender,
+    () => _detectedGameLanguage,
+  );
 
   handleAuthorized(DB_GET_WFM_ITEMS, assertMainRendererSender, async () => {
     if (!wfmCatalog.isLoaded()) {

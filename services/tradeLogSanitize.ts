@@ -2,13 +2,16 @@
 
 const PUA_GLYPHS = /[\uE000-\uF8FF\uFFFD]+/g;
 const MOJIBAKE_GLYPHS = /[\u00EE\u00EF][\u0080-\u00BF]{2}/g;
-const TRAILING_NON_ASCII = /[\u0080-\uFFFF]+$/;
+// Trailing glyphs and invisible format marks the game appends (directional
+// marks, zero-width chars, BOM, PUA survivors). NOT general non-ASCII: localized
+// item names and usernames legitimately end in real letters (\u00FC, \u00DF, \u015F, \u2026).
+const TRAILING_GLYPHS = /[\u200B-\u200F\u202A-\u202E\u2060\uFEFF\uE000-\uF8FF\uFFFD]+$/;
 
 export function stripPlatformGlyphs(value: string): string {
   return value
     .replace(PUA_GLYPHS, "")
     .replace(MOJIBAKE_GLYPHS, "")
-    .replace(TRAILING_NON_ASCII, "")
+    .replace(TRAILING_GLYPHS, "")
     .replace(/\s{2,}/g, " ")
     .trim();
 }

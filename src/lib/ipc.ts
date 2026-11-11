@@ -88,6 +88,8 @@ const eventApiMap: Record<
     ),
   "item-db-updated": (cb) =>
     window.api.onItemDbUpdated(cb as (data: IpcEventMap["item-db-updated"]) => void),
+  "game-language-detected": (cb) =>
+    window.api.onGameLanguageDetected(cb as (code: IpcEventMap["game-language-detected"]) => void),
   "relic-db-updated": (cb) =>
     window.api.onRelicDbUpdated(cb as (data: IpcEventMap["relic-db-updated"]) => void),
   "app-update-status": (cb) =>

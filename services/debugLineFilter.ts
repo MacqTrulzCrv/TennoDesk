@@ -16,8 +16,10 @@ const FILTER_SUBSTRINGS_LOWER = [
   "dialog::createokcancel", // riven cycle confirm / choice confirm
   "themeddetailedpurchasedialog", // chat riven HudVis + PopulateInfo detection
   "tradingpost.lua", // trade partner detection
-  "you are offering", // trade dialog buffering start
-  "the trade was successful", // trade dialog success
+  "you are offering", // trade dialog buffering start (en)
+  "the trade was successful", // trade dialog success (en)
+  "önerdiğiniz ürün", // trade dialog buffering start (tr)
+  "takas başarı", // trade dialog success (tr)
   "chatredux::addtab", // incoming whisper opens a private chat tab
   "mainmenu::logindone", // inventory refresh after login
   "eom missionlocationunlocked=", // mission end: the post-mission inventory is in memory briefly

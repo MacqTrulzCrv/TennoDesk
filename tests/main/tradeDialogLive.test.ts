@@ -67,6 +67,17 @@ const REPORTED_SALE = {
   items: [{ displayName: "Vicious Bond (RARE RANK 0)", count: 1, direction: "given" }],
 };
 
+// Turkish client (`-language:tr`): the dialog structure differs - the
+// counterparty leads the divider and the quantity leads the platinum line
+// ("10 x Platinum"). Item names stay in the game language; the catalog lookup
+// resolves them to English downstream. Sampled from a real EE.log.
+const TR_DIALOG_HEAD =
+  "16834.779 Script [Info]: Dialog.lua: Dialog::CreateOkCancel(description=" +
+  "Bu takası onaylamak istiyor musunuz? Önerdiğiniz ürün:";
+const TR_SUCCESS_LINE =
+  "16839.857 Script [Info]: Dialog.lua: Dialog::CreateOk(description=" +
+  "Takas başarılı bir şekilde gerçekleşti., title= leftItem=/Menu/Confirm_Item_Ok)";
+
 describe("trade dialog dispatch through the line handler", () => {
   let tmpDir = "";
   let trades: ParsedLogTrade[] = [];
@@ -193,5 +204,52 @@ describe("trade dialog dispatch through the line handler", () => {
 
     expect(trades).toHaveLength(1);
     expect(trades[0]).toMatchObject(REPORTED_SALE);
+  });
+
+  it("reads a Turkish single-item sale (count-first platinum, trailing partner)", () => {
+    emit(
+      [
+        TR_DIALOG_HEAD,
+        "Akjagara Prime Sürgü",
+        "Serampore" + GLYPH + " isimli oyuncunun size önerdiği ürün:",
+        "10 x Platinum" + DIALOG_TAIL,
+      ].join("\r"),
+    );
+    emit(TR_SUCCESS_LINE);
+
+    expect(trades).toHaveLength(1);
+    expect(trades[0]).toMatchObject({
+      type: "sale",
+      platChange: 10,
+      partner: "Serampore",
+      items: [{ displayName: "Akjagara Prime Sürgü", count: 1, direction: "given" }],
+    });
+  });
+
+  it("reads a Turkish multi-item sale from the file poll", () => {
+    appendToLog([
+      [
+        TR_DIALOG_HEAD,
+        "Gauss Prime Kalıp",
+        "Gauss Prime Sistemleri Kalıp",
+        "Gauss Prime Nöroptikleri Kalıp",
+        "Gauss Prime Gövde Kalıp",
+        "ArtV1 isimli oyuncunun size önerdiği ürün:",
+        "45 x Platinum" + DIALOG_TAIL,
+      ].join("\r"),
+    ]);
+    forceEeLogPoll();
+    appendToLog([TR_SUCCESS_LINE]);
+    forceEeLogPoll();
+
+    expect(trades).toHaveLength(1);
+    expect(trades[0]).toMatchObject({ type: "sale", platChange: 45, partner: "ArtV1" });
+    expect(trades[0].items.map((item) => item.displayName)).toEqual([
+      "Gauss Prime Kalıp",
+      "Gauss Prime Sistemleri Kalıp",
+      "Gauss Prime Nöroptikleri Kalıp",
+      "Gauss Prime Gövde Kalıp",
+    ]);
+    expect(trades[0].items.every((item) => item.direction === "given")).toBe(true);
   });
 });

@@ -52,6 +52,16 @@ describe("DebugLineGate", () => {
     expect(gate.wants(LOGIN_LINE, 0)).toBe(true);
   });
 
+  it("forwards Turkish trade dialog lines", () => {
+    const gate = new DebugLineGate();
+    expect(
+      gate.wants("Dialog::CreateOkCancel(description=Bu takası... Önerdiğiniz ürün:", 0),
+    ).toBe(true);
+    expect(
+      gate.wants("Dialog::CreateOk(description=Takas başarılı bir şekilde gerçekleşti.", 0),
+    ).toBe(true);
+  });
+
   it("forwards the mission end, abort and mission info lines", () => {
     const gate = new DebugLineGate();
     for (const line of [

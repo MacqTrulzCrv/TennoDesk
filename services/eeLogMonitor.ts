@@ -150,6 +150,8 @@ let tradePartnerCallback: ((username: string) => void) | null = null;
 let tradeConfirmedCallback: ((trade: ParsedLogTrade) => void) | null = null;
 let messageCallback: ((playerName: string) => void) | null = null;
 let activeMissionTagCallback: ((tag: string) => void) | null = null;
+let gameLanguageCallback: ((code: string) => void) | null = null;
+let _lastGameLanguage: string | null = null;
 let loginCompleteCallback: (() => void) | null = null;
 let lastLoginCompleteAt = 0;
 
@@ -208,8 +210,59 @@ export interface ParsedLogTrade {
 }
 
 let _tradeDialogBuffer: string[] | null = null;
-const TRADE_DIALOG_START = "Are you sure you want to accept this trade?";
-const TRADE_SUCCESS = "The trade was successful!";
+
+/** A trade confirmation dialog as the game writes it per client language. The
+ *  structure differs by locale: the counterparty sits in a different place and
+ *  some languages log quantities count-first ("10 x Platinum"). English stays
+ *  first so its behaviour is unchanged. Add a locale from a real EE.log sample. */
+interface TradeDialogLocale {
+  id: string;
+  /** Substring that opens the confirmation dialog (starts buffering). */
+  dialogStart: string;
+  /** Substring in the success entry that commits the buffered trade. */
+  success: string;
+  /** Substring marking the start of the offered-items block. */
+  offeringMarker: string;
+  /** Matches the divider line; group 1 is the counterparty. */
+  receiveDivider: RegExp;
+}
+
+const TRADE_DIALOG_LOCALES: ReadonlyArray<TradeDialogLocale> = Object.freeze([
+  {
+    id: "en",
+    dialogStart: "Are you sure you want to accept this trade?",
+    success: "The trade was successful",
+    offeringMarker: "You are offering:",
+    receiveDivider: /and will receive from\s+(.+?)\s+the following:/i,
+  },
+  {
+    id: "tr",
+    dialogStart: "Bu takası onaylamak istiyor musunuz?",
+    success: "Takas başarılı bir şekilde gerçekleşti",
+    offeringMarker: "Önerdiğiniz ürün:",
+    receiveDivider: /(.+?)\s+isimli oyuncunun size önerdiği ürün:/,
+  },
+]);
+
+/** The platinum token is left untranslated in every dialog seen so far. */
+const PLATINUM_TOKENS: ReadonlySet<string> = new Set(["platinum"]);
+
+// Warframe logs its client language once at launch, both on the process command
+// line (`-language:tr`) and as `Using language: _tr`. This is the only in-log
+// signal of the game's ACTUAL language, independent of the app's UI language.
+const GAME_LANGUAGE_PATTERNS: ReadonlyArray<RegExp> = Object.freeze([
+  /Using language:\s*_([a-z]{2,4})\b/i,
+  /\blanguage:([a-z]{2,4})\b/i,
+]);
+
+/** Extracts the game's language code from a launch line, or null. */
+export function parseGameLanguage(line: string): string | null {
+  for (const pattern of GAME_LANGUAGE_PATTERNS) {
+    const match = pattern.exec(line);
+    if (match) return match[1].toLowerCase();
+  }
+  return null;
+}
 /** Max time to wait for the confirmation dialog to resolve before discarding buffered lines. */
 const TRADE_DIALOG_TIMEOUT_MS = 60_000;
 let _tradeDialogStartAt = 0;
@@ -453,6 +506,15 @@ function handleLine(line: string, source: "dbwin" | "file" = "file"): void {
     }
   }
 
+  if (gameLanguageCallback) {
+    const code = parseGameLanguage(line);
+    if (code && code !== _lastGameLanguage) {
+      _lastGameLanguage = code;
+      log.info("[EELog] Game language detected:", code);
+      gameLanguageCallback(code);
+    }
+  }
+
   if (messageCallback) {
     const whisperUser = parseWhisperUsername(line);
     if (whisperUser && !whisperEchoes.isEcho(whisperUser, Date.now())) {
@@ -474,12 +536,13 @@ function handleLine(line: string, source: "dbwin" | "file" = "file"): void {
   // A single-line dialog already carries its arg tail, so it seals at once. Only
   // the tail after the start marker counts: a previous dialog's tail shares the
   // line when the engine flushed this entry behind it.
-  if (line.includes(TRADE_DIALOG_START)) {
+  const startLocale = TRADE_DIALOG_LOCALES.find((loc) => line.includes(loc.dialogStart));
+  if (startLocale) {
     _tradeDialogBuffer = [line];
     _tradeDialogStartAt = Date.now();
     _tradeDialogGlueMark = null;
     _tradeDialogSealed = TRADE_DIALOG_TAIL_PATTERN.test(
-      line.slice(line.indexOf(TRADE_DIALOG_START)),
+      line.slice(line.indexOf(startLocale.dialogStart)),
     );
   } else if (_tradeDialogBuffer !== null) {
     if (Date.now() - _tradeDialogStartAt > TRADE_DIALOG_TIMEOUT_MS) {
@@ -489,7 +552,10 @@ function handleLine(line: string, source: "dbwin" | "file" = "file"): void {
     }
   }
 
-  if (line.includes(TRADE_SUCCESS) && _tradeDialogBuffer !== null) {
+  if (
+    _tradeDialogBuffer !== null &&
+    TRADE_DIALOG_LOCALES.some((loc) => line.includes(loc.success))
+  ) {
     const dialogLines =
       _tradeDialogGlueMark === null
         ? _tradeDialogBuffer
@@ -546,19 +612,21 @@ function handleLine(line: string, source: "dbwin" | "file" = "file"): void {
 export function _parseTradeDialog(lines: string[]): ParsedLogTrade | null {
   const text = lines.join("\n");
 
-  // Extract the description between the trigger text and the leftItem suffix
-  const descStart = text.indexOf("You are offering:");
-  if (descStart < 0) return null;
+  // The dialog is self-identifying: the locale whose offering marker appears is
+  // the one that wrote it, so detection needs no knowledge of the game language.
+  const locale = TRADE_DIALOG_LOCALES.find((loc) => text.includes(loc.offeringMarker));
+  if (!locale) return null;
+  const descStart = text.indexOf(locale.offeringMarker);
   const desc = text.slice(descStart);
 
-  // Split on the "and will receive from <partner> the following:" divider
-  const receiveMatch = desc.match(/and will receive from\s+(.+?)\s+the following:/i);
+  // Split on the divider that names the counterparty.
+  const receiveMatch = desc.match(locale.receiveDivider);
   if (!receiveMatch) return null;
   // The game may append a platform glyph to the username (same as whispers).
   const partner = stripPlatformGlyphs(receiveMatch[1]);
 
   const dividerIdx = desc.indexOf(receiveMatch[0]);
-  const offeringBlock = desc.slice("You are offering:".length, dividerIdx);
+  const offeringBlock = desc.slice(locale.offeringMarker.length, dividerIdx);
   const receivingBlock = desc.slice(dividerIdx + receiveMatch[0].length);
 
   function parseItemBlock(block: string): { items: ParsedLogTradeItem[]; plat: number } {
@@ -580,19 +648,25 @@ export function _parseTradeDialog(lines: string[]): ParsedLogTrade | null {
       const cleaned = stripPlatformGlyphs(withoutTail);
       if (!cleaned) continue;
 
-      const platMatch = cleaned.match(/^Platinum(?:\s+x\s+(\d+))?$/i);
-      if (platMatch) {
-        plat += platMatch[1] ? parseInt(platMatch[1], 10) : 1;
-        continue;
-      }
       // Stacked items log as "Name x N" (one slot); non-stacking items repeat
-      // one line each. Handle both so partial-quantity closes are accurate.
+      // one line each. The multiplier can lead ("10 x Platinum", Turkish) or
+      // trail ("Platinum x 10", English), so try both orders. A bare line is a
+      // single unit. Handling both keeps partial-quantity closes accurate.
       let name = cleaned;
       let qty = 1;
-      const stackMatch = cleaned.match(/^(.+?)\s+x\s+(\d+)$/i);
-      if (stackMatch) {
-        name = stackMatch[1].trim();
-        qty = parseInt(stackMatch[2], 10) || 1;
+      const countFirst = cleaned.match(/^(\d+)\s+x\s+(.+)$/i);
+      const countLast = cleaned.match(/^(.+?)\s+x\s+(\d+)$/i);
+      if (countFirst) {
+        qty = parseInt(countFirst[1], 10) || 1;
+        name = countFirst[2].trim();
+      } else if (countLast) {
+        name = countLast[1].trim();
+        qty = parseInt(countLast[2], 10) || 1;
+      }
+      // Platinum is logged untranslated; fold it into the trade's plat total.
+      if (PLATINUM_TOKENS.has(name.toLowerCase())) {
+        plat += qty;
+        continue;
       }
       counts.set(name, (counts.get(name) || 0) + qty);
     }
@@ -647,6 +721,7 @@ interface EeLogHandlers {
   onTradeConfirmed?: ((trade: ParsedLogTrade) => void) | null;
   onInGameMessage?: ((playerName: string) => void) | null;
   onActiveMissionTag?: ((tag: string) => void) | null;
+  onGameLanguage?: ((code: string) => void) | null;
   onRivenSessionOpen?: (() => void) | null;
   onRivenSessionClose?: (() => void) | null;
   onRivenRollPending?: ((weapon: string, kuvaPerRoll: number) => void) | null;
@@ -675,6 +750,7 @@ const NULL_EE_LOG_HANDLERS: NormalizedEeLogHandlers = {
   onTradeConfirmed: null,
   onInGameMessage: null,
   onActiveMissionTag: null,
+  onGameLanguage: null,
   onRivenSessionOpen: null,
   onRivenSessionClose: null,
   onRivenRollPending: null,
@@ -715,6 +791,7 @@ function normalizeHandlers(
     onTradeConfirmed: asFunction(handlers.onTradeConfirmed),
     onInGameMessage: asFunction(handlers.onInGameMessage),
     onActiveMissionTag: asFunction(handlers.onActiveMissionTag),
+    onGameLanguage: asFunction(handlers.onGameLanguage),
     onRivenSessionOpen: asFunction(handlers.onRivenSessionOpen),
     onRivenSessionClose: asFunction(handlers.onRivenSessionClose),
     onRivenRollPending: asFunction(handlers.onRivenRollPending),
@@ -726,6 +803,38 @@ function normalizeHandlers(
     onArbiRunSaved: asFunction(handlers.onArbiRunSaved),
     onPtRunSaved: asFunction(handlers.onPtRunSaved),
   };
+}
+
+/** Read the top of the current EE.log once to recover the launch-time language
+ *  line the live tail already scrolled past. Best-effort: never throws. */
+function scanGameLanguageFromHeader(): void {
+  if (!EE_LOG_PATH || !gameLanguageCallback) return;
+  let fd: number | null = null;
+  try {
+    fd = fs.openSync(EE_LOG_PATH, "r");
+    const header = Buffer.alloc(32 * 1024);
+    const bytes = fs.readSync(fd, header, 0, header.length, 0);
+    if (!bytes) return;
+    for (const line of header.subarray(0, bytes).toString("utf8").split(/\r?\n/)) {
+      const code = parseGameLanguage(line);
+      if (code && code !== _lastGameLanguage) {
+        _lastGameLanguage = code;
+        log.info("[EELog] Game language detected (header):", code);
+        gameLanguageCallback(code);
+        return;
+      }
+    }
+  } catch (error) {
+    log.warn("[EELog] Game language header scan failed:", normalizeErrorMessage(error));
+  } finally {
+    if (fd != null) {
+      try {
+        fs.closeSync(fd);
+      } catch {
+        // ignore close errors
+      }
+    }
+  }
 }
 
 export function startWatching(
@@ -755,6 +864,8 @@ export function startWatching(
   tradeConfirmedCallback = normalized.onTradeConfirmed;
   messageCallback = normalized.onInGameMessage;
   activeMissionTagCallback = normalized.onActiveMissionTag;
+  gameLanguageCallback = normalized.onGameLanguage;
+  _lastGameLanguage = null;
   setRivenCallbacks({
     onRivenSessionOpen: normalized.onRivenSessionOpen,
     onRivenSessionClose: normalized.onRivenSessionClose,
@@ -777,6 +888,11 @@ export function startWatching(
     lastSize = 0;
   }
   lineRemainder = "";
+
+  // The language line sits at the very top of EE.log, written before we attach,
+  // so the live tail never sees it when the game is already running. Read the
+  // header once so "auto" can pick the game's real language on startup too.
+  if (gameLanguageCallback) scanGameLanguageFromHeader();
 
   if (watcher) {
     watcher.close();

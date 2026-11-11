@@ -931,6 +931,7 @@ export interface IpcEventMap {
   "profile-account-changed": void;
   "inventory-status-updated": InventoryStatus;
   "item-db-updated": undefined;
+  "game-language-detected": string;
   "relic-db-updated": undefined;
   "app-update-status": AppUpdateState;
   "wfm:notification": WfmNotification;

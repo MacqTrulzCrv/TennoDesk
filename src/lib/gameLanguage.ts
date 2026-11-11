@@ -65,10 +65,26 @@ const choiceStore = writable<GameLanguageChoice>(readStoredChoice());
 /** Read-only so setGameLanguage stays the only writer that persists. */
 export const gameLanguage: Readable<GameLanguageChoice> = { subscribe: choiceStore.subscribe };
 
+// The game's actual language, parsed from EE.log by main. Lets "auto" follow the
+// client instead of the app UI, which is what traders read item names in.
+const detectedStore = writable<GameLanguageCode | null>(null);
+
+function applyDetected(code: string | null): void {
+  if (code && isGameLanguageCode(code)) detectedStore.set(code);
+}
+
+if (typeof window !== "undefined" && window.api) {
+  window.api.onGameLanguageDetected?.(applyDetected);
+  // Cover the case where detection fired before this subscriber existed.
+  window.api.getDetectedGameLanguage?.().then(applyDetected).catch(() => undefined);
+}
+
 const effectiveGameLanguage: Readable<GameLanguageCode> = derived(
-  [choiceStore, locale],
-  ([$choice, $locale]) => {
+  [choiceStore, locale, detectedStore],
+  ([$choice, $locale, $detected]) => {
     if ($choice !== "auto") return $choice;
+    // Prefer the real game language; fall back to the UI language, then English.
+    if ($detected) return $detected;
     return isGameLanguageCode($locale) ? $locale : "en";
   },
 );

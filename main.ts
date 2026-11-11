@@ -682,6 +682,7 @@ function initGameMonitoring(profileStage: ProfileStage): void {
     onActiveMissionTag: (tag) => rewardOverlayIpc.setActiveMissionTag(tag),
     onInGameMessage: (playerName) => void messageNotificationIpc.notifyInGameMessage(playerName),
     onTradeConfirmed: (trade) => tradeWorkflow.handleConfirmedTrade(trade),
+    onGameLanguage: (code) => systemIpc.setDetectedGameLanguage(code),
     onRivenSessionOpen: () => rivenOverlayIpc.onRivenSessionOpen(),
     onRivenSessionClose: () => rivenOverlayIpc.onRivenSessionClose(),
     onRivenRollPending: (weapon: string, cost: number) =>

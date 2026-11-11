@@ -1376,7 +1376,7 @@
   "settings.exportInventoryHint": "Envanterini okunması kolay, girintili JSON olarak kaydeder.",
   "settings.languageRow": "Görüntüleme dili",
   "settings.gameLanguageRow": "Öğe adları",
-  "settings.gameLanguageAuto": "Görüntüleme dilini izle",
+  "settings.gameLanguageAuto": "Otomatik (oyun dilini algıla)",
   "settings.linuxDisplayAuto": "Otomatik",
   "settings.linuxDisplayAutoHint": "XWayland; pencere görünmezse geri düşer",
   "settings.linuxDisplayDesc": "Overlay'ler Warframe'in üzerinde görünebilsin diye TennoDesk normalde XWayland kullanır. Uygulama penceresi görünmezse Yerel Wayland'ı dene.",

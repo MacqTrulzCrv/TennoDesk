@@ -12,6 +12,10 @@ export const INVENTORY_STATUS_UPDATED = "inventory-status-updated";
 export const DB_GET_ITEM_DATABASE = "get-item-database";
 export const ITEM_DB_UPDATED = "item-db-updated";
 export const GAME_LOCALE_UPDATED = "game-locale-updated";
+// Main pushes the game's real language (parsed from EE.log) so "auto" can follow
+// the client, not the app UI; the getter lets a late renderer pull the current value.
+export const GAME_LANGUAGE_DETECTED = "game-language-detected";
+export const GET_DETECTED_GAME_LANGUAGE = "get-detected-game-language";
 export const DB_GET_WORLD_STATE = "get-world-state";
 export const WORLD_STATE_FETCH_ERROR = "world-state-fetch-error";
 export const DB_GET_RELIC_DATABASE = "get-relic-database";
