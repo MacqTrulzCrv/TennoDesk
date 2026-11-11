@@ -9,6 +9,18 @@ import type {
 } from "./wfmTypes";
 import { unwrapWfmResponse } from "./wfmTypes";
 import * as wfmClient from "./wfmClient";
+import { getStatDisplayName } from "./rivenData";
+import { wfmUrlNameToTag } from "../config/shared/wfmRivenVocabulary";
+
+/** A WFM stat url_name shown in the player's language, matching the finder's
+ *  dropdown labels. Falls back to the prettified url_name when unmapped. English
+ *  is a no-op. The melee label (Attack Speed) needs weapon context the listing
+ *  lacks, so melee stays false - the same choice the stat dropdown makes. */
+function localizeStatName(urlName: string): string {
+  const tag = wfmUrlNameToTag(urlName, false);
+  if (tag) return getStatDisplayName(tag);
+  return urlName.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 const log = withScope("wfmRivenSearch");
 
@@ -56,9 +68,7 @@ function parseAuctions(auctions: WfmRawAuction[]): WfmRivenListing[] {
     }
 
     const stats = a.item.attributes.map((attr) => ({
-      name: String(attr.url_name || "")
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, (c: string) => c.toUpperCase()),
+      name: localizeStatName(String(attr.url_name || "")),
       value: typeof attr.value === "number" ? attr.value : 0,
       positive: attr.positive !== false,
     }));

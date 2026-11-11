@@ -1,4 +1,5 @@
 import { readPepDict, readPepExport } from "./bundledGameData";
+import { getGameLocale } from "./gameLocale";
 import { withScope } from "./logger";
 import { levenshteinDistance } from "./rewardScannerUtils";
 import { TAG_TO_WFM_URL_NAME } from "../config/shared/wfmRivenVocabulary";
@@ -187,13 +188,17 @@ const WEAPON_OCR_ALIASES: Readonly<Record<string, string>> = Object.freeze({
 });
 
 function cleanLocTag(raw: string): string {
-  // locTags look like: "|val|% <DT_FIRE_COLOR>Heat" or "|val|% Critical Chance"
-  // Strip the |val|%, |STAT1|%, |val|s prefixes and color tags
-  let cleaned = raw.replace(/\|[^|]*\|[%s]?\s*/g, "").trim();
+  // locTags look like "|val|% <DT_FIRE_COLOR>Heat" (en) or "%|val| Kritik Hasar"
+  // (tr: the percent leads the placeholder). Strip the |val|%, |STAT1|%, |val|s
+  // forms - including a percent on either side of the placeholder - and color tags.
+  // Replace each removed chunk with a space, not nothing: some languages put the
+  // value placeholder between words ("Corpus'a |val| Hasar verir"), and dropping
+  // it outright would fuse them.
+  let cleaned = raw.replace(/%?\s*\|[^|]*\|[%s]?\s*/g, " ");
   cleaned = stripColorTags(cleaned);
   // Remove parenthetical qualifiers: "(x2 for Bows)", "(x2 for Heavy Attacks)"
-  cleaned = cleaned.replace(/\s*\(.*?\)\s*/g, "").trim();
-  return cleaned;
+  cleaned = cleaned.replace(/\s*\(.*?\)\s*/g, " ");
+  return cleaned.replace(/\s+/g, " ").trim();
 }
 
 // Mod class comes from the inherited archetype, not holsterCategory: Drakgoon holsters WIDE_RIFLE.
@@ -376,11 +381,58 @@ export function statNameToTag(statName: string): string | null {
   return STAT_NAME_TO_TAG[lc] || null;
 }
 
+// Stat names are shown in the player's game language while the canonical English
+// names stay the WFM search and OCR match keys. The melee fire-rate stat is
+// surfaced as "Attack Speed", which the game localizes under its own key.
+const ATTACK_SPEED_LOC_KEY = "/Lotus/Language/Upgrades/AttackSpeedBuffDesc";
+let _tagToLocaleDisplay = new Map<string, string>();
+let _localeMeleeAttackSpeed: string | null = null;
+let _localeDisplayBuiltFor: string | null = null;
+
+/** Build a tag -> localized stat display map for the active game language. A
+ *  no-op in English (the canonical maps already hold it). Lazy and cached per
+ *  locale, rebuilt when the game language changes. */
+function ensureLocaleStatDisplay(): void {
+  const locale = getGameLocale();
+  if (_localeDisplayBuiltFor === locale) return;
+  _localeDisplayBuiltFor = locale;
+  _tagToLocaleDisplay = new Map();
+  _localeMeleeAttackSpeed = null;
+  if (locale === "en") return;
+  const dict = readPepDict(locale);
+  if (!dict) return;
+  const upgrades = (readPepExport("ExportUpgrades") || {}) as Record<
+    string,
+    { upgradeEntries?: Array<{ tag?: string; upgradeValues?: Array<{ locTag?: string }> }> }
+  >;
+  for (const [key, mod] of Object.entries(upgrades)) {
+    if (!Array.isArray(mod.upgradeEntries) || !key.includes("Randomized")) continue;
+    for (const ue of mod.upgradeEntries) {
+      const locTag = ue.upgradeValues?.[0]?.locTag;
+      const dn = cleanLocTag(locTag ? dict[locTag] || "" : "");
+      if (dn && ue.tag && !_tagToLocaleDisplay.has(ue.tag)) _tagToLocaleDisplay.set(ue.tag, dn);
+    }
+  }
+  _localeMeleeAttackSpeed = cleanLocTag(dict[ATTACK_SPEED_LOC_KEY] || "") || null;
+}
+
 /** Uses Attack Speed for WeaponFireRateMod on melee cards. */
 export function getStatDisplayName(tag: string, melee = false): string {
   ensureBuilt();
-  if (melee && tag === "WeaponFireRateMod") return "Attack Speed";
-  return _tagToDisplayName.get(tag) || TAG_TO_DISPLAY[tag] || tag;
+  ensureLocaleStatDisplay();
+  if (melee && tag === "WeaponFireRateMod") return _localeMeleeAttackSpeed || "Attack Speed";
+  return (
+    _tagToLocaleDisplay.get(tag) || _tagToDisplayName.get(tag) || TAG_TO_DISPLAY[tag] || tag
+  );
+}
+
+/** The localized stat label for a tag, or null in English / when unknown. Lets a
+ *  caller keep its own English labels and only overlay the player's language. */
+export function getLocalizedStatDisplay(tag: string, melee = false): string | null {
+  ensureLocaleStatDisplay();
+  if (_localeDisplayBuiltFor === "en") return null;
+  if (melee && tag === "WeaponFireRateMod") return _localeMeleeAttackSpeed;
+  return _tagToLocaleDisplay.get(tag) || null;
 }
 
 /** Finds an upgrade entry by tag within a riven type. */
@@ -661,8 +713,7 @@ export function getRivenStatOptions(): { tag: string; wfmUrlName: string; displa
   for (const [tag, wfmName] of Object.entries(TAG_TO_WFM_URL_NAME)) {
     if (seen.has(wfmName)) continue;
     seen.add(wfmName);
-    const displayName = _tagToDisplayName.get(tag) || TAG_TO_DISPLAY[tag] || tag;
-    result.push({ tag, wfmUrlName: wfmName, displayName });
+    result.push({ tag, wfmUrlName: wfmName, displayName: getStatDisplayName(tag) });
   }
   result.sort((a, b) => a.displayName.localeCompare(b.displayName));
   return result;

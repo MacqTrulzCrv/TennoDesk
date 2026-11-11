@@ -13,7 +13,12 @@ import { normalizeWfmSlugKey } from "../config/shared/wfm";
 import { tagToWfmUrlName } from "../config/shared/wfmRivenVocabulary";
 import { createJsonCache } from "./jsonCache";
 import { withScope } from "./logger";
-import { getRivenFamilySlug } from "./rivenData";
+import { getRivenFamilySlug, getLocalizedStatDisplay } from "./rivenData";
+
+/** English label by default, overlaid with the player's language when available. */
+function statLabel(tag: string, melee: boolean): string {
+  return getLocalizedStatDisplay(tag, melee) ?? statTagToDisplayName(tag, melee);
+}
 
 const log = withScope("rivenBestAttributes");
 
@@ -202,7 +207,7 @@ function toAttribute(tag: string, isMelee: boolean): RivenGoodRollAttribute {
   return {
     tag,
     wfmUrlName: tagToWfmUrlName(tag),
-    displayName: statTagToDisplayName(tag, isMelee),
+    displayName: statLabel(tag, isMelee),
   };
 }
 
@@ -229,16 +234,16 @@ export function getBestAttributes(weaponName: string, isMelee = false): BestAttr
     for (const tag of roll.mandatory) {
       if (seen.has(tag)) continue;
       seen.add(tag);
-      positives.push(statTagToDisplayName(tag, isMelee));
+      positives.push(statLabel(tag, isMelee));
     }
   }
   for (const roll of data.goodAttrs) {
     for (const tag of roll.optional) {
       if (seen.has(tag)) continue;
       seen.add(tag);
-      positives.push(statTagToDisplayName(tag, isMelee));
+      positives.push(statLabel(tag, isMelee));
     }
   }
-  const negatives = data.acceptedBadAttrs.map((tag) => statTagToDisplayName(tag, isMelee));
+  const negatives = data.acceptedBadAttrs.map((tag) => statLabel(tag, isMelee));
   return { positives, negatives };
 }
