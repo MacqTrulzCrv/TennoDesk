@@ -66,6 +66,17 @@ describe("riven stat localization", () => {
     expect(names).toContain("critical chance");
   });
 
+  it("tolerates the dotless-i read as l/i and leading punctuation noise", () => {
+    setGameLocale("tr");
+    // Real OCR from an Arca Titron card: "Statü Şansı" -> "Statu Sansl",
+    // "Saldırı Hızı" -> "Saldiri Hizl", and a stray "(" before "Kesme" (Slash).
+    const ocr = "%+164,9 ( Kesme\n%+142,8 Statu Sansl\n%-33,4 Saldiri Hizl";
+    const english = localizeRivenOcrText(ocr);
+    expect(english).toContain("Slash");
+    expect(english).toContain("Status Chance");
+    expect(english).toContain("Fire Rate");
+  });
+
   it("leaves English OCR text untouched", () => {
     setGameLocale("en");
     const ocr = "+132.3% Multishot\n+187.1% Critical Chance";

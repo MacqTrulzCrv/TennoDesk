@@ -394,18 +394,17 @@ let _localeStatNameToTag = new Map<string, string>();
 let _localeOcrToEnglish = new Map<string, string>();
 let _localeMeleeAttackSpeed: string | null = null;
 let _localeDisplayBuiltFor: string | null = null;
-let _ocrReplacements: Array<[RegExp, string]> = [];
-let _ocrReplacementsFor: string | null = null;
 
-/** Fold a stat label to a diacritic-insensitive key. The OCR model drops Turkish
- *  accents ("Çoklu Atış" reads as "Coklu Atis"), so the dictionary labels and the
- *  scanned text must normalize the same way before they can match. */
+/** Fold a stat label to an OCR-tolerant key. PaddleOCR drops Turkish accents
+ *  ("Çoklu Atış" -> "Coklu Atis") and reads the dotless-i as i, l or 1
+ *  interchangeably ("Statü Şansı" -> "Statu Sansl"), so the dictionary labels and
+ *  the scanned text both collapse those look-alikes to one letter before matching. */
 function normalizeStatOcrText(value: string): string {
   return value
-    .toLowerCase()
-    .replace(/[ıİ]/g, "i")
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[ıl1|]/g, "i")
     .replace(/[^a-z0-9 ]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -481,19 +480,39 @@ export function getLocalizedStatDisplay(tag: string, melee = false): string | nu
 export function localizeRivenOcrText(text: string): string {
   ensureLocaleStatDisplay();
   if (_localeDisplayBuiltFor === "en" || _localeOcrToEnglish.size === 0) return text;
-  if (_ocrReplacementsFor !== _localeDisplayBuiltFor) {
-    _ocrReplacementsFor = _localeDisplayBuiltFor;
-    // Longest first so a multi-word label wins over a bare trailing word.
-    _ocrReplacements = [..._localeOcrToEnglish.entries()]
-      .sort((a, b) => b[0].length - a[0].length)
-      .map(([key, english]) => [
-        new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
-        english,
-      ]);
+  return text
+    .split(/\r?\n/)
+    .map(localizeRivenOcrLine)
+    .join("\n");
+}
+
+/** Replace the trailing stat-label run of one OCR line with its English name.
+ *  The label sits after the value and any stray punctuation, so match the final
+ *  run of letters, fold it, and look it up (exact, then within a small edit
+ *  budget to absorb residual OCR slips). Non-stat lines are left untouched. */
+function localizeRivenOcrLine(line: string): string {
+  const match = /([\p{L}][\p{L} ]*)\s*$/u.exec(line);
+  if (!match) return line;
+  const key = normalizeStatOcrText(match[1]);
+  if (!key) return line;
+  const english = _localeOcrToEnglish.get(key) ?? fuzzyOcrStatLookup(key);
+  return english ? line.slice(0, match.index) + english : line;
+}
+
+/** Nearest known stat label within ~20% edit distance, or null. */
+function fuzzyOcrStatLookup(key: string): string | null {
+  const budget = Math.max(1, Math.floor(key.length * 0.2));
+  let best: string | null = null;
+  let bestDistance = budget + 1;
+  for (const [candidate, english] of _localeOcrToEnglish) {
+    if (Math.abs(candidate.length - key.length) > budget) continue;
+    const distance = levenshteinDistance(key, candidate);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = english;
+    }
   }
-  let out = text;
-  for (const [pattern, english] of _ocrReplacements) out = out.replace(pattern, english);
-  return out;
+  return best;
 }
 
 /** Finds an upgrade entry by tag within a riven type. */
