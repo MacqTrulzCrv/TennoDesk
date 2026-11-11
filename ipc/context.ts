@@ -23,6 +23,7 @@ interface MainProcessContext {
   overlayHotkeyRegistered: string | null;
   overlayInteractionHotkeyRegistered: string | null;
   rivenRescanHotkeyRegistered: string | null;
+  rivenToggleHotkeyRegistered: string | null;
   plannerToggleHotkeyRegistered: string | null;
   overlayInteractiveMode: boolean;
   overlayDismissedUntilMs: number;
@@ -45,6 +46,7 @@ type QuotedKey =
   | "overlayHotkeyRegistered"
   | "overlayInteractionHotkeyRegistered"
   | "rivenRescanHotkeyRegistered"
+  | "rivenToggleHotkeyRegistered"
   | "plannerToggleHotkeyRegistered";
 
 const log = withScope("ctx");
@@ -63,6 +65,7 @@ const quotedKeys: ReadonlySet<ContextKey> = new Set<QuotedKey>([
   "overlayHotkeyRegistered",
   "overlayInteractionHotkeyRegistered",
   "rivenRescanHotkeyRegistered",
+  "rivenToggleHotkeyRegistered",
   "plannerToggleHotkeyRegistered",
 ]);
 
@@ -82,6 +85,7 @@ const state: MainProcessContext = {
   overlayHotkeyRegistered: null,
   overlayInteractionHotkeyRegistered: null,
   rivenRescanHotkeyRegistered: null,
+  rivenToggleHotkeyRegistered: null,
   plannerToggleHotkeyRegistered: null,
   overlayInteractiveMode: false,
   overlayDismissedUntilMs: 0,

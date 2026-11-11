@@ -303,6 +303,9 @@
   "settings.rivenRescanHotkeyEnabled": "Enable riven panel rescan",
   "settings.rivenRescanHotkeyHint": "Brings the riven panels back over an open cycle screen and reads the card again.",
   "settings.rivenRescanHotkey": "Riven panel rescan",
+  "settings.rivenToggleHotkeyEnabled": "Enable riven overlay toggle",
+  "settings.rivenToggleHotkeyHint": "Opens the riven scanner overlay by hand, or closes it when it is already up.",
+  "settings.rivenToggleHotkey": "Riven overlay toggle",
   "settings.plannerToggleHotkeyEnabled": "Enable relic list toggle",
   "settings.plannerToggleHotkeyHint": "Shows or hides the relic recommendation list on demand.",
   "settings.plannerToggleHotkey": "Relic list toggle",
@@ -2768,6 +2771,7 @@
   "shortcuts.overlayReward": "Scan relic rewards",
   "shortcuts.overlayInteract": "Toggle overlay interaction",
   "shortcuts.overlayRiven": "Scan riven",
+  "shortcuts.overlayRivenToggle": "Toggle riven overlay",
   "shortcuts.overlayRep": "Trade +rep toast",
   "shortcuts.overlayPlanner": "Toggle planner overlay"
 }

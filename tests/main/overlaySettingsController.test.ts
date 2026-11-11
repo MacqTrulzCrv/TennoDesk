@@ -12,6 +12,7 @@ function buildController() {
     overlayHotkeyRegistered: null,
     overlayInteractionHotkeyRegistered: null,
     rivenRescanHotkeyRegistered: null,
+    rivenToggleHotkeyRegistered: null,
   };
 
   const registerCallbacks = new Map<string, () => void>();
@@ -45,6 +46,8 @@ function buildController() {
     onRelicRewardTrigger: vi.fn(),
     onToggleOverlayInteractionMode: vi.fn(),
     onRivenRescanTrigger: vi.fn(),
+    onRivenToggleTrigger: vi.fn(),
+    onPlannerToggleTrigger: vi.fn(),
     configureWarframeLifecycle: vi.fn(async (_enabled: boolean) => {}),
   };
 
@@ -572,6 +575,20 @@ describe("overlay settings controller", () => {
     controller.setHotkeysActive(false);
     expect(deps.globalShortcut.unregister).toHaveBeenCalledWith(accelerator);
     expect(ctx.rivenRescanHotkeyRegistered).toBeNull();
+  });
+
+  it("registers the riven overlay toggle hotkey and releases it with the others", () => {
+    const { controller, deps, ctx, registerCallbacks } = buildController();
+    controller.setHotkeysActive(true);
+
+    const accelerator = String(OVERLAY_SETTINGS_DEFAULTS.rivenToggleHotkey);
+    expect(ctx.rivenToggleHotkeyRegistered).toBe(accelerator);
+    registerCallbacks.get(accelerator)?.();
+    expect(deps.onRivenToggleTrigger).toHaveBeenCalledWith("hotkey");
+
+    controller.setHotkeysActive(false);
+    expect(deps.globalShortcut.unregister).toHaveBeenCalledWith(accelerator);
+    expect(ctx.rivenToggleHotkeyRegistered).toBeNull();
   });
 
   it("keeps a cleared riven rescan hotkey on its default instead of unbinding it", () => {

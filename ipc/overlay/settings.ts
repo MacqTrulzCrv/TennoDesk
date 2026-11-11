@@ -33,6 +33,7 @@ type OverlayCtx = {
   plannerOverlayWindow?: import("electron").BrowserWindow | null;
   overlayInteractionHotkeyRegistered: string | null;
   rivenRescanHotkeyRegistered: string | null;
+  rivenToggleHotkeyRegistered: string | null;
   plannerToggleHotkeyRegistered: string | null;
   overlayInteractiveMode: boolean;
 };
@@ -54,6 +55,7 @@ type OverlaySettingsControllerOptions = {
   onRelicRewardTrigger: (source?: string) => void;
   onToggleOverlayInteractionMode: (source?: string) => void;
   onRivenRescanTrigger: (source?: string) => void;
+  onRivenToggleTrigger: (source?: string) => void;
   onPlannerToggleTrigger: (source?: string) => void;
   configureWarframeLifecycle: (enabled: boolean) => Promise<void>;
 };
@@ -108,6 +110,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     onRelicRewardTrigger,
     onToggleOverlayInteractionMode,
     onRivenRescanTrigger,
+    onRivenToggleTrigger,
     onPlannerToggleTrigger,
   } = options;
 
@@ -226,6 +229,11 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
       rivenRescanHotkey: normalizeHotkey(
         candidate.rivenRescanHotkey ?? defaults.rivenRescanHotkey,
         String(defaults.rivenRescanHotkey),
+      ),
+      rivenToggleHotkeyEnabled: booleanSetting("rivenToggleHotkeyEnabled"),
+      rivenToggleHotkey: normalizeHotkey(
+        candidate.rivenToggleHotkey ?? defaults.rivenToggleHotkey,
+        String(defaults.rivenToggleHotkey),
       ),
       plannerToggleHotkeyEnabled: booleanSetting("plannerToggleHotkeyEnabled"),
       plannerToggleHotkey: normalizeHotkey(
@@ -373,6 +381,16 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     ctx.rivenRescanHotkeyRegistered = null;
   }
 
+  function unregisterRivenToggleHotkey(): void {
+    if (!ctx.rivenToggleHotkeyRegistered) return;
+    try {
+      globalShortcut.unregister(ctx.rivenToggleHotkeyRegistered);
+    } catch (err) {
+      log.warn("[RivenToggleHotkey] unregister failed:", normalizeErrorMessage(err));
+    }
+    ctx.rivenToggleHotkeyRegistered = null;
+  }
+
   function unregisterPlannerToggleHotkey(): void {
     if (!ctx.plannerToggleHotkeyRegistered) return;
     try {
@@ -387,6 +405,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     unregisterOverlayTriggerHotkey();
     unregisterOverlayInteractionHotkey();
     unregisterRivenRescanHotkey();
+    unregisterRivenToggleHotkey();
     unregisterPlannerToggleHotkey();
   }
 
@@ -474,6 +493,32 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     }
   }
 
+  function registerRivenToggleHotkey(): boolean {
+    unregisterRivenToggleHotkey();
+
+    if (!ctx.overlaySettings.rivenToggleHotkeyEnabled) {
+      log.info("[RivenToggleHotkey] disabled");
+      return false;
+    }
+
+    const accelerator = String(ctx.overlaySettings.rivenToggleHotkey || "");
+    if (!accelerator) return false;
+
+    try {
+      const ok = globalShortcut.register(accelerator, () => onRivenToggleTrigger("hotkey"));
+      if (!ok) {
+        log.warn("[RivenToggleHotkey] register failed:", accelerator);
+        return false;
+      }
+      ctx.rivenToggleHotkeyRegistered = accelerator;
+      log.info("[RivenToggleHotkey] registered:", accelerator);
+      return true;
+    } catch (err) {
+      log.warn("[RivenToggleHotkey] invalid shortcut:", accelerator, normalizeErrorMessage(err));
+      return false;
+    }
+  }
+
   function registerPlannerToggleHotkey(): boolean {
     unregisterPlannerToggleHotkey();
 
@@ -511,8 +556,9 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     const triggerOk = registerOverlayTriggerHotkey();
     const interactionOk = registerOverlayInteractionHotkey();
     const rescanOk = registerRivenRescanHotkey();
+    const rivenToggleOk = registerRivenToggleHotkey();
     const plannerOk = registerPlannerToggleHotkey();
-    return triggerOk || interactionOk || rescanOk || plannerOk;
+    return triggerOk || interactionOk || rescanOk || rivenToggleOk || plannerOk;
   }
 
   function setHotkeysActive(active: boolean): void {

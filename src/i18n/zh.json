@@ -309,6 +309,9 @@
   "settings.rivenRescanHotkeyEnabled": "启用裂罅面板重新扫描",
   "settings.rivenRescanHotkeyHint": "在已打开的循环界面上重新显示裂罅面板并再次读取卡片。",
   "settings.rivenRescanHotkey": "裂罅面板重新扫描",
+  "settings.rivenToggleHotkeyEnabled": "启用裂罅覆盖层开关",
+  "settings.rivenToggleHotkeyHint": "手动打开裂罅扫描覆盖层，若已打开则将其关闭。",
+  "settings.rivenToggleHotkey": "裂罅覆盖层开关",
   "settings.plannerToggleHotkeyEnabled": "启用遗物列表开关",
   "settings.plannerToggleHotkeyHint": "按需显示或隐藏遗物推荐列表。",
   "settings.plannerToggleHotkey": "遗物列表开关",
@@ -2748,6 +2751,7 @@
   "shortcuts.overlayReward": "扫描遗物奖励",
   "shortcuts.overlayInteract": "切换覆盖层交互",
   "shortcuts.overlayRiven": "扫描裂罅",
+  "shortcuts.overlayRivenToggle": "切换裂罅覆盖层",
   "shortcuts.overlayRep": "交易 +声望 提示",
   "shortcuts.overlayPlanner": "切换规划器覆盖层"
 }

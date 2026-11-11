@@ -54,6 +54,8 @@ export interface OverlaySettings {
   interactionHotkey: string;
   rivenRescanHotkeyEnabled: boolean;
   rivenRescanHotkey: string;
+  rivenToggleHotkeyEnabled: boolean;
+  rivenToggleHotkey: string;
   plannerToggleHotkeyEnabled: boolean;
   plannerToggleHotkey: string;
   worldNotificationsEnabled: boolean;
@@ -144,6 +146,9 @@ export const OVERLAY_SETTINGS_DEFAULTS = Object.freeze({
   interactionHotkey: "F7",
   rivenRescanHotkeyEnabled: true,
   rivenRescanHotkey: "F6",
+  // F5 opens or closes the riven scanner overlay by hand, apart from the game screen.
+  rivenToggleHotkeyEnabled: true,
+  rivenToggleHotkey: "F5",
   // F9 belongs to the trade +rep toast, so the planner toggle sits one key over.
   plannerToggleHotkeyEnabled: true,
   plannerToggleHotkey: "F10",

@@ -344,6 +344,9 @@
   "settings.rivenRescanHotkeyEnabled": "Riven paneli yeniden taramayı etkinleştir",
   "settings.rivenRescanHotkeyHint": "Riven panellerini açık döngü ekranının üzerine geri getirir ve kartı yeniden okur.",
   "settings.rivenRescanHotkey": "Riven paneli yeniden tarama",
+  "settings.rivenToggleHotkeyEnabled": "Riven overlay aç/kapa tuşunu etkinleştir",
+  "settings.rivenToggleHotkeyHint": "Riven tarayıcı overlay'ini elle açar, zaten açıksa kapatır.",
+  "settings.rivenToggleHotkey": "Riven overlay aç/kapa",
   "settings.plannerToggleHotkeyEnabled": "Relic listesi kısayolunu etkinleştir",
   "settings.plannerToggleHotkeyHint": "Relic öneri listesini istediğinde gösterir ya da gizler.",
   "settings.plannerToggleHotkey": "Relic listesi aç/kapat",
@@ -2754,6 +2757,7 @@
   "shortcuts.overlayReward": "Relic ödüllerini tara",
   "shortcuts.overlayInteract": "Overlay etkileşimini aç/kapat",
   "shortcuts.overlayRiven": "Riven tara",
+  "shortcuts.overlayRivenToggle": "Riven overlay aç/kapa",
   "shortcuts.overlayRep": "Ticaret +rep bildirimi",
   "shortcuts.overlayPlanner": "Planner overlay aç/kapat"
 }

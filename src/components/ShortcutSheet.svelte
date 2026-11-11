@@ -14,6 +14,7 @@
     { labelKey: "shortcuts.overlayReward", keys: $overlaySettings.hotkey },
     { labelKey: "shortcuts.overlayInteract", keys: $overlaySettings.interactionHotkey },
     { labelKey: "shortcuts.overlayRiven", keys: $overlaySettings.rivenRescanHotkey },
+    { labelKey: "shortcuts.overlayRivenToggle", keys: $overlaySettings.rivenToggleHotkey },
     { labelKey: "shortcuts.overlayRep", keys: $overlaySettings.tradeRepHotkey },
     { labelKey: "shortcuts.overlayPlanner", keys: $overlaySettings.plannerToggleHotkey },
   ]);

@@ -738,6 +738,22 @@ export function onRivenManualRescan(source = "hotkey"): void {
   onRivenSessionOpen();
 }
 
+/** Hotkey: open the riven scanner by hand when it is hidden, close it when shown. */
+export function onRivenOverlayToggle(source = "hotkey"): void {
+  if (!isRivenOverlayEnabled()) {
+    log.info("[OverlayRoute] riven toggle ignored - the riven overlay is off");
+    return;
+  }
+  if (isAnyRivenWindowVisible()) {
+    log.info(`[OverlayRoute] trigger=riven-toggle-close source=${source}`);
+    onRivenSessionClose();
+    return;
+  }
+  log.info(`[OverlayRoute] trigger=riven-toggle-open source=${source}`);
+  resumeRivenSession();
+  onRivenSessionOpen();
+}
+
 export function onRivenSessionOpen(): void {
   if (!isRivenOverlayEnabled()) return;
   log.info("[OverlayRoute] trigger=riven-session");

@@ -325,6 +325,8 @@
     "interactionHotkey",
     "rivenRescanHotkeyEnabled",
     "rivenRescanHotkey",
+    "rivenToggleHotkeyEnabled",
+    "rivenToggleHotkey",
     "plannerToggleHotkeyEnabled",
     "plannerToggleHotkey",
     "linuxOverlaysInteractive",
@@ -406,6 +408,16 @@
       hintKey: "settings.rivenRescanHotkeyHint",
       enabledAttrs: { dataSetting: "riven-rescan-hotkey-enabled" },
       attrs: { dataSetting: "riven-rescan-hotkey" },
+    },
+    {
+      enabledKey: "rivenToggleHotkeyEnabled",
+      field: "rivenToggleHotkey",
+      enabledLabelKey: "settings.rivenToggleHotkeyEnabled",
+      labelKey: "settings.rivenToggleHotkey",
+      placeholderKey: "settings.interactionHotkeyPlaceholder",
+      hintKey: "settings.rivenToggleHotkeyHint",
+      enabledAttrs: { dataSetting: "riven-toggle-hotkey-enabled" },
+      attrs: { dataSetting: "riven-toggle-hotkey" },
     },
     {
       enabledKey: "plannerToggleHotkeyEnabled",
@@ -679,6 +691,7 @@
     | "hotkey"
     | "interactionHotkey"
     | "rivenRescanHotkey"
+    | "rivenToggleHotkey"
     | "tradeRepHotkey"
     | "plannerToggleHotkey";
 
