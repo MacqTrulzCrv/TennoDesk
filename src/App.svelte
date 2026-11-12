@@ -40,6 +40,10 @@
     closeShortcutSheet,
   } from "./stores/shortcutSheet.js";
   import { setInventoryStatus } from "./lib/actions.js";
+  import { globalTooltips } from "./lib/tooltip.js";
+  import { readStorage, writeStorage } from "./lib/persistence.js";
+  import { addToast } from "./stores/toasts.js";
+  import { startTour } from "./stores/tour.js";
   import { themeSettings } from "./stores/theme.js";
   import { viewAccentVars } from "./lib/theme/derive.js";
   import { effectiveViewAccent, viewOverrideStyle } from "./lib/theme/viewOverrides.js";
@@ -117,9 +121,12 @@
     } else {
       void reopenSetupWhenInventoryIsUnavailable();
       void restoreWorkspaceOnLaunch();
+      maybeShowOnboardingHint();
     }
 
     window.addEventListener("keydown", onKeyDown);
+
+    const disposeTooltips = globalTooltips();
 
     const prefetchTimer = isPopoutWindow
       ? null
@@ -131,6 +138,7 @@
     return () => {
       prefetchStopped = true;
       if (prefetchTimer) clearTimeout(prefetchTimer);
+      disposeTooltips();
       unsubscribeBulkSell();
       startup.dispose();
       disposeEvents();
@@ -138,6 +146,25 @@
       window.removeEventListener("keydown", onKeyDown);
     };
   });
+
+  // A one-time nudge toward features that landed after many users finished setup
+  // (⌘K quick-switch, row right-click). New users meet these through the tour.
+  const ONBOARDING_HINT_KEY = "onboarding-hint-v1";
+  function maybeShowOnboardingHint(): void {
+    if (isPopoutWindow) return;
+    if (readStorage(ONBOARDING_HINT_KEY) === "1") return;
+    writeStorage(ONBOARDING_HINT_KEY, "1");
+    // A beat after launch so it doesn't land on top of startup toasts.
+    setTimeout(() => {
+      addToast({
+        level: "info",
+        title: $tr("onboarding.hintTitle"),
+        message: $tr("onboarding.hintMessage"),
+        durationMs: 12000,
+        action: { label: $tr("onboarding.hintAction"), run: () => startTour() },
+      });
+    }, 1800);
+  }
 
   function handleViewChange(view: ViewName): void {
     if (isLazyView(view)) {

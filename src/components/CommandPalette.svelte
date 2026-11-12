@@ -15,6 +15,9 @@
   } from "../lib/viewRegistry.js";
   import { refreshMarketOrders } from "../lib/marketOrdersSync.js";
   import { bulkSellOpen } from "../stores/inventorySelection.js";
+  import { recentItems } from "../stores/recentItems.js";
+  import { startTour } from "../stores/tour.js";
+  import { toggleShortcutSheet } from "../stores/shortcutSheet.js";
   import type { ParsedItem } from "../types/inventory.js";
 
   type NavCmd = { kind: "nav"; id: string; label: string; view: SidebarViewName; icon: string };
@@ -56,7 +59,36 @@
       icon: NAV_ICON_URLS.market,
       run: () => bulkSellOpen.set(true),
     },
+    {
+      kind: "action",
+      id: "action:shortcuts",
+      label: $tr("palette.shortcuts"),
+      icon: NAV_ICON_URLS.settings,
+      run: () => toggleShortcutSheet(),
+    },
+    {
+      kind: "action",
+      id: "action:startTour",
+      label: $tr("palette.startTour"),
+      icon: NAV_ICON_URLS.settings,
+      run: () => startTour(),
+    },
   ] as ActionCmd[];
+
+  // Items opened this session, shown only on an empty query as a quick re-open.
+  $: recentCmds = (
+    !q
+      ? $recentItems.map(
+          (item): ItemCmd => ({
+            kind: "item",
+            id: `recent:${item.internalName}`,
+            label: itemLabel(item),
+            sub: $tr("palette.recent"),
+            item,
+          }),
+        )
+      : []
+  ) as ItemCmd[];
 
   $: q = query.trim().toLowerCase();
 
@@ -91,7 +123,7 @@
           )
       : [];
 
-  $: results = [...navMatches, ...actionMatches, ...itemMatches] as Cmd[];
+  $: results = [...recentCmds, ...navMatches, ...actionMatches, ...itemMatches] as Cmd[];
   $: if (selected > results.length - 1) selected = Math.max(0, results.length - 1);
 
   // Autofocus and reset whenever the palette transitions to open. wasOpen is the

@@ -889,9 +889,22 @@
 
       {#if loading}
         <div
-          class="rounded-xl border border-dashed border-border bg-bg-soft px-4 py-6 text-center text-sm text-text-secondary"
+          class="overflow-hidden rounded-xl border border-border"
+          aria-busy="true"
+          aria-label={$translate("common.loadingListings")}
         >
-          {$translate("common.loadingListings")}
+          {#each Array(6) as _, rowIndex (rowIndex)}
+            <div
+              class="flex items-center gap-3 px-3 py-2.5 {rowIndex > 0
+                ? 'border-t border-border/50'
+                : ''}"
+            >
+              <span class="skeleton skeleton--text w-8"></span>
+              <span class="skeleton skeleton--text flex-1" style="max-width: 11rem"></span>
+              <span class="skeleton skeleton--text w-16"></span>
+              <span class="skeleton skeleton--text ml-auto w-12"></span>
+            </div>
+          {/each}
         </div>
       {:else if errorKey}
         <div

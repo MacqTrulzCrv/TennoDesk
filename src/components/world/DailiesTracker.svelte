@@ -5,6 +5,7 @@
   import { send } from "../../lib/ipc.js";
   import { clockStore } from "../../lib/timers.js";
   import { buildWikiUrl } from "../../lib/wikiUrl.js";
+  import { tooltip } from "../../lib/tooltip.js";
   import {
     componentOwnership,
     inventoryData,
@@ -68,9 +69,28 @@
     nwWeekly: "dailies.nwWeekly",
     nwElite: "dailies.nwElite",
   };
-  /** Under an hour reads as warning, under ten minutes as danger. */
-  const URGENT_MS = 60 * 60_000;
-  const CRITICAL_MS = 10 * 60_000;
+  const MIN = 60_000;
+  const HOUR = 3_600_000;
+  /** Urgency scales with how long a timer runs: short alerts flip early, while
+   *  multi-day resets only light up near the very end. [warn, crit] in ms. */
+  const URGENCY: Record<"short" | "day" | "week", [number, number]> = {
+    short: [30 * MIN, 10 * MIN],
+    day: [2 * HOUR, 30 * MIN],
+    week: [6 * HOUR, HOUR],
+  };
+
+  function urgency(left: number, kind: "short" | "day" | "week"): "" | "warn" | "crit" {
+    const [warn, crit] = URGENCY[kind];
+    if (left < crit) return "crit";
+    if (left < warn) return "warn";
+    return "";
+  }
+
+  function timerKind(group: TrackerGroup): "short" | "day" | "week" {
+    if (group === "alerts") return "short";
+    if (group === "weekly") return "week";
+    return "day";
+  }
   /** Rows whose strip is the shared vendor rotation rather than a plain icon list. */
   const VENDOR_ROWS: Record<string, "coda" | "tenet" | undefined> = {
     codaWeapons: "coda",
@@ -394,10 +414,19 @@
     return "";
   }
 
+  function groupResetMs(group: TrackerGroup): number {
+    if (group === "daily") return nextDailyResetUtc(now).getTime() - nowMs;
+    if (group === "weekly") return nextWeeklyResetUtc(now).getTime() - nowMs;
+    return Number.POSITIVE_INFINITY;
+  }
+
   function groupStats(group: TrackerGroup): { done: number; total: number } {
     const shown = rows.filter((row) => row.kind === "task" && row.group === group && !row.hidden);
     return { done: shown.filter((row) => row.done).length, total: shown.length };
   }
+
+  const SEARCHABLE_GROUPS: TrackerGroup[] = ["daily", "nightwave", "alerts", "weekly", "vendors"];
+  const anyVisible = $derived(SEARCHABLE_GROUPS.some((group) => groupRows(group).length > 0));
 </script>
 
 {#snippet section(group: TrackerGroup)}
@@ -406,6 +435,7 @@
     {@const sectionHidden = tracker.hidden.includes(`section:${group}`)}
     {@const stats = groupStats(group)}
     {@const reset = groupReset(group)}
+    {@const resetUrgency = urgency(groupResetMs(group), group === "weekly" ? "week" : "day")}
     <div class="dailies-section" class:dailies-section--off={sectionHidden}>
       <CollapsibleSection
         title={$tr(GROUP_TITLES[group])}
@@ -429,7 +459,11 @@
               ></div>
             </div>
             {#if reset}
-              <span class="dailies-reset">{reset}</span>
+              <span
+                class="dailies-reset"
+                class:dailies-reset--warn={resetUrgency === "warn"}
+                class:dailies-reset--crit={resetUrgency === "crit"}>{reset}</span
+              >
             {/if}
             {#if editing && (group === "nightwave" || group === "alerts")}
               <button
@@ -442,14 +476,18 @@
             {/if}
           </div>
 
-          {#each list as row (row.id)}
+          {#each list as row, rowIndex (row.id)}
             {#if row.kind === "header"}
               <p class="dailies-subhead">{row.label}</p>
             {:else}
               {@const left = remainingMs(row.expiry)}
               <!-- No period key means the tick would never be read back, so the row waits. -->
               {@const locked = row.periodKey === null && !row.custom}
-              <div class="dailies-row" class:dailies-row--off={row.hidden}>
+              <div
+                class="dailies-row"
+                class:dailies-row--off={row.hidden}
+                style="--row-i: {rowIndex}"
+              >
                 <label class="dailies-label" title={row.auto ? $tr("dailies.autoTracked") : null}>
                   <input
                     type="checkbox"
@@ -482,7 +520,7 @@
                   <div class="flex shrink-0 items-center gap-1">
                     <button
                       class="dailies-step"
-                      title={$tr("dailies.decrement")}
+                      use:tooltip={$tr("dailies.decrement")}
                       aria-label={$tr("dailies.decrement")}
                       disabled={locked || row.count <= row.autoCount}
                       data-task-dec={row.id}
@@ -493,7 +531,7 @@
                     >
                     <button
                       class="dailies-step"
-                      title={$tr("dailies.increment")}
+                      use:tooltip={$tr("dailies.increment")}
                       aria-label={$tr("dailies.increment")}
                       disabled={locked || row.count >= row.target}
                       data-task-inc={row.id}
@@ -503,17 +541,18 @@
                 {/if}
 
                 {#if row.expiry}
+                  {@const timeUrgency = urgency(left, timerKind(row.group))}
                   <span
                     class="dailies-time"
-                    class:dailies-time--warn={left < URGENT_MS}
-                    class:dailies-time--crit={left < CRITICAL_MS}>{countdown(row.expiry)}</span
+                    class:dailies-time--warn={timeUrgency === "warn"}
+                    class:dailies-time--crit={timeUrgency === "crit"}>{countdown(row.expiry)}</span
                   >
                 {/if}
 
                 {#if row.lines || row.circuit || row.calendar || row.vendor}
                   <button
                     class="dailies-icon"
-                    title={expanded[row.id] ? $tr("dailies.collapse") : $tr("dailies.expand")}
+                    use:tooltip={expanded[row.id] ? $tr("dailies.collapse") : $tr("dailies.expand")}
                     aria-label={expanded[row.id] ? $tr("dailies.collapse") : $tr("dailies.expand")}
                     aria-expanded={Boolean(expanded[row.id])}
                     data-task-expand={row.id}
@@ -527,7 +566,7 @@
                   {@const page = row.wiki}
                   <button
                     class="dailies-icon"
-                    title={$tr("dailies.openWiki")}
+                    use:tooltip={$tr("dailies.openWiki")}
                     aria-label={$tr("dailies.openWiki")}
                     onclick={() => send("open-external", buildWikiUrl(page))}
                   >
@@ -726,6 +765,16 @@
     </div>
   </div>
 
+  {#if query.trim() && !anyVisible}
+    <div class="dailies-empty">
+      <span class="dailies-empty-glyph" aria-hidden="true">🛰️</span>
+      <p class="dailies-empty-text">{$tr("common.noResults")}</p>
+      <button class="btn-secondary btn-sm" onclick={() => (query = "")}>
+        {$tr("common.clearSearch")}
+      </button>
+    </div>
+  {/if}
+
   {#if editing}
     <div class="dailies-section flex flex-wrap items-center gap-2">
       <input
@@ -756,6 +805,28 @@
 <style>
   .dailies-section {
     padding: 0.35rem 0 0.85rem;
+  }
+
+  .dailies-empty {
+    align-items: center;
+    animation: fade-in 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 2.5rem 1rem;
+    text-align: center;
+  }
+
+  .dailies-empty-glyph {
+    filter: grayscale(0.3);
+    font-size: 2rem;
+    opacity: 0.7;
+  }
+
+  .dailies-empty-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
   }
 
   .dailies-section--off {
@@ -803,14 +874,40 @@
     background: var(--accent);
     border-radius: 2px;
     height: 100%;
-    transition: width 0.3s ease;
+    transition: width 0.5s cubic-bezier(0.3, 0.9, 0.2, 1);
+  }
+
+  /* When the group hits full, the bar gives one short glow. */
+  .dailies-cardhead:has(.dailies-count--full) .dailies-bar-fill {
+    animation: dailies-bar-pulse 0.5s ease;
+  }
+
+  @keyframes dailies-bar-pulse {
+    0% {
+      filter: brightness(1);
+    }
+    45% {
+      filter: brightness(1.55);
+    }
+    100% {
+      filter: brightness(1);
+    }
   }
 
   .dailies-reset {
     color: var(--text-secondary);
     flex-shrink: 0;
     font-size: 0.7rem;
+    transition: color 0.3s ease;
     white-space: nowrap;
+  }
+
+  .dailies-reset--warn {
+    color: var(--warning);
+  }
+
+  .dailies-reset--crit {
+    color: var(--danger);
   }
 
   .dailies-subhead {
@@ -834,7 +931,27 @@
     display: flex;
     gap: 0.5rem;
     padding: 0.38rem 0.75rem;
-    transition: background-color 0.12s;
+    transition:
+      background-color 0.12s,
+      transform 0.12s ease;
+    animation: dailies-row-in 0.3s ease backwards;
+    animation-delay: calc(var(--row-i, 0) * 35ms);
+  }
+
+  /* Pressing a row settles it down a touch — subtle tactile feedback. */
+  .dailies-row:active {
+    transform: scale(0.985);
+  }
+
+  @keyframes dailies-row-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .dailies-row + .dailies-row,

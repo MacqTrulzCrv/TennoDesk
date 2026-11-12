@@ -1,6 +1,7 @@
 <script lang="ts">
   import { PLATINUM_ICON_URL, STAT_ICON_URLS } from "../../lib/assetUrls.js";
   import { locale, tr, type Translator } from "../../lib/i18n.js";
+  import { countUp } from "../../lib/countUp.js";
   import {
     VALUE_MIN_PLATINUM_PRESETS,
     selectValueStripRows,
@@ -80,7 +81,12 @@
           data-value-platinum
         >
           <img src={PLAT_ICON} alt="" class="h-3.5 w-3.5 shrink-0 self-center object-contain" />
-          {figure(row.totals.platinum, row.totals.platinumUnpriced, $locale, $tr)}
+          <span
+            use:countUp={{
+              value: row.totals.platinum,
+              format: (n) => figure(Math.round(n), row.totals.platinumUnpriced, $locale, $tr),
+            }}
+          ></span>
         </span>
         {#if hasDucats(row.totals)}
           <span
@@ -90,7 +96,12 @@
             data-value-ducats
           >
             <img src={DUCAT_ICON} alt="" class="h-3.5 w-3.5 shrink-0 self-center object-contain" />
-            {figure(row.totals.ducats, row.totals.ducatsUnpriced, $locale, $tr)}
+            <span
+              use:countUp={{
+                value: row.totals.ducats,
+                format: (n) => figure(Math.round(n), row.totals.ducatsUnpriced, $locale, $tr),
+              }}
+            ></span>
           </span>
         {/if}
         {#if index === 0 && row.totals.unpriced > 0}

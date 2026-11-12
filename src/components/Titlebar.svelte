@@ -9,8 +9,18 @@
   import { APP_LOGO_URL } from "../lib/assetUrls.js";
   import WfmStatusPill from "./market/WfmStatusPill.svelte";
   import { themeSettings } from "../stores/theme.js";
+  import { THEME_PRESETS } from "../config/themePresets.js";
   import { DEFAULT_APP_NAME } from "../config/themeDefaults.js";
   import type { HelperStatus } from "../types/ipc.js";
+
+  // Quick accent/energy swatch popped from the titlebar — one click swaps the
+  // whole palette preset without a detour through Settings.
+  let swatchOpen = false;
+  const presetEntries = Object.entries(THEME_PRESETS);
+  function pickPreset(key: string): void {
+    themeSettings.applyPreset(key);
+    swatchOpen = false;
+  }
 
   const HELPER_STATUS_POLL_MS = 5_000;
   const INVENTORY_OLD_MS = 60 * 60 * 1000;
@@ -113,6 +123,13 @@
   });
 </script>
 
+<svelte:window
+  on:click={() => (swatchOpen = false)}
+  on:keydown={(event) => {
+    if (event.key === "Escape") swatchOpen = false;
+  }}
+/>
+
 <header
   class="z-50 flex h-[var(--titlebar-height)] select-none items-center justify-between border-b border-border bg-bg-deep app-region-drag"
 >
@@ -142,6 +159,45 @@
   <!-- ml-auto, because justify-between centres a third child. -->
   <div class="app-region-no-drag ml-auto flex items-center pr-2">
     <WfmStatusPill />
+  </div>
+  <div class="app-region-no-drag relative flex items-center">
+    <button
+      class="flex h-[var(--titlebar-height)] w-[var(--size-titlebar-control)] cursor-pointer items-center justify-center border-0 bg-transparent transition-[background-color] duration-150 hover:bg-bg-hover"
+      title={$tr("titlebar.accentSwatch")}
+      aria-haspopup="true"
+      aria-expanded={swatchOpen}
+      on:click|stopPropagation={() => (swatchOpen = !swatchOpen)}
+    >
+      <span
+        class="h-3.5 w-3.5 rounded-full border border-border shadow-[0_0_6px_-1px_var(--accent-glow)]"
+        style="background: {$themeSettings.colors.accent}"
+      ></span>
+    </button>
+    {#if swatchOpen}
+      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+      <div
+        class="absolute right-1 top-[var(--titlebar-height)] z-[1300] rounded-lg border border-border bg-bg-raised p-2 shadow-[var(--ui-panel-shadow)]"
+        role="menu"
+        tabindex="-1"
+        on:click|stopPropagation
+      >
+        <div class="grid grid-cols-6 gap-1.5">
+          {#each presetEntries as [key, preset] (key)}
+            <button
+              type="button"
+              class="h-6 w-6 rounded-full transition-transform duration-150 hover:scale-110 {$themeSettings.activePreset ===
+              key
+                ? 'ring-2 ring-accent-bright'
+                : 'border border-border'}"
+              style="background: {preset.colors.accent}"
+              title={preset.label}
+              aria-label={preset.label}
+              on:click={() => pickPreset(key)}
+            ></button>
+          {/each}
+        </div>
+      </div>
+    {/if}
   </div>
   <div class="app-region-no-drag flex">
     <button

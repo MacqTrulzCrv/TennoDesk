@@ -434,7 +434,15 @@
         showChange,
       })
     : null;
-  $: sessionSummaryItems = buildSessionItems(session, displayedResources, $tr, $locale, iconMap);
+  $: sessionSummaryItems = buildSessionItems(session, displayedResources, $tr, $locale, iconMap).map(
+    (item) => {
+      const bars = chartDataMap[item.key]?.bars;
+      if (!bars || bars.length < 2) return item;
+      const spark = bars.map((b) => b.value);
+      // A dead-flat (all-equal) series says nothing, so leave it off.
+      return spark.some((v) => v !== spark[0]) ? { ...item, spark } : item;
+    },
+  );
   // Deselecting the expanded resource leaves the modal without a chart to page to.
   $: if (expandedKey !== null && !chartSections.some((s) => s.key === expandedKey)) {
     expandedKey = null;

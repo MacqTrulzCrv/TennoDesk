@@ -7,6 +7,8 @@
     icon?: string | null;
     subtext?: string;
     subtextTone?: "default" | "success" | "warning" | "danger";
+    /** Recent values (oldest→newest) drawn as a tiny trend sparkline under the figure. */
+    spark?: number[];
   };
 </script>
 
@@ -25,6 +27,32 @@
 
   function subtextToneClass(tone: SummaryStripItem["subtextTone"]): string {
     return tone && tone !== "default" ? toneClass(tone) : "text-text-secondary";
+  }
+
+  // Normalise a series into polyline points inside a fixed viewBox; the last
+  // point is returned separately so a marker dot can sit on the latest value.
+  const SPARK_W = 76;
+  const SPARK_H = 20;
+  function sparkGeometry(
+    values: number[],
+  ): { points: string; lastX: number; lastY: number } | null {
+    if (!values || values.length < 2) return null;
+    const pad = 2;
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const span = max - min || 1;
+    const stepX = (SPARK_W - pad * 2) / (values.length - 1);
+    const coords = values.map((v, i) => {
+      const x = pad + i * stepX;
+      const y = pad + (SPARK_H - pad * 2) * (1 - (v - min) / span);
+      return [x, y] as const;
+    });
+    const last = coords[coords.length - 1];
+    return {
+      points: coords.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" "),
+      lastX: last[0],
+      lastY: last[1],
+    };
   }
 </script>
 
@@ -64,6 +92,27 @@
           >
             {item.value}
           </span>
+          {#if item.spark}
+            {@const geo = sparkGeometry(item.spark)}
+            {#if geo}
+              <svg
+                viewBox="0 0 {SPARK_W} {SPARK_H}"
+                class="mt-0.5 h-5 w-[76px] self-center overflow-visible opacity-80"
+                aria-hidden="true"
+              >
+                <polyline
+                  points={geo.points}
+                  fill="none"
+                  stroke="var(--accent)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  vector-effect="non-scaling-stroke"
+                />
+                <circle cx={geo.lastX} cy={geo.lastY} r="1.6" fill="var(--accent-bright)" />
+              </svg>
+            {/if}
+          {/if}
           {#if item.subtext}
             <span class="text-xs font-semibold {subtextToneClass(item.subtextTone)}"
               >{item.subtext}</span
@@ -108,6 +157,27 @@
               >
                 {item.value}
               </span>
+              {#if item.spark}
+                {@const geo = sparkGeometry(item.spark)}
+                {#if geo}
+                  <svg
+                    viewBox="0 0 {SPARK_W} {SPARK_H}"
+                    class="h-4 w-[76px] self-center overflow-visible opacity-80"
+                    aria-hidden="true"
+                  >
+                    <polyline
+                      points={geo.points}
+                      fill="none"
+                      stroke="var(--accent)"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      vector-effect="non-scaling-stroke"
+                    />
+                    <circle cx={geo.lastX} cy={geo.lastY} r="1.6" fill="var(--accent-bright)" />
+                  </svg>
+                {/if}
+              {/if}
             </div>
             {#if item.subtext}
               <span class="text-xs font-semibold {subtextToneClass(item.subtextTone)}"

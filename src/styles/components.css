@@ -402,6 +402,69 @@
     font-size: 0.75rem;
   }
 
+  /* Keyboard focus gets a clear accent ring everywhere; :where keeps specificity
+     at zero so any component's own focus style still wins, and mouse focus
+     (:focus without -visible) is left untouched. */
+  :where(a, button, [role="button"], [tabindex]:not([tabindex="-1"]), summary):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Shared delayed tooltip (use:tooltip). One element, reused for every target. */
+  .app-tooltip {
+    position: fixed;
+    z-index: 9999;
+    max-width: 16rem;
+    padding: 0.28rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-tooltip, var(--bg-raised));
+    box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--bg-deep) 70%, transparent);
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    line-height: 1.3;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.14s ease;
+  }
+
+  .app-tooltip--visible {
+    opacity: 1;
+  }
+
+  /* Skeleton placeholder — a dim block with a sheen sweeping across while real
+     data (e.g. WFM prices) loads. The reduced-motion guard in app.css stops the
+     sweep automatically, leaving a calm static block. */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--text-muted) 16%, transparent);
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--text-primary) 10%, transparent),
+      transparent
+    );
+    animation: skeletonSheen 1.25s ease-in-out infinite;
+  }
+  .skeleton--text {
+    display: inline-block;
+    height: 0.72em;
+    vertical-align: middle;
+  }
+  @keyframes skeletonSheen {
+    to {
+      transform: translateX(100%);
+    }
+  }
+
   /* accent-color alone only paints the CHECKED box, leaving the unchecked one the browser default white. */
   input[type="checkbox"] {
     appearance: none;
@@ -427,8 +490,11 @@
     border: 2px solid var(--bg-deep);
     border-top: none;
     border-right: none;
-    transform: translateY(-15%) rotate(-45deg);
+    transform: translateY(-15%) rotate(-45deg) scale(0.4);
     opacity: 0;
+    transition:
+      opacity 0.14s ease,
+      transform 0.18s cubic-bezier(0.34, 1.3, 0.5, 1);
   }
   input[type="checkbox"]:checked {
     background: var(--accent);
@@ -436,6 +502,7 @@
   }
   input[type="checkbox"]:checked::after {
     opacity: 1;
+    transform: translateY(-15%) rotate(-45deg) scale(1);
   }
   input[type="checkbox"]:hover:not(:disabled) {
     border-color: var(--accent-dim);

@@ -9,7 +9,12 @@
 
   import ArchonShardPips from "../archon/ArchonShardPips.svelte";
   import ItemImage from "../ItemImage.svelte";
+  import WikiButton from "../WikiButton.svelte";
   import SortHeaderButton from "../SortHeaderButton.svelte";
+  import { send } from "../../lib/ipc.js";
+  import { toOfficialWikiUrl, buildWikiUrl } from "../../lib/wikiUrl.js";
+  import { openQuickSell } from "../../lib/inventory/quickSell.js";
+  import { addToast } from "../../stores/toasts.js";
   import { NAV_ICON_URLS } from "../../lib/assetUrls.js";
   import { archonShardsBySuit } from "../../stores/archonShards.js";
   // Aliased: a store named `tr` makes svelte-check flag every <tr> row as a lowercase component.
@@ -185,7 +190,60 @@
   function isMaxRank(item: InventoryViewItem): boolean {
     return item.maxRank > 1 && item.rank >= item.maxRank;
   }
+
+  // One row open at a time keeps the table short; a Set would let several sprawl.
+  let expandedKey = $state<string | null>(null);
+  // Right-click menu — a fixed-position panel anchored at the pointer.
+  let menu = $state<{ item: InventoryViewItem; x: number; y: number } | null>(null);
+  const MENU_W = 208;
+  const MENU_H = 168;
+
+  // Column count for the detail row's colspan: the visible data columns plus the
+  // leading checkbox column when selecting.
+  const colSpan = $derived(columns.length + (selectionMode ? 1 : 0));
+
+  function toggleExpand(item: InventoryViewItem, event: MouseEvent): void {
+    event.stopPropagation();
+    expandedKey = expandedKey === item.internalName ? null : item.internalName;
+  }
+
+  function openWiki(item: InventoryViewItem): void {
+    send("open-external", item.wikiaUrl ? toOfficialWikiUrl(item.wikiaUrl) : buildWikiUrl(item.name));
+  }
+
+  async function copyName(item: InventoryViewItem): Promise<void> {
+    const label = itemLabel(item);
+    try {
+      await navigator.clipboard.writeText(label);
+      addToast({ level: "success", message: $t("common.copied") });
+    } catch {
+      addToast({ level: "error", message: $t("common.copyFailed") });
+    }
+  }
+
+  function openMenu(event: MouseEvent, item: InventoryViewItem): void {
+    if (selectionMode) return;
+    event.preventDefault();
+    menu = {
+      item,
+      x: Math.max(8, Math.min(event.clientX, window.innerWidth - MENU_W)),
+      y: Math.max(8, Math.min(event.clientY, window.innerHeight - MENU_H)),
+    };
+  }
+
+  function runMenu(action: (item: InventoryViewItem) => void): void {
+    const item = menu?.item;
+    menu = null;
+    if (item) action(item);
+  }
 </script>
+
+<svelte:window
+  onclick={() => (menu = null)}
+  onkeydown={(event) => {
+    if (event.key === "Escape") menu = null;
+  }}
+/>
 
 <div class="inventory-list" data-inventory-list>
   {#if items.length === 0}
@@ -259,12 +317,13 @@
               ].join("\n")
             : ""}
           <tr
-            class="cursor-pointer transition-colors duration-100 hover:bg-bg-raised {selected
+            class="group cursor-pointer transition-colors duration-100 hover:bg-bg-raised {selected
               ? 'bg-accent/15'
               : ''} {selectionMode && !isSelectable(item) ? 'opacity-45' : ''}"
             data-list-row={item.internalName}
             use:trackRow={item}
             onclick={(event) => openRow(item, event)}
+            oncontextmenu={(event) => openMenu(event, item)}
           >
             {#if selectionMode}
               <td class="border-b border-border/50 px-2 py-1">
@@ -296,6 +355,8 @@
               </span>
             </td>
             <td class="border-b border-border/50 px-2 py-1">
+              <div class="flex items-start gap-2">
+                <div class="min-w-0 flex-1">
               <button
                 type="button"
                 class="block text-left font-semibold hover:text-accent {item.isPrime
@@ -339,6 +400,69 @@
                   />
                 {/each}
               </span>
+                </div>
+                <div
+                  class="flex shrink-0 items-center gap-0.5 self-center transition-opacity {expandedKey ===
+                  item.internalName
+                    ? 'opacity-100'
+                    : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100'}"
+                >
+                  {#if item.marketSlug}
+                    <button
+                      type="button"
+                      class="rounded p-1 text-text-muted transition-colors hover:text-success"
+                      data-list-quick-sell={item.internalName}
+                      title={$t("inventory.quickSell")}
+                      aria-label={$t("inventory.quickSell")}
+                      onclick={(event) => {
+                        event.stopPropagation();
+                        void openQuickSell(item);
+                      }}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="15"
+                        height="15"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                        <circle cx="7" cy="7" r="1.2" fill="currentColor" />
+                      </svg>
+                    </button>
+                  {/if}
+                  <button
+                    type="button"
+                    class="rounded p-1 text-text-muted transition-colors hover:text-accent"
+                    data-list-expand={item.internalName}
+                    aria-expanded={expandedKey === item.internalName}
+                    title={$t("common.details")}
+                    aria-label={$t("common.openDetailsFor", { name: itemLabel(item) })}
+                    onclick={(event) => toggleExpand(item, event)}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="15"
+                      height="15"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="transition-transform duration-200 {expandedKey === item.internalName
+                        ? 'rotate-180'
+                        : ''}"
+                      aria-hidden="true"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </td>
             <td
               class="border-b border-border/50 px-2 py-1 text-right font-semibold text-success tabular-nums"
@@ -402,6 +526,69 @@
               </button>
             </td>
           </tr>
+          {#if expandedKey === item.internalName}
+            <tr data-list-detail={item.internalName}>
+              <td colspan={colSpan} class="border-b border-border/50 bg-bg-soft px-2 py-2">
+                <div
+                  class="flex flex-wrap items-center gap-x-4 gap-y-2 border-l-2 border-accent/40 pl-3 text-xs"
+                >
+                  <span class="text-text-muted">{item.categoryLabel}</span>
+                  {#if item.inventoryGroup === "incomplete_sets"}
+                    <span class="text-text-secondary">
+                      {$t("common.item")}:
+                      <span class="tabular-nums text-text-primary"
+                        >{item.ownedPartTypes ?? 0}/{item.totalPartTypes ?? 0}</span
+                      >
+                    </span>
+                  {/if}
+                  {#if showsRank(item)}
+                    <span class="tabular-nums text-text-secondary">{item.rank}/{item.maxRank}</span>
+                  {/if}
+                  <span
+                    class="inline-flex items-center gap-1 tabular-nums {item.platinum == null
+                      ? 'text-text-muted'
+                      : 'text-accent-bright'}"
+                  >
+                    {numberLabel(item.platinum, $locale)} P
+                  </span>
+                  {#if showDucats}
+                    <span
+                      class="inline-flex items-center gap-1 tabular-nums {item.ducats == null
+                        ? 'text-text-muted'
+                        : 'text-accent'}"
+                    >
+                      {numberLabel(item.ducats, $locale)} D
+                    </span>
+                  {/if}
+                  <span class="ml-auto flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      class="detail-close"
+                      onclick={(event) => {
+                        event.stopPropagation();
+                        onExpand(item);
+                      }}
+                    >
+                      {$t("common.details")}
+                    </button>
+                    <WikiButton wikiUrl={item.wikiaUrl} fallbackName={item.name} />
+                    {#if item.marketSlug}
+                      <button
+                        type="button"
+                        class="detail-close"
+                        onclick={(event) => {
+                          event.stopPropagation();
+                          void openQuickSell(item);
+                        }}
+                      >
+                        {$t("inventory.quickSell")}
+                      </button>
+                    {/if}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          {/if}
         {/each}
       </tbody>
     </table>
@@ -412,6 +599,51 @@
     {/if}
   {/if}
 </div>
+
+{#if menu}
+  <div
+    class="fixed z-[60] min-w-[13rem] rounded-lg border border-border bg-surface-tooltip py-1 shadow-[var(--ui-panel-shadow)]"
+    style="left: {menu.x}px; top: {menu.y}px"
+    role="menu"
+    tabindex="-1"
+    data-list-context-menu
+  >
+    <button
+      type="button"
+      role="menuitem"
+      class="block w-full px-3 py-1.5 text-left text-xs text-text-secondary hover:bg-surface-hover hover:text-text-primary"
+      onclick={() => runMenu((item) => onExpand(item))}
+    >
+      {$t("common.details")}
+    </button>
+    <button
+      type="button"
+      role="menuitem"
+      class="block w-full px-3 py-1.5 text-left text-xs text-text-secondary hover:bg-surface-hover hover:text-text-primary"
+      onclick={() => runMenu((item) => openWiki(item))}
+    >
+      {$t("common.wiki")}
+    </button>
+    {#if menu.item.marketSlug}
+      <button
+        type="button"
+        role="menuitem"
+        class="block w-full px-3 py-1.5 text-left text-xs text-text-secondary hover:bg-surface-hover hover:text-text-primary"
+        onclick={() => runMenu((item) => void openQuickSell(item))}
+      >
+        {$t("inventory.quickSell")}
+      </button>
+    {/if}
+    <button
+      type="button"
+      role="menuitem"
+      class="block w-full px-3 py-1.5 text-left text-xs text-text-secondary hover:bg-surface-hover hover:text-text-primary"
+      onclick={() => runMenu((item) => void copyName(item))}
+    >
+      {$t("inventory.copyName")}
+    </button>
+  </div>
+{/if}
 
 <style>
   .inventory-list th {

@@ -4,6 +4,7 @@
   import HeaderTabs from "../HeaderTabs.svelte";
   import SharedFilterBar from "../SharedFilterBar.svelte";
   import { tr } from "../../lib/i18n.js";
+  import { countUp } from "../../lib/countUp.js";
   import type { MessageKey } from "../../lib/i18n.js";
   import type { InventoryFilterTab } from "../../lib/inventoryMarket.js";
   import type { SharedSortKey } from "../../types/filters.js";
@@ -71,9 +72,8 @@
     </h2>
     <span
       class="self-center rounded-full border border-[color:color-mix(in_oklab,var(--accent)_30%,transparent)] bg-accent-glow px-2.5 py-0.5 font-display text-base font-semibold leading-none text-accent-bright"
-    >
-      {totalCount}
-    </span>
+      use:countUp={totalCount}
+    ></span>
   </div>
   <div class="ml-auto flex items-center gap-2">
     <slot name="actions" />
