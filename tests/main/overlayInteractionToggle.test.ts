@@ -114,6 +114,11 @@ vi.mock("../../ipc/rivenOverlayIpc", () => ({
   isRivenInteractiveMode: () => state.rivenInteractive,
   setRivenInteractiveMode: state.setRivenInteractiveMode,
   onRivenManualRescan: vi.fn(),
+  onRivenOverlayToggle: vi.fn(),
+  onRivenRangesToggle: vi.fn(),
+  onRivenSessionClose: vi.fn(),
+  getRivenPlacementRects: vi.fn(() => null),
+  markRivenRendererReady: vi.fn(() => false),
   configureOverlaySettingsPersistence: vi.fn(),
   positionRivenOverlayWindows: vi.fn(),
   forEachRivenWindow: (fn: (win: { webContents: { send: unknown } }) => void) =>

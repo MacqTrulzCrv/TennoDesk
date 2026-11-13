@@ -26,6 +26,19 @@
     return value !== null && value !== undefined && value !== "";
   }
 
+  // A metric with no value shows the loading skeleton only while a fetch is in
+  // flight; once it settles with nothing it must drop to the dash.
+  function isLoadingPlaceholder(value: MetricValue, metricState: MetricState): boolean {
+    return metricState === "loading" && !hasValue(value);
+  }
+
+  // Reads `metricState` so the label re-renders when a lookup resolves to no
+  // data rather than staying stuck on the placeholder.
+  function valueLabel(value: MetricValue, metricState: MetricState): string {
+    if (hasValue(value)) return `${value}`;
+    return metricState === "loading" ? "" : "-";
+  }
+
   function toneClass(value: MetricValue, tone: "plat" | "ducat"): string {
     if (!hasValue(value)) return "text-text-muted";
     if (tone === "ducat") return "text-accent";
@@ -63,10 +76,10 @@
     title={$tr("common.platinum")}
   >
     <img src={PLAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0" />
-    {#if hasValue(platinum)}{platinum}{:else if state === "loading"}<span
+    {#if isLoadingPlaceholder(platinum, state)}<span
         class="metric-skeleton"
         title={$tr("common.loading")}
-      ></span>{:else}-{/if}
+      ></span>{:else}{valueLabel(platinum, state)}{/if}
   </span>
 
   {#if showDucats}
@@ -78,10 +91,10 @@
       title={$tr("common.ducats")}
     >
       <img src={DUCAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0" />
-      {#if hasValue(ducats)}{ducats}{:else if state === "loading"}<span
+      {#if isLoadingPlaceholder(ducats, state)}<span
           class="metric-skeleton"
           title={$tr("common.loading")}
-        ></span>{:else}-{/if}
+        ></span>{:else}{valueLabel(ducats, state)}{/if}
     </span>
 
     <span
@@ -94,10 +107,10 @@
       <img src={DUCAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0" />
       <span aria-hidden="true" class="text-text-muted text-[0.8em]">/</span>
       <img src={PLAT_ICON} alt="" class="{iconSizeClass} object-contain shrink-0 mr-1" />
-      {#if hasValue(ratio)}{ratio}{:else if state === "loading"}<span
+      {#if isLoadingPlaceholder(ratio, state)}<span
           class="metric-skeleton"
           title={$tr("common.loading")}
-        ></span>{:else}-{/if}
+        ></span>{:else}{valueLabel(ratio, state)}{/if}
     </span>
   {/if}
 </div>
