@@ -557,12 +557,12 @@
               {/if}
             </td>
             <td
-              class="border-b border-border/50 px-2 py-1 text-right tabular-nums {item.platinum ==
+              class="border-b border-border/50 px-2 py-1 text-right tabular-nums {item.displayPlatinum ==
               null
                 ? 'text-text-muted'
                 : 'text-accent-bright'}"
             >
-              {numberLabel(item.platinum, $locale)}
+              {numberLabel(item.displayPlatinum, $locale)}
             </td>
             {#if showDucats}
               <td
@@ -614,11 +614,11 @@
                     <span class="tabular-nums text-text-secondary">{item.rank}/{item.maxRank}</span>
                   {/if}
                   <span
-                    class="inline-flex items-center gap-1 tabular-nums {item.platinum == null
+                    class="inline-flex items-center gap-1 tabular-nums {item.displayPlatinum == null
                       ? 'text-text-muted'
                       : 'text-accent-bright'}"
                   >
-                    {numberLabel(item.platinum, $locale)} P
+                    {numberLabel(item.displayPlatinum, $locale)} P
                   </span>
                   {#if showDucats}
                     <span

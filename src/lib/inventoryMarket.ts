@@ -53,6 +53,9 @@ export interface InventoryBaseItem extends ParsedItem {
 
 export interface InventoryViewItem extends InventoryBaseItem {
   platinum: number | null;
+  /** Live best-sell at the owned rank (falls back to the median) — the price the
+   *  card headline and the list column both show. */
+  displayPlatinum: number | null;
   platinumR0: number | null;
   platinumRmax: number | null;
   wtsR0: number | null;
@@ -556,6 +559,15 @@ export function buildInventoryViewItems<T extends InventoryBaseItem>(
         ? Number((ducats / platinum).toFixed(2))
         : null;
 
+    // The "sell it now" headline the card leads with, surfaced as a field so the
+    // list column shows the same live price instead of the noisy 48h median.
+    const ownedRankWts = isRankedListingItem
+      ? itemCurrentRank >= itemMaxRank
+        ? (metricWtsRmax ?? cachedOrdersRmax?.wts ?? null)
+        : (metricWtsR0 ?? cachedOrdersR0?.wts ?? null)
+      : null;
+    const displayPlatinum = ownedRankWts ?? platinum;
+
     const iconFromMeta = formatWfmAssetUrl(metric?.thumb || metric?.icon || null);
     // For mods and arcanes the WFM thumb beats DE's flat icon, but the framed
     // wiki card beats both, so cardArt wins wherever it exists.
@@ -575,6 +587,7 @@ export function buildInventoryViewItems<T extends InventoryBaseItem>(
     return {
       ...item,
       platinum,
+      displayPlatinum,
       platinumR0: isRankedListingItem ? metricPlatinumR0 : null,
       platinumRmax: isRankedListingItem ? metricPlatinumRmax : null,
       wtsR0: isRankedListingItem ? (metricWtsR0 ?? cachedOrdersR0?.wts ?? null) : null,

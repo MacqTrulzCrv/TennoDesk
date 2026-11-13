@@ -1,7 +1,10 @@
 <script lang="ts">
   import { tr, type MessageKey } from "../../lib/i18n.js";
   import InventoryGrid from "../inventory/InventoryGrid.svelte";
+  import InventoryList from "../inventory/InventoryList.svelte";
   import InventoryOrderBookPanel from "../inventory/InventoryOrderBookPanel.svelte";
+  import { inventoryViewMode } from "../../stores/inventoryViewMode.js";
+  import type { SharedSortKey, SortDirection } from "../../types/filters.js";
   import { activeItem, activeRelic } from "../../stores/modals.js";
   import { parsedItems, wfmItems } from "../../stores/data.js";
   import { relicDb } from "../../stores/relics.js";
@@ -67,6 +70,24 @@
 
   function flipSortDirection(): void {
     sortDescending = !sortDescending;
+    limit = PAGE_SIZE;
+  }
+
+  // List-mode column headers can sort too; only the columns that double as a
+  // sellables sort key are clickable (the "owned" column maps to "amount").
+  const SELLABLE_LIST_SORT_KEYS: ReadonlySet<string> = new Set([
+    "name",
+    "amount",
+    "platinum",
+    "ducats",
+  ]);
+  // A non-null (but empty) detail set routes a list row click to onSelect — the
+  // order-book/sell panel — matching the card, instead of the read-only modal.
+  const SELL_LIST_DETAIL_KEYS = new Set<string>();
+  function applyListSort(patch: { sortBy: SharedSortKey; sortDirection: SortDirection }): void {
+    if (!SELLABLE_LIST_SORT_KEYS.has(patch.sortBy)) return;
+    sortBy = patch.sortBy as SellSortKey;
+    sortDescending = patch.sortDirection === "desc";
     limit = PAGE_SIZE;
   }
 
@@ -146,7 +167,8 @@
   // Rows without the chosen figure always sink to the bottom, whatever the
   // direction, so flipping never floods the top with unpriced stock.
   function numericValue(item: InventoryViewItem, key: SellSortKey): number | null {
-    if (key === "platinum") return item.platinum;
+    // Sort by the same live price the card/list shows, not the hidden median.
+    if (key === "platinum") return item.displayPlatinum;
     if (key === "ducats") return item.ducats;
     if (key === "ducatonator") return item.ducatonator;
     if (key === "amount") return item.amount;
@@ -341,19 +363,40 @@
       : ''}"
   >
     <div class="min-w-0">
-      <InventoryGrid
-        items={pageItems}
-        totalCount={sorted.length}
-        detailKeys={null}
-        selectionMode={selecting}
-        selectedKeys={$inventorySelection}
-        {eligibleKeys}
-        on:select={(event) => handleSelect(event.detail)}
-        on:visible={(event) => handleVisible(event.detail)}
-        on:expand={(event) => handleExpand(event.detail)}
-        on:toggle={(event) => toggleSelected(event.detail.item.internalName)}
-        on:more={() => (limit += PAGE_SIZE)}
-      />
+      {#if $inventoryViewMode === "list"}
+        <InventoryList
+          items={pageItems}
+          totalCount={sorted.length}
+          showDucats={true}
+          detailKeys={SELL_LIST_DETAIL_KEYS}
+          sortBy={sortBy}
+          sortDirection={sortDescending ? "desc" : "asc"}
+          sortableKeys={SELLABLE_LIST_SORT_KEYS}
+          onSort={applyListSort}
+          onSelect={handleSelect}
+          onVisible={handleVisible}
+          onExpand={handleExpand}
+          onMore={() => (limit += PAGE_SIZE)}
+          selectionMode={selecting}
+          selectedKeys={$inventorySelection}
+          {eligibleKeys}
+          onToggleSelect={(item) => toggleSelected(item.internalName)}
+        />
+      {:else}
+        <InventoryGrid
+          items={pageItems}
+          totalCount={sorted.length}
+          detailKeys={null}
+          selectionMode={selecting}
+          selectedKeys={$inventorySelection}
+          {eligibleKeys}
+          on:select={(event) => handleSelect(event.detail)}
+          on:visible={(event) => handleVisible(event.detail)}
+          on:expand={(event) => handleExpand(event.detail)}
+          on:toggle={(event) => toggleSelected(event.detail.item.internalName)}
+          on:more={() => (limit += PAGE_SIZE)}
+        />
+      {/if}
     </div>
 
     {#if orderBookPanelOpen}
