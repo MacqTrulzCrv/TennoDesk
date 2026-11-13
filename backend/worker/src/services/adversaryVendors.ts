@@ -9,7 +9,7 @@ import { toFiniteNumber } from '../../../../config/shared/numeric';
 const CODA_PAGE_URL = 'https://wiki.warframe.com/w/Coda_Weapons?action=raw';
 const TENET_PAGE_URL = 'https://wiki.warframe.com/w/Tenet_Weapons?action=raw';
 // A spoofed browser user agent is answered with a 403 challenge page; this one passes.
-const WIKI_USER_AGENT = 'WFHelper-worker/1.0 (+https://wfhelper.com)';
+const WIKI_USER_AGENT = 'TennoDesk-worker/1.0 (+https://github.com/MacqTrulzCrv/TennoDesk)';
 const FETCH_TIMEOUT_MS = 10_000;
 const MAX_PAGE_CHARS = 2 * 1024 * 1024;
 const REBUILD_INTERVAL_MS = 60 * 60 * 1000;

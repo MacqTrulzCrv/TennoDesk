@@ -24,7 +24,7 @@ import {
 // The abbreviated install doc has no per-version publish time, so this is the full
 // packument: 4.5 MB raw, 368 KB gzipped on the wire for 1,279 versions (2026-09-26).
 const REGISTRY_URL = 'https://registry.npmjs.org/@wfcd%2Fitems';
-const WORKER_UA = 'WFHelper-worker/1.0 (+https://wfhelper.com)';
+const WORKER_UA = 'TennoDesk-worker/1.0 (+https://github.com/MacqTrulzCrv/TennoDesk)';
 const REGISTRY_TIMEOUT_MS = 15_000;
 const DATA_TIMEOUT_MS = 30_000;
 // Relics.json of 1.1276.6 is 8.8 MB raw; the trimmed doc is 4.9 MB against KV's 25 MiB.

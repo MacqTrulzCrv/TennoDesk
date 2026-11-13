@@ -101,7 +101,7 @@ function mockWiki(pages: Record<string, string | Response>): ReturnType<typeof v
 		const result = pages[page];
 		if (result === undefined) throw new Error(`Unexpected url: ${url}`);
 		const agent = new Headers(init?.headers).get('user-agent');
-		if (agent !== 'WFHelper-worker/1.0 (+https://wfhelper.com)') throw new Error(`Unexpected user agent: ${agent}`);
+		if (agent !== 'TennoDesk-worker/1.0 (+https://github.com/MacqTrulzCrv/TennoDesk)') throw new Error(`Unexpected user agent: ${agent}`);
 		return result instanceof Response ? result : new Response(result, { status: 200, headers: { 'content-type': 'text/plain' } });
 	});
 	globalThis.fetch = fetchMock as unknown as typeof fetch;

@@ -33,7 +33,7 @@ const MAX_BARO_ROWS = 500;
 const RIVEN_WEAPON_LIST_TTL_MS = 24 * 60 * 60 * 1000;
 const WORLD_STATE_URL = 'https://api.warframe.com/cdn/worldState.php';
 const WARFRAMESTAT_VOID_TRADER_URL = 'https://api.warframestat.us/pc/voidTrader?language=en';
-const BARO_UA = 'WFHelper-worker/1.0 (+https://wfhelper.com)';
+const BARO_UA = 'TennoDesk-worker/1.0 (+https://github.com/MacqTrulzCrv/TennoDesk)';
 // DE serves a few MB; anything far past that is not the world state we parse.
 const MAX_WORLD_STATE_BYTES = 32 * 1024 * 1024;
 

@@ -98,7 +98,7 @@ function mockWiki(page: string | Response): ReturnType<typeof vi.fn> {
 		const url = String(input instanceof Request ? input.url : input);
 		if (!url.includes('Nightwave/Offerings')) throw new Error(`Unexpected url: ${url}`);
 		const agent = new Headers(init?.headers).get('user-agent');
-		if (agent !== 'WFHelper-worker/1.0 (+https://wfhelper.com)') throw new Error(`Unexpected user agent: ${agent}`);
+		if (agent !== 'TennoDesk-worker/1.0 (+https://github.com/MacqTrulzCrv/TennoDesk)') throw new Error(`Unexpected user agent: ${agent}`);
 		return page instanceof Response ? page : new Response(page, { status: 200, headers: { 'content-type': 'text/plain' } });
 	});
 	globalThis.fetch = fetchMock as unknown as typeof fetch;

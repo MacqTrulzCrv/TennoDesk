@@ -518,7 +518,7 @@ never cached.
 
 Source: the raw wikitext of `Coda_Weapons` and `Tenet_Weapons`. DE publishes no vendor rotation, so
 the elements and bonus percentages are player-reported wiki tables and nothing else. Requests carry
-the user agent `WFHelper-worker/1.0 (+https://wfhelper.com)`. A request posing as a browser gets a
+the user agent `TennoDesk-worker/1.0 (+https://github.com/MacqTrulzCrv/TennoDesk)`. A request posing as a browser gets a
 403 challenge page instead of the article, so the Worker never pretends to be one.
 `services/adversaryVendors.ts` parses the weapon, element and bonus tables inside the pages' timer
 sections, rejects a row without a name, an element or a finite 0-100 bonus, and treats the whole
@@ -547,7 +547,7 @@ body ETag; before the first refresh it answers `404 {"ok":false,"error":"nightwa
 and is never cached.
 
 The source is the raw wikitext of `Nightwave/Offerings`, fetched with the same
-`WFHelper-worker/1.0` user agent the vendor tables use. `services/nightwaveOfferings.ts` reads
+`TennoDesk-worker/1.0` user agent the vendor tables use. `services/nightwaveOfferings.ts` reads
 the `<tabber>` tabs, their `===` headings (a `({{Nc|N}} each)` parenthetical prices the whole
 section) and the `<gallery>` captions, unwrapping `{{M|X}}` and `[[Page|X]]` markup. Bold marks
 an offer as always available, a caption's own `{{Nc|N}}` beats the section price, and a name

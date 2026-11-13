@@ -166,6 +166,8 @@ dist
 !.env.example
 .wrangler/
 
-# local admin/ops scripts, not for the public repo
+# local admin/ops scripts, not for the public repo - except the DAU reader,
+# which holds no secrets (the admin key comes from the environment)
 
-scripts/
+scripts/*
+!scripts/dau.mjs
