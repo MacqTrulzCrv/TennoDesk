@@ -21,6 +21,11 @@
     themeSettings.applyPreset(key);
     swatchOpen = false;
   }
+  // Native colour inputs only accept #rrggbb; non-hex accents (rgba presets) fall
+  // back to gold so the picker still opens somewhere sensible.
+  $: customAccentHex = /^#[0-9a-f]{6}$/i.test($themeSettings.colors.accent)
+    ? $themeSettings.colors.accent
+    : "#c8a44d";
 
   const HELPER_STATUS_POLL_MS = 5_000;
   const INVENTORY_OLD_MS = 60 * 60 * 1000;
@@ -196,6 +201,19 @@
             ></button>
           {/each}
         </div>
+        <label
+          class="mt-2.5 flex items-center justify-between gap-2 border-t border-border pt-2.5 text-[11px] text-text-muted"
+        >
+          <span>{$tr("titlebar.customAccent")}</span>
+          <input
+            type="color"
+            class="h-6 w-9 cursor-pointer rounded border border-border bg-transparent p-0"
+            value={customAccentHex}
+            on:input={(event) =>
+              themeSettings.setColor("accent", (event.currentTarget as HTMLInputElement).value)}
+            aria-label={$tr("titlebar.customAccent")}
+          />
+        </label>
       </div>
     {/if}
   </div>

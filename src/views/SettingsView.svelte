@@ -55,6 +55,7 @@
     APPEARANCE_TABS,
     appearanceTab,
     autoFocusSearch,
+    soundFeedback,
     hideFoundryClaims,
     hideFounderMasteryItems,
     settingsCategory,
@@ -821,6 +822,9 @@
                   bind:checked={$autoFocusSearch}
                   data-setting-auto-focus-search
                 />
+              </SettingsRow>
+              <SettingsRow label={$tr("settings.soundFeedback")}>
+                <input type="checkbox" bind:checked={$soundFeedback} data-setting-sound-feedback />
               </SettingsRow>
             </div>
           </SettingsSection>

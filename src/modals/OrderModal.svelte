@@ -6,6 +6,7 @@
   import { isIpcError } from "../lib/ipcGuards.js";
   import { refreshMarketOrders } from "../lib/marketOrdersSync.js";
   import { addToast } from "../stores/toasts.js";
+  import { playActionTick } from "../lib/sound.js";
   import ModalShell from "../components/ModalShell.svelte";
   import ThemedButton from "../components/ThemedButton.svelte";
   import ThemedInput from "../components/ThemedInput.svelte";
@@ -324,6 +325,7 @@
   }
 
   function notifyOrderPosted(orderId: string): void {
+    playActionTick();
     const undoneMessage = $tr("orderModal.undone");
     addToast({
       level: "success",

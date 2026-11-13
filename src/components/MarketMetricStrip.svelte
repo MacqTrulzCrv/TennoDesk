@@ -1,6 +1,7 @@
 <script lang="ts">
   import { PLATINUM_ICON_URL, STAT_ICON_URLS } from "../lib/assetUrls.js";
   import { tr } from "../lib/i18n.js";
+  import { valueTier } from "../lib/inventory/valueTotals.js";
 
   type MetricValue = number | string | null | undefined;
   type MetricState = "has-value" | "loading" | "no-data";
@@ -27,7 +28,15 @@
 
   function toneClass(value: MetricValue, tone: "plat" | "ducat"): string {
     if (!hasValue(value)) return "text-text-muted";
-    return tone === "plat" ? "text-accent-bright" : "text-accent";
+    if (tone === "ducat") return "text-accent";
+    // Platinum scales with value: cheap stock stays quiet, pricey stock pops.
+    const numeric = typeof value === "number" ? value : Number(value);
+    const tier = valueTier(Number.isFinite(numeric) ? numeric : null);
+    return tier === "high"
+      ? "text-accent-bright"
+      : tier === "mid"
+        ? "text-accent"
+        : "text-text-secondary";
   }
 
   $: textSizeClass = size === "compact" ? "text-sm" : "text-base";
