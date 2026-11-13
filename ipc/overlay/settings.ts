@@ -605,9 +605,7 @@ export function createOverlaySettingsController(options: OverlaySettingsControll
     const rivenToggleOk = registerRivenToggleHotkey();
     const rivenRangesOk = registerRivenRangesHotkey();
     const plannerOk = registerPlannerToggleHotkey();
-    return (
-      triggerOk || interactionOk || rescanOk || rivenToggleOk || rivenRangesOk || plannerOk
-    );
+    return triggerOk || interactionOk || rescanOk || rivenToggleOk || rivenRangesOk || plannerOk;
   }
 
   function setHotkeysActive(active: boolean): void {

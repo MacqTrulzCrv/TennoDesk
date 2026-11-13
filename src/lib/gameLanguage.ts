@@ -76,7 +76,10 @@ function applyDetected(code: string | null): void {
 if (typeof window !== "undefined" && window.api) {
   window.api.onGameLanguageDetected?.(applyDetected);
   // Cover the case where detection fired before this subscriber existed.
-  window.api.getDetectedGameLanguage?.().then(applyDetected).catch(() => undefined);
+  window.api
+    .getDetectedGameLanguage?.()
+    .then(applyDetected)
+    .catch(() => undefined);
 }
 
 const effectiveGameLanguage: Readable<GameLanguageCode> = derived(

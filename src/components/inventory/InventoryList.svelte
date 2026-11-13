@@ -274,7 +274,10 @@
   }
 
   function openWiki(item: InventoryViewItem): void {
-    send("open-external", item.wikiaUrl ? toOfficialWikiUrl(item.wikiaUrl) : buildWikiUrl(item.name));
+    send(
+      "open-external",
+      item.wikiaUrl ? toOfficialWikiUrl(item.wikiaUrl) : buildWikiUrl(item.name),
+    );
   }
 
   async function copyName(item: InventoryViewItem): Promise<void> {
@@ -426,49 +429,49 @@
             <td class="border-b border-border/50 px-2 py-1">
               <div class="flex items-start gap-2">
                 <div class="min-w-0 flex-1">
-              <button
-                type="button"
-                class="block text-left font-semibold hover:text-accent {item.isPrime
-                  ? 'text-accent'
-                  : 'text-text-primary'}"
-                aria-label={$t("common.openDetailsFor", { name: itemLabel(item) })}
-                onclick={(event) => {
-                  event.stopPropagation();
-                  openRow(item, event);
-                }}
-              >
-                {itemLabel(item)}
-              </button>
-              <span class="flex flex-wrap items-center gap-1.5 text-[11px] text-text-muted">
-                <span>{item.categoryLabel}</span>
-                {#if $showVaultedBadges && item.vaulted}<span
-                    class="vault-badge vault-badge--inline"
-                    title={$t("common.vaulted")}>V</span
-                  >{/if}
-                {#if $showMasteredBadges && marks.mastered}<span
-                    class="detail-tag mastered"
-                    data-item-mark="mastered"
-                    title={$t("common.mastered")}>{$t("common.mastered")}</span
-                  >{/if}
-                {#if $showOwnedParentBadges && marks.crafted}<span
-                    class="detail-tag crafted"
-                    data-item-mark="crafted"
-                    title={$t("common.parentItemOwned")}>{$t("common.parentOwned")}</span
-                  >{/if}
-                {#if $showFoundryReadyBadges && marks.foundry}<span
-                    class="detail-tag foundry"
-                    data-item-mark="foundry"
-                    title={$t("common.parentReadyToClaim")}>F</span
-                  >{/if}
-                {#each shardCopies as copy, copyIndex (copy.instanceId ?? copyIndex)}
-                  <ArchonShardPips
-                    slots={copy.slots}
-                    title={copy.filled === 1
-                      ? $t("archon.shardCountOne", { count: copy.filled })
-                      : $t("archon.shardCount", { count: copy.filled })}
-                  />
-                {/each}
-              </span>
+                  <button
+                    type="button"
+                    class="block text-left font-semibold hover:text-accent {item.isPrime
+                      ? 'text-accent'
+                      : 'text-text-primary'}"
+                    aria-label={$t("common.openDetailsFor", { name: itemLabel(item) })}
+                    onclick={(event) => {
+                      event.stopPropagation();
+                      openRow(item, event);
+                    }}
+                  >
+                    {itemLabel(item)}
+                  </button>
+                  <span class="flex flex-wrap items-center gap-1.5 text-[11px] text-text-muted">
+                    <span>{item.categoryLabel}</span>
+                    {#if $showVaultedBadges && item.vaulted}<span
+                        class="vault-badge vault-badge--inline"
+                        title={$t("common.vaulted")}>V</span
+                      >{/if}
+                    {#if $showMasteredBadges && marks.mastered}<span
+                        class="detail-tag mastered"
+                        data-item-mark="mastered"
+                        title={$t("common.mastered")}>{$t("common.mastered")}</span
+                      >{/if}
+                    {#if $showOwnedParentBadges && marks.crafted}<span
+                        class="detail-tag crafted"
+                        data-item-mark="crafted"
+                        title={$t("common.parentItemOwned")}>{$t("common.parentOwned")}</span
+                      >{/if}
+                    {#if $showFoundryReadyBadges && marks.foundry}<span
+                        class="detail-tag foundry"
+                        data-item-mark="foundry"
+                        title={$t("common.parentReadyToClaim")}>F</span
+                      >{/if}
+                    {#each shardCopies as copy, copyIndex (copy.instanceId ?? copyIndex)}
+                      <ArchonShardPips
+                        slots={copy.slots}
+                        title={copy.filled === 1
+                          ? $t("archon.shardCountOne", { count: copy.filled })
+                          : $t("archon.shardCount", { count: copy.filled })}
+                      />
+                    {/each}
+                  </span>
                 </div>
                 <div
                   class="flex shrink-0 items-center gap-0.5 self-center transition-opacity {expandedKey ===
@@ -499,7 +502,9 @@
                         stroke-linejoin="round"
                         aria-hidden="true"
                       >
-                        <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                        <path
+                          d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+                        />
                         <circle cx="7" cy="7" r="1.2" fill="currentColor" />
                       </svg>
                     </button>

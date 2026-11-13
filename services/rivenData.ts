@@ -503,9 +503,7 @@ export function getStatDisplayName(tag: string, melee = false): string {
   ensureBuilt();
   ensureLocaleStatDisplay();
   if (melee && tag === "WeaponFireRateMod") return _localeMeleeAttackSpeed || "Attack Speed";
-  return (
-    _tagToLocaleDisplay.get(tag) || _tagToDisplayName.get(tag) || TAG_TO_DISPLAY[tag] || tag
-  );
+  return _tagToLocaleDisplay.get(tag) || _tagToDisplayName.get(tag) || TAG_TO_DISPLAY[tag] || tag;
 }
 
 /** The localized stat label for a tag, or null in English / when unknown. Lets a
@@ -562,7 +560,10 @@ function rewriteGappedLine(lines: string[], i: number): { text: string; consumed
       }
     }
     if (!matched) continue;
-    const value = line.slice(map[headEnd - 1] + 1, map[t0]).trim().replace(/,/g, ".");
+    const value = line
+      .slice(map[headEnd - 1] + 1, map[t0])
+      .trim()
+      .replace(/,/g, ".");
     const prefix = line.slice(0, map[hIdx]);
     return { text: `${prefix}${value ? `${value} ` : ""}${english}`, consumed };
   }

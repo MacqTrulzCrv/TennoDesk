@@ -109,8 +109,7 @@ function leaveGlobal(): void {
 }
 
 function enterGlobal(target: EventTarget | null): void {
-  const node =
-    target instanceof Element ? (target.closest("[title]") as HTMLElement | null) : null;
+  const node = target instanceof Element ? (target.closest("[title]") as HTMLElement | null) : null;
   // Already showing this one, or nothing with a title under the pointer.
   if (node === activeNode) return;
   // Moving to a different (or no) target — tear down the previous one first.

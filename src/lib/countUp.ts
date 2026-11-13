@@ -12,9 +12,7 @@
  * tabular figures so the width never jitters mid-count.
  */
 type Formatter = (value: number) => string;
-type CountUpOptions =
-  | number
-  | { value: number; format?: Formatter; duration?: number };
+type CountUpOptions = number | { value: number; format?: Formatter; duration?: number };
 
 const DEFAULT_DURATION = 600;
 const defaultFormat: Formatter = (n) => Math.round(n).toLocaleString();

@@ -70,7 +70,10 @@ test.describe("Riven Finder weapon search", () => {
     const input = page.getByPlaceholder("Type weapon name...");
     await input.click();
     await input.pressSequentially("Boltor", { delay: 40 });
-    await page.locator("div.absolute.top-full button", { hasText: /^Boltor$/ }).first().click();
+    await page
+      .locator("div.absolute.top-full button", { hasText: /^Boltor$/ })
+      .first()
+      .click();
     await page.getByRole("button", { name: "Search WFM" }).click();
 
     const openButtons = page.locator("button", { hasText: /Open on WFM/i });

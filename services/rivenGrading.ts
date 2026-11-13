@@ -190,8 +190,22 @@ export function getRivenStatRanges(
     let buff: RivenStatEndpoints | null = null;
     let curse: RivenStatEndpoints | null = null;
     if (entry.canBeBuff) {
-      const r0 = rivenRawMagnitude(entry.baseValue, disposition, buffsAtten, buffCurseAtten, 0, lvl);
-      const r1 = rivenRawMagnitude(entry.baseValue, disposition, buffsAtten, buffCurseAtten, 1, lvl);
+      const r0 = rivenRawMagnitude(
+        entry.baseValue,
+        disposition,
+        buffsAtten,
+        buffCurseAtten,
+        0,
+        lvl,
+      );
+      const r1 = rivenRawMagnitude(
+        entry.baseValue,
+        disposition,
+        buffsAtten,
+        buffCurseAtten,
+        1,
+        lvl,
+      );
       buff = { atMin: displayBuff(r0, unit), atMax: displayBuff(r1, unit) };
     }
     // A curse only exists on the card when the roll carries one.
@@ -201,7 +215,13 @@ export function getRivenStatRanges(
       curse = { atMin: displayCurse(r0, unit), atMax: displayCurse(r1, unit) };
     }
     if (!buff && !curse) continue;
-    stats.push({ tag: entry.tag, displayName: rivenData.getStatDisplayName(entry.tag, melee), unit, buff, curse });
+    stats.push({
+      tag: entry.tag,
+      displayName: rivenData.getStatDisplayName(entry.tag, melee),
+      unit,
+      buff,
+      curse,
+    });
   }
   return { weapon: weaponName, disposition, melee, numBuffs: nb, numCurses: nc, lvl, stats };
 }

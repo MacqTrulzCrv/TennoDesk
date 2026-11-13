@@ -36,7 +36,9 @@ describe("formatWfmAssetUrl", () => {
       formatWfmAssetUrl(
         "items/images/en/thumbs/astral_bond.2fc6548b626af779f232d8f23f701dbb.128x128.png",
       ),
-    ).toBe("https://assets.tennodesk.workers.dev/wfm/items/images/en/thumbs/astral_bond.128x128.png");
+    ).toBe(
+      "https://assets.tennodesk.workers.dev/wfm/items/images/en/thumbs/astral_bond.128x128.png",
+    );
   });
 
   it("leaves non-thumb WFM assets and foreign hosts alone", () => {

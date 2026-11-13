@@ -461,7 +461,9 @@ function openRivenRangesWindow(): void {
   if (!isRivenRangesOverlayEnabled()) return;
   const existing = ctx.rivenOverlayCenterWindow;
   if (existing && !existing.isDestroyed()) {
-    rivenCenterWindowsController.positionOverlayWindow(rivenCenterWindowsController.getAnchorMeta());
+    rivenCenterWindowsController.positionOverlayWindow(
+      rivenCenterWindowsController.getAnchorMeta(),
+    );
     applyOverlayZOrder(existing, true);
     rivenCenterWindowsController.showOverlayWindowInactive();
     rivenCenterWindowsController.setOverlayInteractiveMode(_rivenInteractive);

@@ -66,12 +66,16 @@ function rangeCell(side, unit, ep) {
 
 /** Round endpoints so stats that land on the same range collapse into one row. */
 function groupKey(s) {
-  const r = (ep, u) => (ep ? `${ep.atMin.toFixed(decimals(u))}/${ep.atMax.toFixed(decimals(u))}` : "-");
+  const r = (ep, u) =>
+    ep ? `${ep.atMin.toFixed(decimals(u))}/${ep.atMax.toFixed(decimals(u))}` : "-";
   return `${s.unit}|${r(s.buff, s.unit)}|${r(s.curse, s.unit)}`;
 }
 
 function escapeHtml(str) {
-  return String(str).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  return String(str).replace(
+    /[&<>"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+  );
 }
 
 function groupStats(stats) {
@@ -125,7 +129,10 @@ function render() {
   const rows = groups
     .map((g) => {
       const first = escapeHtml(g.names[0]);
-      const rest = g.names.length > 1 ? ` <span class="grp">· ${escapeHtml(g.names.slice(1).join(" · "))}</span>` : "";
+      const rest =
+        g.names.length > 1
+          ? ` <span class="grp">· ${escapeHtml(g.names.slice(1).join(" · "))}</span>`
+          : "";
       return (
         `<div class="row">` +
         `<div class="st-name">${first}${rest}</div>` +

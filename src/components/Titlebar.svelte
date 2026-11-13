@@ -179,7 +179,7 @@
       ></span>
     </button>
     {#if swatchOpen}
-      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="absolute right-1 top-[var(--titlebar-height)] z-[1300] w-64 rounded-lg border border-border bg-bg-raised p-2.5 shadow-[var(--ui-panel-shadow)]"
         role="menu"

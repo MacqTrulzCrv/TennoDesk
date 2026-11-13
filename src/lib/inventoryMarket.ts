@@ -597,7 +597,7 @@ export function buildInventoryViewItems<T extends InventoryBaseItem>(
       // Freshness of the order snapshot behind this row's headline: the owned
       // rank's summary (max rank when fully ranked, else rank 0).
       ordersTimestamp: isRankedListingItem
-        ? (itemCurrentRank >= itemMaxRank ? cachedOrdersRmax : cachedOrdersR0)?.timestamp ?? null
+        ? ((itemCurrentRank >= itemMaxRank ? cachedOrdersRmax : cachedOrdersR0)?.timestamp ?? null)
         : null,
       ducats,
       ducatonator,

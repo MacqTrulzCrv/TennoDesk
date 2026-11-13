@@ -12,7 +12,6 @@ export function lookupTradedCatalogItem(
   // English, or a locale with no table) so nothing regresses.
   const english = localizedToEnglishItemName(baseName) ?? baseName;
   return (
-    wfmCatalog.lookupByName(english) ||
-    wfmCatalog.lookupByName(english.replace(/ Blueprint$/i, ""))
+    wfmCatalog.lookupByName(english) || wfmCatalog.lookupByName(english.replace(/ Blueprint$/i, ""))
   );
 }
