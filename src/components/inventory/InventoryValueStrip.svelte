@@ -21,6 +21,9 @@
     /** Per-unit platinum floor applied to both figures; 0 is off. */
     minPlatinum: number;
     onSelectMinPlatinum: (minPlatinum: number) => void;
+    /** Hides rows the user owns a single copy of, leaving only spares. */
+    hideSingles: boolean;
+    onSelectHideSingles: (hideSingles: boolean) => void;
   }
 
   let {
@@ -31,6 +34,8 @@
     onSelectScope,
     minPlatinum,
     onSelectMinPlatinum,
+    hideSingles,
+    onSelectHideSingles,
   }: Props = $props();
 
   const PLAT_ICON = PLATINUM_ICON_URL;
@@ -177,5 +182,21 @@
         </button>
       {/each}
     </div>
+
+    <!-- Same lens family as the scope toggle: narrows the open tab (and the
+         figures with it) to rows owned at least twice, so the user's only copy
+         of a part never shows up on a selling pass. -->
+    <button
+      type="button"
+      class="inline-flex items-center rounded border border-border/60 px-2 py-0.5 font-display text-[11px] uppercase tracking-[0.04em] {hideSingles
+        ? 'bg-accent-glow text-accent'
+        : 'bg-transparent text-text-muted hover:text-text-secondary'}"
+      aria-pressed={hideSingles}
+      data-value-hide-singles
+      title={$tr("inventory.value.hideSinglesHint")}
+      onclick={() => onSelectHideSingles(!hideSingles)}
+    >
+      {$tr("inventory.value.hideSingles")}
+    </button>
   </div>
 {/if}

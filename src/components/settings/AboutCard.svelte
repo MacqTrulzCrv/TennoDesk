@@ -4,8 +4,14 @@
   import { invoke, on } from "../../lib/ipc.js";
   import type { RelicDataInfo } from "../../../config/shared/relicDataInfo.js";
   import SettingsSection from "./SettingsSection.svelte";
+  import { DISCORD_INVITE_URL } from "../../data/community.js";
 
   const appVersion = import.meta.env.VITE_APP_VERSION || "?";
+  const discordInviteShort = DISCORD_INVITE_URL.replace(/^https?:\/\//, "");
+
+  function openDiscord(): void {
+    window.api?.openExternal?.(DISCORD_INVITE_URL);
+  }
 
   let relicData = $state<RelicDataInfo | null>(null);
 
@@ -66,6 +72,15 @@
         <span class="settings-credit-value">{row.value}</span>
       </div>
     {/each}
+    <button
+      type="button"
+      class="settings-credit-row settings-discord-row"
+      data-credit="discord"
+      onclick={openDiscord}
+    >
+      <span>{$tr("settings.discordLabel")}</span>
+      <span class="settings-credit-value settings-discord-value">{discordInviteShort}</span>
+    </button>
   </div>
 
   <p class="m-0 mt-2.5 text-xs leading-snug text-text-muted">
@@ -102,5 +117,19 @@
   .settings-credit-value {
     color: var(--text-primary);
     font-size: 0.875rem;
+  }
+  .settings-discord-row {
+    width: calc(100% + 0.9rem);
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .settings-discord-value {
+    color: var(--accent);
+  }
+  .settings-discord-row:hover .settings-discord-value {
+    text-decoration: underline;
   }
 </style>

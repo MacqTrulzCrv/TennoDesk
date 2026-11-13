@@ -8,12 +8,17 @@ import {
 
 const ACCELERATED_ISOTOPE = "/Lotus/Upgrades/Mods/Pistol/DualStat/RadiationFireratePistolMod";
 const BRATON_PRIME_BARREL = "/Lotus/Types/Recipes/Weapons/WeaponParts/BratonPrimeBarrel";
+const BRATON_PRIME_STOCK = "/Lotus/Types/Recipes/Weapons/WeaponParts/BratonPrimeStock";
 
 function inventory() {
   return {
     Suits: [],
     RawUpgrades: [{ ItemType: ACCELERATED_ISOTOPE, ItemCount: 23 }],
-    MiscItems: [{ ItemType: BRATON_PRIME_BARREL, ItemCount: 2 }],
+    // The stock's single copy is the hide-singles fixture: the barrel is a spare.
+    MiscItems: [
+      { ItemType: BRATON_PRIME_BARREL, ItemCount: 2 },
+      { ItemType: BRATON_PRIME_STOCK, ItemCount: 1 },
+    ],
   };
 }
 
@@ -92,6 +97,29 @@ test.describe("Inventory value strip controls", () => {
       "true",
     );
     await page.locator('[data-tour-tab="all_parts"]').click();
+  });
+
+  test("the hide-singles lens drops single copies and lifts back off", async () => {
+    const page = harness!.page;
+    await page.locator('[data-tour-tab="all_parts"]').click();
+    const toggle = page.locator("[data-value-hide-singles]");
+    const barrel = page.locator(`[data-inventory-card^="${BRATON_PRIME_BARREL}"]`).first();
+    const stock = page.locator(`[data-inventory-card^="${BRATON_PRIME_STOCK}"]`).first();
+
+    // Off by default: both the spare barrel and the single stock show.
+    await expect(toggle).toHaveAttribute("aria-pressed", "false");
+    await expect(barrel).toBeVisible({ timeout: 15_000 });
+    await expect(stock).toBeVisible();
+
+    // On: the only-copy stock leaves, the twice-owned barrel stays.
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect(stock).toHaveCount(0);
+    await expect(barrel).toBeVisible();
+
+    // Off again so the later tests see the full stock.
+    await toggle.click();
+    await expect(stock).toBeVisible({ timeout: 15_000 });
   });
 
   // Last on purpose: with this tiny fixture a platinum floor can zero both

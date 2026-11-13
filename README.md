@@ -24,6 +24,9 @@ En güncel kurulumu doğrudan indir:
 
 Kurulum konumu: `%LOCALAPPDATA%\Programs\TennoDesk` · veri: `%APPDATA%\TennoDesk`
 
+**💬 [Discord sunucumuz](https://discord.gg/8wzwq5yT3s)** — destek, hata bildirimi
+ve topluluk için.
+
 > Kendin kaynaktan derlemek istersen aşağıdaki
 > [Kaynaktan derleme](#kaynaktan-derleme-ve-kurulum) bölümüne bak.
 
@@ -96,7 +99,8 @@ Kullanıcı verisi: `%APPDATA%\TennoDesk`
 
 > **Otomatik güncelleme açıktır:** uygulama açılışta GitHub'daki en son sürümü
 > denetler, yeni sürüm varsa indirir (`build.publish` → GitHub; `app-update.yml`
-> + `latest.yml` üretilir). Doğrudan indirme linki her sürümde aynı kalır.
+>
+> - `latest.yml` üretilir). Doğrudan indirme linki her sürümde aynı kalır.
 
 ---
 

@@ -10,6 +10,7 @@
   import { relicDb } from "../../stores/relics.js";
   import { relicGroupForUniqueName } from "../../lib/relic.js";
   import { marketOrders } from "../../stores/market.js";
+  import { marketSellablesHideSingles } from "../../stores/preferences.js";
   import { getInventoryHydrationController } from "../../stores/inventoryHydration.js";
   import {
     bulkSellOpen,
@@ -156,6 +157,9 @@
   $: needle = query.trim().toLowerCase();
   $: filteredBase = categoryBase.filter((item) => {
     if (unlistedOnly && item.orderPlaced) return false;
+    // Spares-only lens: rows owned once stay hidden (full sets included - a
+    // single buildable set means its parts are down to one copy each).
+    if ($marketSellablesHideSingles && item.amount < 2) return false;
     if (!needle) return true;
     return (
       itemLabel(item).toLowerCase().includes(needle) || item.name.toLowerCase().includes(needle)
@@ -290,6 +294,18 @@
       />
       {$tr("workbench.filter.listedUnlisted")}
     </label>
+    <label
+      class="flex w-fit shrink-0 cursor-pointer items-center gap-2 text-xs text-text-secondary"
+      title={$tr("inventory.value.hideSinglesHint")}
+    >
+      <input
+        type="checkbox"
+        checked={$marketSellablesHideSingles}
+        data-sellables-hide-singles
+        on:change={() => marketSellablesHideSingles.set(!$marketSellablesHideSingles)}
+      />
+      {$tr("inventory.value.hideSingles")}
+    </label>
     <div class="flex shrink-0 items-center gap-1">
       <span class="text-xs uppercase tracking-[0.05em] text-text-muted">{$tr("common.sort")}</span>
       <select
@@ -369,7 +385,7 @@
           totalCount={sorted.length}
           showDucats={true}
           detailKeys={SELL_LIST_DETAIL_KEYS}
-          sortBy={sortBy}
+          {sortBy}
           sortDirection={sortDescending ? "desc" : "asc"}
           sortableKeys={SELLABLE_LIST_SORT_KEYS}
           onSort={applyListSort}

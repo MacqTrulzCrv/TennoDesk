@@ -102,6 +102,7 @@ import * as rewardOverlayIpc from "./ipc/rewardOverlayIpc";
 import * as rivenOverlayIpc from "./ipc/rivenOverlayIpc";
 import * as arbiOverlayIpc from "./ipc/arbiOverlayIpc";
 import * as worldStateIpc from "./ipc/worldStateIpc";
+import * as feedbackIpc from "./ipc/feedbackIpc";
 import * as messageNotificationIpc from "./ipc/messageNotificationIpc";
 import * as systemIpc from "./ipc/systemIpc";
 import * as notificationSoundIpc from "./ipc/notificationSoundIpc";
@@ -525,6 +526,7 @@ function registerIpcHandlers(profileStage: ProfileStage): void {
   wfmIpc.register();
   overlayIpc.register();
   worldStateIpc.register();
+  feedbackIpc.register();
   systemIpc.register();
   notificationSoundIpc.register();
   snapshotCacheIpc.register();

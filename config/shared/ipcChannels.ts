@@ -35,6 +35,8 @@ export const OVERLAY_EDIT_UPDATE = "overlay-edit:update";
 export const OVERLAY_EDIT_END = "overlay-edit:end";
 export const OVERLAY_EDIT_STATE = "overlay-edit-state";
 export const OVERLAY_LAYOUT_GET = "overlay-layout:get";
+export const FEEDBACK_CONTEXT = "feedback:context";
+export const FEEDBACK_SUBMIT = "feedback:submit";
 
 export const WFM_SIGNIN = "wfm:signin";
 export const WFM_SIGNOUT = "wfm:signout";

@@ -37,6 +37,14 @@ export const inventoryValueMinPlatinum = persistedPresetNumber(
   VALUE_MIN_PLATINUM_PRESETS,
   0,
 );
+// Hide rows the user owns a single copy of, leaving only the spares that are
+// safe to sell. Inventory and the market Sellables tab keep separate switches:
+// one is a collection view, the other a selling screen, so their lenses differ.
+export const inventoryHideSingles = persistedBoolean("wf_inventory_hide_singles", false);
+export const marketSellablesHideSingles = persistedBoolean(
+  "wf_market_sellables_hide_singles",
+  false,
+);
 
 export const SETTINGS_CATEGORIES = [
   "general",

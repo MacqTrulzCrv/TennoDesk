@@ -16,6 +16,10 @@ export interface PreloadAPI {
     ...args: IpcInvokeMap["saveNotificationSound"]["args"]
   ) => Promise<IpcInvokeMap["saveNotificationSound"]["return"]>;
   resetNotificationSound: () => Promise<null>;
+  getFeedbackContext: () => Promise<IpcInvokeMap["getFeedbackContext"]["return"]>;
+  submitFeedback: (
+    ...args: IpcInvokeMap["submitFeedback"]["args"]
+  ) => Promise<IpcInvokeMap["submitFeedback"]["return"]>;
   getOverlayPreview: (
     ...args: IpcInvokeMap["getOverlayPreview"]["args"]
   ) => Promise<IpcInvokeMap["getOverlayPreview"]["return"]>;

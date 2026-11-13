@@ -12,6 +12,7 @@ const OPEN_EXTERNAL_ALLOWED_HOSTS: readonly string[] = Object.freeze([
   "www.warframe.com",
   "browse.wf",
   "arbi.guide",
+  "discord.gg",
 ]);
 
 const BASE_CONNECT_SRC_ALLOWLIST: readonly string[] = Object.freeze([

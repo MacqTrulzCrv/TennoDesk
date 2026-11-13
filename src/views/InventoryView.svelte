@@ -107,7 +107,11 @@
   import { devMode, degradedIcons } from "../stores/devMode.js";
   import { sharedFilters, updateSharedFilters, resetSharedFilters } from "../stores/filters.js";
   import { inventoryViewMode } from "../stores/inventoryViewMode.js";
-  import { inventoryValueAllTradables, inventoryValueMinPlatinum } from "../stores/preferences.js";
+  import {
+    inventoryHideSingles,
+    inventoryValueAllTradables,
+    inventoryValueMinPlatinum,
+  } from "../stores/preferences.js";
   import { activeItem, activeRelic } from "../stores/modals.js";
   import { inventorySafetyContext, inventorySafetyVerdicts } from "../stores/inventorySafety.js";
   import {
@@ -297,6 +301,10 @@
 
   function setValueMinPlatinum(minPlatinum: number): void {
     inventoryValueMinPlatinum.set(minPlatinum);
+  }
+
+  function setValueHideSingles(hideSingles: boolean): void {
+    inventoryHideSingles.set(hideSingles);
   }
 
   function handleItemSelect(item: InventoryViewItem): void {
@@ -602,16 +610,21 @@
   $: tabHasPrime = filtered.some(isPrimeRow);
   $: scopedItems =
     $inventoryValueAllTradables || !tabHasPrime ? filtered : filtered.filter(isPrimeRow);
+  // A second, user-flipped lens: only rows owned at least twice, so a selling
+  // pass never surfaces the only copy of a part. Default off and persisted.
+  $: spareItems = $inventoryHideSingles
+    ? scopedItems.filter((item) => item.amount >= 2)
+    : scopedItems;
   $: visibleItems =
     $devMode && missingIconsOnly
-      ? scopedItems.filter(
+      ? spareItems.filter(
           (item) =>
             !item.displayImageUrl ||
             item.usesFallbackArt ||
             ARCANE_STAND_IN_ART.has(item.internalName) ||
             $degradedIcons.has(item.name),
         )
-      : scopedItems;
+      : spareItems;
   // Annotated so the reactive assignment keeps the literal union instead of string.
   let valueScope: InventoryValueScope;
   let valueSourceTab: InventoryFilterTab;
@@ -627,7 +640,9 @@
     orderedSlugs,
     $relicDb,
     orderedSubtypes,
-  ).filter((item) => isCountedForValue(item, valueScope));
+  ).filter(
+    (item) => isCountedForValue(item, valueScope) && (!$inventoryHideSingles || item.amount >= 2),
+  );
   // Rebuilt on every metric flush, so the totals below re-walk with it.
   $: valueInventoryItems = buildInventoryViewItems(valueBaseItems, $hydrationMetrics);
   // The platinum floor belongs to the totals, not the prefilter above: base rows
@@ -677,14 +692,15 @@
   function filterAndSortResources(
     list: typeof resourceList,
     filters: typeof $inventoryFilters,
+    hideSingles: boolean,
   ): typeof resourceList {
     // Skip on an empty query so a thousands-row account does not re-filter for nothing.
     const searched = filters.search.trim()
       ? list.filter((resource) => matchesSearch(resource, filters.search))
       : list;
     const gated =
-      filters.minimumAmount > 0
-        ? searched.filter((r) => r.count >= filters.minimumAmount)
+      filters.minimumAmount > 0 || hideSingles
+        ? searched.filter((r) => r.count >= Math.max(filters.minimumAmount, hideSingles ? 2 : 0))
         : searched;
     const dir = filters.sortDirection === "asc" ? 1 : -1;
     return [...gated].sort((a, b) =>
@@ -692,7 +708,11 @@
     );
   }
 
-  $: filteredResources = filterAndSortResources(resourceList, $inventoryFilters);
+  $: filteredResources = filterAndSortResources(
+    resourceList,
+    $inventoryFilters,
+    $inventoryHideSingles,
+  );
   $: petGenetics = filter === "pets" ? parsePetGenetics($inventoryData) : null;
   $: marketTab = filter !== "resources" && filter !== "pets";
   $: filteredTotalCount =
@@ -775,6 +795,8 @@
           onSelectScope={setValueScope}
           minPlatinum={$inventoryValueMinPlatinum}
           onSelectMinPlatinum={setValueMinPlatinum}
+          hideSingles={$inventoryHideSingles}
+          onSelectHideSingles={setValueHideSingles}
         />
       {:else if sectionId === "inventory.selectionBar"}
         <InventorySelectionBar
