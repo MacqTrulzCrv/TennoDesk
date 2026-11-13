@@ -6,6 +6,9 @@
   const APP_ROWS: { labelKey: MessageKey; keys: string }[] = [
     { labelKey: "nav.quickSwitch", keys: "Ctrl K" },
     { labelKey: "shortcuts.search", keys: "Ctrl F" },
+    { labelKey: "shortcuts.listNavigate", keys: "J K" },
+    { labelKey: "shortcuts.listOpen", keys: "Enter" },
+    { labelKey: "shortcuts.listSell", keys: "X" },
     { labelKey: "shortcuts.close", keys: "Esc" },
     { labelKey: "shortcuts.title", keys: "?" },
   ];

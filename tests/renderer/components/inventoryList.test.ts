@@ -70,6 +70,7 @@ function row(name: string, extra: Partial<InventoryViewItem> = {}): InventoryVie
     wtbRmax: null,
     ducats: null,
     ducatonator: null,
+    ordersTimestamp: null,
     displayImageUrl: null,
     usesFallbackArt: false,
     equippedSummary: null,

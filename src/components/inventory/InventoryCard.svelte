@@ -21,6 +21,7 @@
   import { itemMarksFor } from "../../lib/parentMastery.js";
   import { tr } from "../../lib/i18n.js";
   import { openQuickSell } from "../../lib/inventory/quickSell.js";
+  import { formatUpdatedLabel } from "../../lib/relativeTime.js";
   import type { InventoryViewItem } from "../../lib/inventoryMarket.js";
   import { isRankedGroup } from "../../../config/shared/numeric.js";
   import { getInventoryHydrationController } from "../../stores/inventoryHydration.js";
@@ -60,16 +61,17 @@
   let metricState: "loading" | "has-value" | "no-data";
   $: metricState = $pendingPriceKeys.has(item.internalName)
     ? "loading"
-    : item.platinum != null
+    : headlinePlatinum != null
       ? "has-value"
       : "no-data";
 
   // Lead the eye with the valuable stock: high/mid platinum rows get a gold
-  // rail + inset halo (see .value-high/.value-mid in components.css).
+  // rail + inset halo (see .value-high/.value-mid in components.css). Tier off
+  // the live headline so a noisy median can't fake a "valuable" highlight.
   $: valueTierClass =
-    valueTier(item.platinum) === "high"
+    valueTier(headlinePlatinum) === "high"
       ? "value-high"
-      : valueTier(item.platinum) === "mid"
+      : valueTier(headlinePlatinum) === "mid"
         ? "value-mid"
         : "";
 
@@ -89,6 +91,27 @@
   $: wtbRank0Label = item.wtbR0 != null ? `${item.wtbR0}p` : "-";
   $: wtsRankMaxLabel = item.wtsRmax != null ? `${item.wtsRmax}p` : "-";
   $: wtbRankMaxLabel = item.wtbRmax != null ? `${item.wtbRmax}p` : "-";
+
+  // The headline is the live best-sell at the rank you own, not the 48h median.
+  // The median is a closed-trade average that goes wildly noisy on thin markets
+  // (e.g. a 4p mod reading 100p), so it steps back to a secondary reference.
+  $: ownedRankWts = isRankedGroup(item.inventoryGroup)
+    ? item.rank >= item.maxRank
+      ? item.wtsRmax
+      : item.wtsR0
+    : null;
+  $: headlinePlatinum = ownedRankWts ?? item.platinum;
+  $: medianReference =
+    item.platinum != null && headlinePlatinum != null && item.platinum !== headlinePlatinum
+      ? item.platinum
+      : null;
+
+  // How old the live order snapshot behind the headline is. Only shown when the
+  // headline actually came from live orders, so it never mislabels a median.
+  $: ordersAgeLabel =
+    ownedRankWts != null && item.ordersTimestamp != null
+      ? formatUpdatedLabel($tr, item.ordersTimestamp, Date.now())
+      : null;
 
   function selectCard(event: MouseEvent | KeyboardEvent): void {
     if (selectionMode) {
@@ -277,7 +300,7 @@
     </span>
 
     <MarketMetricStrip
-      platinum={item.platinum}
+      platinum={headlinePlatinum}
       ducats={item.ducats}
       ratio={item.ducatonator}
       state={metricState}
@@ -285,6 +308,23 @@
       emphasizePrimary
       className="mt-1"
     />
+
+    {#if medianReference != null || ordersAgeLabel}
+      <div
+        class="-mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0 text-[11px] leading-tight text-text-muted"
+      >
+        {#if medianReference != null}
+          <span title={$tr("inventory.avg48hHint")}
+            >{$tr("inventory.avg48h", { value: medianReference })}</span
+          >
+        {/if}
+        {#if ordersAgeLabel}
+          <span class="inline-flex items-center gap-0.5" title={ordersAgeLabel}>
+            <span aria-hidden="true">⟳</span>{ordersAgeLabel}
+          </span>
+        {/if}
+      </div>
+    {/if}
 
     {#if showRankOrderSummary}
       <div class="grid grid-cols-2 gap-1">

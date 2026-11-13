@@ -172,6 +172,72 @@
     return eligibleKeys?.has(item.internalName) ?? false;
   }
 
+  // Keyboard cursor over the rows: j/k move it, Enter opens, x quick-sells.
+  // Kept null until the first keypress so the highlight never appears unasked.
+  let focusedIndex = $state<number | null>(null);
+
+  // A shrinking list (filter, search) must not strand the cursor past the end.
+  $effect(() => {
+    if (focusedIndex === null) return;
+    if (items.length === 0) focusedIndex = null;
+    else if (focusedIndex > items.length - 1) focusedIndex = items.length - 1;
+  });
+
+  function isTypingTarget(target: EventTarget | null): boolean {
+    const el = target as HTMLElement | null;
+    if (!el) return false;
+    const tag = el.tagName;
+    return (
+      tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || el.isContentEditable === true
+    );
+  }
+
+  function scrollFocusedIntoView(): void {
+    const key = focusedIndex === null ? null : items[focusedIndex]?.internalName;
+    if (!key) return;
+    document
+      .querySelector<HTMLElement>(`[data-list-row="${CSS.escape(key)}"]`)
+      ?.scrollIntoView({ block: "nearest" });
+  }
+
+  function moveFocus(delta: number): void {
+    if (items.length === 0) return;
+    const start = focusedIndex ?? (delta > 0 ? -1 : 0);
+    focusedIndex = Math.max(0, Math.min(items.length - 1, start + delta));
+    queueMicrotask(scrollFocusedIntoView);
+  }
+
+  function onListKeyDown(event: KeyboardEvent): void {
+    // A modal, the command palette, or a text field owns the keyboard first.
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (isTypingTarget(event.target) || document.querySelector('[role="dialog"]')) return;
+
+    if (event.key === "j") {
+      event.preventDefault();
+      moveFocus(1);
+    } else if (event.key === "k") {
+      event.preventDefault();
+      moveFocus(-1);
+    } else if (event.key === "Escape" && focusedIndex !== null) {
+      focusedIndex = null;
+    } else if (focusedIndex !== null) {
+      const item = items[focusedIndex];
+      if (!item) return;
+      if (event.key === "Enter") {
+        event.preventDefault();
+        openRow(item);
+      } else if ((event.key === "x" || event.key === "X") && item.marketSlug) {
+        event.preventDefault();
+        void openQuickSell(item);
+      }
+    }
+  }
+
+  $effect(() => {
+    window.addEventListener("keydown", onListKeyDown);
+    return () => window.removeEventListener("keydown", onListKeyDown);
+  });
+
   function ownedLabel(item: InventoryViewItem, code: string): string {
     if (item.inventoryGroup === "incomplete_sets") {
       return `${item.ownedPartTypes ?? 0}/${item.totalPartTypes ?? 0}`;
@@ -303,7 +369,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each items as item (item.internalName)}
+        {#each items as item, rowIndex (item.internalName)}
           {@const shardCopies =
             $archonShardsBySuit.get(item.uniqueName || item.internalName || "") ?? []}
           {@const selected = selectedKeys?.has(item.internalName) ?? false}
@@ -319,8 +385,11 @@
           <tr
             class="group cursor-pointer transition-colors duration-100 hover:bg-bg-raised {selected
               ? 'bg-accent/15'
+              : ''} {rowIndex === focusedIndex
+              ? 'bg-accent/10 shadow-[inset_2px_0_0_0_var(--view-accent)]'
               : ''} {selectionMode && !isSelectable(item) ? 'opacity-45' : ''}"
             data-list-row={item.internalName}
+            data-list-focused={rowIndex === focusedIndex || undefined}
             use:trackRow={item}
             onclick={(event) => openRow(item, event)}
             oncontextmenu={(event) => openMenu(event, item)}

@@ -61,6 +61,8 @@ export interface InventoryViewItem extends InventoryBaseItem {
   wtbRmax: number | null;
   ducats: number | null;
   ducatonator: number | null;
+  /** When the live WTS/WTB order snapshot behind this row was last fetched. */
+  ordersTimestamp: number | null;
   displayImageUrl: string | null;
   usesFallbackArt: boolean;
   equippedSummary: string | null;
@@ -579,6 +581,11 @@ export function buildInventoryViewItems<T extends InventoryBaseItem>(
       wtbR0: isRankedListingItem ? (metricWtbR0 ?? cachedOrdersR0?.wtb ?? null) : null,
       wtsRmax: isRankedListingItem ? (metricWtsRmax ?? cachedOrdersRmax?.wts ?? null) : null,
       wtbRmax: isRankedListingItem ? (metricWtbRmax ?? cachedOrdersRmax?.wtb ?? null) : null,
+      // Freshness of the order snapshot behind this row's headline: the owned
+      // rank's summary (max rank when fully ranked, else rank 0).
+      ordersTimestamp: isRankedListingItem
+        ? (itemCurrentRank >= itemMaxRank ? cachedOrdersRmax : cachedOrdersR0)?.timestamp ?? null
+        : null,
       ducats,
       ducatonator,
       displayImageUrl,

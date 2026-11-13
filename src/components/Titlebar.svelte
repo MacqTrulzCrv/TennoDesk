@@ -176,18 +176,18 @@
     {#if swatchOpen}
       <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
       <div
-        class="absolute right-1 top-[var(--titlebar-height)] z-[1300] rounded-lg border border-border bg-bg-raised p-2 shadow-[var(--ui-panel-shadow)]"
+        class="absolute right-1 top-[var(--titlebar-height)] z-[1300] w-64 rounded-lg border border-border bg-bg-raised p-2.5 shadow-[var(--ui-panel-shadow)]"
         role="menu"
         tabindex="-1"
         on:click|stopPropagation
       >
-        <div class="grid grid-cols-6 gap-1.5">
+        <div class="grid grid-cols-6 justify-items-center gap-2">
           {#each presetEntries as [key, preset] (key)}
             <button
               type="button"
-              class="h-6 w-6 rounded-full transition-transform duration-150 hover:scale-110 {$themeSettings.activePreset ===
+              class="h-7 w-7 shrink-0 rounded-full transition-transform duration-150 hover:scale-110 {$themeSettings.activePreset ===
               key
-                ? 'ring-2 ring-accent-bright'
+                ? 'ring-2 ring-accent-bright ring-offset-2 ring-offset-bg-raised'
                 : 'border border-border'}"
               style="background: {preset.colors.accent}"
               title={preset.label}

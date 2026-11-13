@@ -7,6 +7,10 @@
   import UpdateModal from "./UpdateModal.svelte";
   import NotificationHistory from "./NotificationHistory.svelte";
   import { markNotificationsSeen, notificationsUnread } from "../stores/notifications.js";
+  import { onMount } from "svelte";
+  import { readStorage, writeStorage } from "../lib/persistence.js";
+  import { WHATS_NEW_VERSION, WHATS_NEW_DATE } from "../data/whatsNew.js";
+  import type { AppUpdateState } from "../types/ipc.js";
 
   import { normalizeErrorMessage } from "../../config/shared/errors.js";
 
@@ -19,6 +23,35 @@
     showNotifications = true;
   }
   let autoOpenedVersion: string | null = null;
+
+  // A one-time "what's new" card the first launch after an auto-update lands on
+  // a version we ship notes for. Mirrors the onboarding-hint first-run pattern.
+  const WHATS_NEW_SEEN_KEY = "whats-new-seen-version";
+  let whatsNewVersion: string | null = null;
+
+  onMount(() => {
+    const current = import.meta.env.VITE_APP_VERSION || "";
+    if (!current) return;
+    const seen = readStorage(WHATS_NEW_SEEN_KEY);
+    // Record the running version so the card fires at most once per update.
+    if (seen !== current) writeStorage(WHATS_NEW_SEEN_KEY, current);
+    // Skip a fresh install (no record) and only fire when this exact version
+    // actually ships notes.
+    if (!seen || seen === current || current !== WHATS_NEW_VERSION) return;
+    whatsNewVersion = current;
+  });
+
+  // Built reactively so the notes resolve once the active locale chunk loads;
+  // onMount can run before the translation dictionary is ready.
+  $: whatsNewState = whatsNewVersion
+    ? ({
+        status: "idle",
+        version: whatsNewVersion,
+        releaseDate: WHATS_NEW_DATE,
+        releaseNotes: $tr("whatsnew.notes"),
+        timestamp: 0,
+      } satisfies AppUpdateState)
+    : null;
 
   $: statusLabel = $statusText ? $tr($statusText.key, $statusText.params) : "";
 
@@ -179,6 +212,15 @@
     onClose={() => (showChangelog = false)}
     onDownload={runDownload}
     onInstall={runInstall}
+  />
+{/if}
+
+{#if whatsNewState}
+  <UpdateModal
+    state={whatsNewState}
+    onClose={() => (whatsNewVersion = null)}
+    onDownload={() => {}}
+    onInstall={() => {}}
   />
 {/if}
 

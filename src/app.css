@@ -64,6 +64,20 @@
   }
 }
 
+/* A view-only entrance: a touch longer and further than the shared fade-in so a
+   page switch reads as deliberate and lands in step with the 300ms tab underline.
+   Scoped to .view, so other fade-in users keep the subtler motion. */
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes detail-slide-in {
   from {
     opacity: 0;

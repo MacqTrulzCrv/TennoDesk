@@ -34,6 +34,7 @@ export function getCachedRankOrderSummary(
   wts: number | null;
   wtb: number | null;
   fresh: boolean;
+  timestamp: number | null;
 } | null {
   const summary = getCachedOrderSummaryState(slugInput, rank, { allowStale: true });
   if (!summary) return null;
@@ -51,6 +52,7 @@ export function getCachedRankOrderSummary(
     wts,
     wtb,
     fresh: isOrderSummaryFresh(summary),
+    timestamp: typeof summary.timestamp === "number" ? summary.timestamp : null,
   };
 }
 

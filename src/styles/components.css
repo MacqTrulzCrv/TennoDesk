@@ -27,7 +27,7 @@
   }
   .view {
     display: block;
-    animation: fade-in 0.18s ease;
+    animation: view-enter 0.26s ease-out;
     padding-top: 1.5rem;
   }
 
