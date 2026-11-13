@@ -160,6 +160,12 @@ function controllers(): FakeController[] {
   return state.controllers as FakeController[];
 }
 
+// The scanner panels (left, right) are created before the center ranges panel,
+// so the first two are the ones a session reuses.
+function scannerControllers(): FakeController[] {
+  return controllers().slice(0, 2);
+}
+
 describe("riven panels reused by a second session", () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -188,8 +194,11 @@ describe("riven panels reused by a second session", () => {
   it("repositions the kept panels instead of rebuilding them", () => {
     onRivenSessionOpen();
 
-    expect(controllers()).toHaveLength(2);
-    for (const controller of controllers()) {
+    // Three controllers exist at module load (left, right, center ranges), but
+    // a session only reuses the two scanner panels; the center ranges panel is
+    // opened on its own hotkey, not on session open.
+    expect(controllers()).toHaveLength(3);
+    for (const controller of scannerControllers()) {
       expect(controller.positionOverlayWindow).toHaveBeenCalledWith(controller.anchor);
       expect(controller.showOverlayWindowInactive).toHaveBeenCalled();
       expect(controller.createOverlayWindow).not.toHaveBeenCalled();
@@ -201,7 +210,7 @@ describe("riven panels reused by a second session", () => {
   it("repositions before the panels are shown", () => {
     onRivenSessionOpen();
 
-    for (const controller of controllers()) {
+    for (const controller of scannerControllers()) {
       expect(controller.positionOverlayWindow.mock.invocationCallOrder[0]).toBeLessThan(
         controller.showOverlayWindowInactive.mock.invocationCallOrder[0]!,
       );
