@@ -27,6 +27,7 @@ export const LAZY_VIEW_LOADERS: Record<
   market: () => import("../views/MarketView.svelte"),
   analytics: () => import("../views/MarketAnalysisView.svelte"),
   relics: () => import("../views/RelicsView.svelte"),
+  guides: () => import("../views/GuideVideosView.svelte"),
   wiki: () => import("../views/WikiView.svelte"),
   builds: () => import("../views/BuildGuidesView.svelte"),
   shopping: () => import("../views/ShoppingListView.svelte"),
@@ -52,6 +53,7 @@ export const VIEW_LABEL_KEYS: Record<ViewName, MessageKey> = {
   market: "common.market",
   analytics: "common.analytics",
   relics: "common.relics",
+  guides: "nav.guides",
   wiki: "common.wiki",
   builds: "nav.builds",
   shopping: "nav.shopping",
@@ -74,6 +76,7 @@ const SIDEBAR_VIEW_HIDEABLE: Record<SidebarViewName, boolean> = {
   market: true,
   analytics: true,
   relics: true,
+  guides: true,
   wiki: true,
   builds: true,
   shopping: true,
@@ -107,7 +110,7 @@ export const SIDEBAR_GROUPS: readonly SidebarGroup[] = [
   },
   { key: "market", labelKey: "nav.group.market", views: ["market", "analytics", "rivens"] },
   { key: "world", labelKey: "nav.group.world", views: ["world", "syndicates"] },
-  { key: "guide", labelKey: "nav.group.guide", views: ["wiki", "builds", "shopping"] },
+  { key: "guide", labelKey: "nav.group.guide", views: ["guides", "wiki", "builds", "shopping"] },
   { key: "system", labelKey: "nav.group.system", views: ["settings"] },
 ];
 

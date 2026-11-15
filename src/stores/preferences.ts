@@ -25,6 +25,9 @@ export const showFoundryReadyBadges = persistedBoolean("wf_show_foundry_ready_ba
 export const showVaultedBadges = persistedBoolean("wf_show_vaulted_badges", true);
 // A short confirmation tick when an action lands (e.g. a listing is posted).
 export const soundFeedback = persistedBoolean("wf_sound_feedback", true);
+// Blurs trade partners' in-game names in stats and analysis lists so screen
+// shares and recordings don't expose other players.
+export const hidePlayerNames = persistedBoolean("wf_hide_player_names", false);
 // Default to the full tab so every category (mods, arcanes, resources, pets)
 // shows its own stock on open; the prime-only lens is an opt-in the user flips
 // on the tabs where selling prime parts is the point.

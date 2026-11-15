@@ -13,6 +13,7 @@ export const VIEW_NAMES = [
   "market",
   "analytics",
   "relics",
+  "guides",
   "wiki",
   "builds",
   "shopping",

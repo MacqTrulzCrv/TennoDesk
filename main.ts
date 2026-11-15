@@ -4,8 +4,9 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
-import { app, BrowserWindow, crashReporter, globalShortcut, powerMonitor } from "electron";
+import { app, BrowserWindow, crashReporter, globalShortcut, net, powerMonitor, protocol } from "electron";
 
 import * as linuxDisplay from "./services/linuxDisplayBackend";
 import { layerOutputRects, probeLayerShell } from "./services/layerShell";
@@ -63,6 +64,36 @@ import * as windowSecurity from "./services/windowSecurity";
 const log = withScope("Main");
 
 const MAIN_WINDOW_ENTRY_FILE = path.join(app.getAppPath(), "renderer", "dist", "index.html");
+
+// Bundled usage-guide videos. They ship as extraResources (loose files outside
+// the asar) so a differential update never re-downloads them, and are served to
+// the renderer over a privileged `tdvideo://` scheme instead of file://, which
+// the window CSP forbids. Packaged they sit under resources/guide-videos; in a
+// dev run they stay in the source tree.
+const GUIDE_VIDEOS_DIR = app.isPackaged
+  ? path.join(process.resourcesPath, "guide-videos")
+  : path.join(app.getAppPath(), "resources", "guide-videos");
+
+// Must run before app ready; `stream` lets <video> issue range requests so the
+// user can seek. `secure`/`standard` keep it a well-behaved first-party origin.
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: "tdvideo",
+    privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true },
+  },
+]);
+
+function registerGuideVideoProtocol(): void {
+  protocol.handle("tdvideo", (request) => {
+    // tdvideo://local/<file>.mp4 — take only the basename and allow a strict
+    // charset so a crafted path can never escape the guide-videos folder.
+    const name = path.basename(decodeURIComponent(new URL(request.url).pathname));
+    if (!/^[0-9a-z][0-9a-z-]*\.mp4$/.test(name)) {
+      return new Response("Not found", { status: 404 });
+    }
+    return net.fetch(pathToFileURL(path.join(GUIDE_VIDEOS_DIR, name)).toString());
+  });
+}
 const OVERLAY_EDITOR_FRAME_URLS = new Set(
   OVERLAY_LAYOUT_KINDS.map((kind) => overlayPreviewUrl(app.getAppPath(), kind)),
 );
@@ -736,6 +767,7 @@ void app.whenReady().then(async () => {
   logStartupPaths(profileStage);
   initTrackersAndSettings(profileStage);
   registerIpcHandlers(profileStage);
+  registerGuideVideoProtocol();
 
   // The renderer loads while the item DB builds. Its invokes queue until this
   // callback returns and nothing here yields, so no handler sees an unbuilt DB.

@@ -97,7 +97,7 @@ export const MAIN_WINDOW_CSP = [
   "style-src-attr 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data: https:",
-  "media-src 'self' data:",
+  "media-src 'self' data: tdvideo:",
   `connect-src ${buildConnectSrcAllowlist()}`,
   "base-uri 'none'",
   "object-src 'none'",

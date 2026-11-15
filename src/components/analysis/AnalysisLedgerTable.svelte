@@ -7,6 +7,7 @@
   // Aliased: a store named `tr` makes svelte-check flag every <tr> row as a lowercase component.
   import { locale, tr as t } from "../../lib/i18n.js";
   import type { MessageKey } from "../../lib/i18n.js";
+  import { hidePlayerNames } from "../../stores/preferences.js";
   import {
     formatPlat,
     itemKey,
@@ -199,7 +200,9 @@
                   </span>
                 </td>
                 <td class="max-w-[10rem] truncate px-2 py-1.5 text-xs text-text-secondary">
-                  {event.partner || "-"}
+                  <span class={$hidePlayerNames && event.partner ? "blur-[5px] select-none" : ""}>
+                    {event.partner || "-"}
+                  </span>
                 </td>
                 <td class="whitespace-nowrap px-2 py-1.5 text-right text-xs tabular-nums">
                   {formatPlat(event.platChange, $locale)}

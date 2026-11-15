@@ -1,5 +1,6 @@
 <script lang="ts">
   import { locale, tr } from "../../lib/i18n.js";
+  import { hidePlayerNames } from "../../stores/preferences.js";
   import ThemedInput from "../ThemedInput.svelte";
   import ThemedPanel from "../ThemedPanel.svelte";
   import type { TradeEvent } from "../../types/ipc.js";
@@ -157,7 +158,9 @@
               {#if trade.partner}
                 <span
                   data-trade-partner
-                  class="text-xs text-accent font-semibold whitespace-nowrap overflow-hidden text-ellipsis max-w-[8rem]"
+                  class="text-xs text-accent font-semibold whitespace-nowrap overflow-hidden text-ellipsis max-w-[8rem] {$hidePlayerNames
+                    ? 'blur-[5px] select-none'
+                    : ''}"
                   >{trade.partner}</span
                 >
               {/if}

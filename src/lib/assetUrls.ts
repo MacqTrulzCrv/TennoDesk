@@ -25,6 +25,7 @@ export const NAV_ICON_URLS = {
   analytics: new URL("../../assets/icons/misc/trade.png", import.meta.url).href,
   settings: new URL("../../assets/icons/Settings.png", import.meta.url).href,
   stats: new URL("../../assets/icons/Stats.png", import.meta.url).href,
+  guides: new URL("../../assets/icons/Guides.svg", import.meta.url).href,
   wiki: new URL("../../assets/icons/Wiki.svg", import.meta.url).href,
   builds: new URL("../../assets/icons/Builds.svg", import.meta.url).href,
   shopping: new URL("../../assets/icons/ShoppingList.svg", import.meta.url).href,

@@ -3,6 +3,7 @@
   import ThemedPanel from "../ThemedPanel.svelte";
   // Aliased: a store named `tr` makes svelte-check flag every <tr> row as a lowercase component.
   import { locale, tr as t } from "../../lib/i18n.js";
+  import { hidePlayerNames } from "../../stores/preferences.js";
   import { formatPlat, type PartnerRollup } from "../../lib/stats/tradeAnalytics.js";
 
   interface Props {
@@ -45,7 +46,12 @@
               >
                 <td class="max-w-[12rem] py-1 pr-2">
                   <span class="flex min-w-0 flex-col gap-0.5">
-                    <span class="truncate text-text-primary" title={row.partner}>
+                    <span
+                      class="truncate text-text-primary {$hidePlayerNames
+                        ? 'blur-[5px] select-none'
+                        : ''}"
+                      title={$hidePlayerNames ? undefined : row.partner}
+                    >
                       {row.partner || $t("common.unknown")}
                     </span>
                     <span

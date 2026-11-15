@@ -24,7 +24,7 @@ import {
   resolveDict,
 } from "./regionNames";
 import { titleCase } from "../config/shared/textNormalize";
-import { fetchJsonWithTimeout } from "./worldStateFetch";
+import { fetchJsonWithTimeout, isWarframestatPaused } from "./worldStateFetch";
 import { computeSteelPathHonors } from "./worldStateSteelPath";
 
 const log = withScope("worldStateParser");
@@ -402,6 +402,9 @@ function computeDuviriMoodCycle(nowMs: number = Date.now()): {
   };
 }
 
+// Last good warframestat responses carry the UI through its outages.
+let lastEarthCycle: { isDay: boolean; timeLeft: string; expiry: string } | null = null;
+
 async function fetchEarthCycle(): Promise<{
   isDay: boolean;
   timeLeft: string;
@@ -435,13 +438,18 @@ async function fetchEarthCycle(): Promise<{
       throw new Error("earth cycle missing state");
     }
 
-    return {
+    lastEarthCycle = {
       isDay,
       timeLeft: typeof earthData?.timeLeft === "string" ? earthData.timeLeft : "",
       expiry: new Date(expiryMs).toISOString(),
     };
+    return lastEarthCycle;
   } catch (err) {
-    log.warn("[WorldState] earth cycle fetch failed:", normalizeErrorMessage(err));
+    if (!isWarframestatPaused(err)) {
+      log.warn("[WorldState] earth cycle fetch failed:", normalizeErrorMessage(err));
+    }
+    // The cached cycle stays truthful until its own expiry passes.
+    if (lastEarthCycle && Date.parse(lastEarthCycle.expiry) > Date.now()) return lastEarthCycle;
     return null;
   }
 }
@@ -474,6 +482,14 @@ export function parseCircuitChoices(
 }
 
 // Keep Circuit empty when the fallback is unavailable.
+let lastDuviriChoices: {
+  choices: Array<{ category: string; choices: string[] }>;
+  fetchedAtMs: number;
+} | null = null;
+// Choices rotate with the Duviri mood cycle, so a cached set older than one
+// period is likely wrong.
+const DUVIRI_CHOICES_MAX_AGE_MS = DUVIRI_MOOD_PERIOD_MS;
+
 async function fetchDuviriChoices(): Promise<Array<{ category: string; choices: string[] }>> {
   try {
     const data = (await fetchJsonWithTimeout(
@@ -481,7 +497,7 @@ async function fetchDuviriChoices(): Promise<Array<{ category: string; choices: 
       CYCLE_FETCH_TIMEOUT_MS,
     )) as Record<string, unknown>;
     const raw = Array.isArray(data?.choices) ? data.choices : [];
-    return raw
+    const parsed = raw
       .map((entry) => {
         const e = (entry || {}) as Record<string, unknown>;
         const category = typeof e.category === "string" ? e.category : "";
@@ -491,8 +507,15 @@ async function fetchDuviriChoices(): Promise<Array<{ category: string; choices: 
         return { category, choices };
       })
       .filter((e) => e.category && e.choices.length > 0);
+    if (parsed.length > 0) lastDuviriChoices = { choices: parsed, fetchedAtMs: Date.now() };
+    return parsed;
   } catch (err) {
-    log.warn("[WorldState] duviri choices fetch failed:", normalizeErrorMessage(err));
+    if (!isWarframestatPaused(err)) {
+      log.warn("[WorldState] duviri choices fetch failed:", normalizeErrorMessage(err));
+    }
+    if (lastDuviriChoices && Date.now() - lastDuviriChoices.fetchedAtMs < DUVIRI_CHOICES_MAX_AGE_MS) {
+      return lastDuviriChoices.choices;
+    }
     return [];
   }
 }
@@ -626,6 +649,14 @@ interface WarframestatSyndicateMission {
   }[];
 }
 
+let lastExtras: {
+  invasions: unknown[];
+  bounties: unknown[];
+  fetchedAtMs: number;
+} | null = null;
+// Invasions progress slowly; an hour-old snapshot beats an empty panel.
+const EXTRAS_MAX_AGE_MS = 60 * 60_000;
+
 async function fetchWarframestatExtras(): Promise<{
   invasions: unknown[];
   bounties: unknown[];
@@ -665,7 +696,7 @@ async function fetchWarframestatExtras(): Promise<{
         completion: typeof inv.completion === "number" ? Math.round(inv.completion * 10) / 10 : 0,
         completed: false,
       }));
-  } else if (invasionsRes.status === "rejected") {
+  } else if (invasionsRes.status === "rejected" && !isWarframestatPaused(invasionsRes.reason)) {
     log.warn("[WorldState] invasions fetch failed:", normalizeErrorMessage(invasionsRes.reason));
   }
 
@@ -689,11 +720,21 @@ async function fetchWarframestatExtras(): Promise<{
           minMR: j.minMR || 0,
         })),
       }));
-  } else if (syndicateRes.status === "rejected") {
+  } else if (syndicateRes.status === "rejected" && !isWarframestatPaused(syndicateRes.reason)) {
     log.warn(
       "[WorldState] syndicateMissions fetch failed:",
       normalizeErrorMessage(syndicateRes.reason),
     );
+  }
+
+  // Backfill failed endpoints from the last good snapshot; a fulfilled-but-empty
+  // response is the truth and must not be overwritten with stale data.
+  const nowMs = Date.now();
+  const cacheFresh = lastExtras !== null && nowMs - lastExtras.fetchedAtMs < EXTRAS_MAX_AGE_MS;
+  if (invasionsRes.status === "rejected" && cacheFresh) result.invasions = lastExtras!.invasions;
+  if (syndicateRes.status === "rejected" && cacheFresh) result.bounties = lastExtras!.bounties;
+  if (invasionsRes.status === "fulfilled" || syndicateRes.status === "fulfilled") {
+    lastExtras = { invasions: result.invasions, bounties: result.bounties, fetchedAtMs: nowMs };
   }
 
   return result;

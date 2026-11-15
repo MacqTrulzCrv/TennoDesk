@@ -243,7 +243,7 @@
           on:click={() => currentView.set(item.view)}
         >
           <img src={item.icon} alt="" class="h-6 w-6 shrink-0 object-contain brightness-[0.85]" />
-          <span>{$sidebarLabels[item.view] ?? $tr(item.labelKey)}</span>
+          <span class="min-w-0 text-left">{$sidebarLabels[item.view] ?? $tr(item.labelKey)}</span>
         </button>
       {/each}
     {/each}

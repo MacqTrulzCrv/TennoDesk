@@ -56,6 +56,7 @@
     appearanceTab,
     autoFocusSearch,
     soundFeedback,
+    hidePlayerNames,
     hideFoundryClaims,
     hideFounderMasteryItems,
     settingsCategory,
@@ -825,6 +826,16 @@
               </SettingsRow>
               <SettingsRow label={$tr("settings.soundFeedback")}>
                 <input type="checkbox" bind:checked={$soundFeedback} data-setting-sound-feedback />
+              </SettingsRow>
+              <SettingsRow
+                label={$tr("settings.hidePlayerNames")}
+                hint={$tr("settings.hidePlayerNamesHint")}
+              >
+                <input
+                  type="checkbox"
+                  bind:checked={$hidePlayerNames}
+                  data-setting-hide-player-names
+                />
               </SettingsRow>
             </div>
           </SettingsSection>

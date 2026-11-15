@@ -82,3 +82,10 @@ scripts/syndicates/
 
 # Local-only developer scripts.
 scripts/local/
+
+# Bundled guide videos ship in the installer via extraResources, not in git:
+# the full walkthrough exceeds GitHub's 100 MB file cap. Keep them local.
+resources/guide-videos/
+
+# Local pnpm store override used to work around a flaky D: drive.
+.npmrc
